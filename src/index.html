@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>JS13K 2024: Superfright</title>
+    <script src="https://js13kgames.com/webxr-src/2024/aframe.js"></script>
+    <script src="game.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-cylinder
+        puppet
+        position="0 0.75 -4"
+        radius="0.5"
+        height="2"
+        color="#FFC65D"
+      >
+        <a-sphere position="0 0.5 0.5" radius="0.25" color="#EF2D5E">
+        </a-sphere>
+      </a-cylinder>
+      <a-plane
+        position="0 0 -3"
+        rotation="-90 0 0"
+        width="5"
+        height="5"
+        color="#7BC8A4"
+      ></a-plane>
+      <a-sky color="#ddd"></a-sky>
+
+      <a-camera motion-tracker>
+        <a-cursor></a-cursor>
+        <a-text 
+          value="0.00s"
+          align="center"
+          color="black"
+          font="monoid"
+          position="0 0.65 -1.5"
+          game-time
+          ></a-text>
+      </a-camera>
+
+      <a-entity id="leftHand"
+                hand-controls="hand: left; handModelStyle: toon; color: #ffcccc"
+                motion-tracker
+      ></a-entity>
+      <a-entity id="rightHand"
+                hand-controls="hand: right; handModelStyle: toon; color: #ffcccc"
+                motion-tracker
+      ></a-entity>
+
+    </a-scene>
+  </body>
+</html>
