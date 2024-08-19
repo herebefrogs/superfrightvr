@@ -1,11 +1,9 @@
-// TODO could also be a primitive wrapping <a-text>
 AFRAME.registerComponent('game-time', {
-  events: {
-    'game-tick': function(e) {
-      this.el.setAttribute('value', this.format(e.detail.time/1000) + 's');
-    }
-  },
+  schema: { type: 'number', default: 0 },
   init: function() {
     this.format = (new Intl.NumberFormat(navigator.language, {minimumFractionDigits: 2, maximumFractionDigits: 2})).format;
   },
+  update: function(oldData) {
+    this.el.setAttribute('value', this.format(this.data/1000) + 's');
+  }
 });

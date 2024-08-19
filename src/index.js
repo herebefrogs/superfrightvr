@@ -3,6 +3,7 @@
 // they don't import each other so that's the only way for esbuild
 // to bundle anything
 
+import "./systems/game-time.js"
 import "./systems/puppeteer.js"
 import "./components/game-time.js"
 import "./components/motion-tracker.js"

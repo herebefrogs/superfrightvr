@@ -1,31 +1,15 @@
 AFRAME.registerSystem('puppeteer', {
   init: function() {
-    this.gameTime = 0;
+    this.el.addEventListener('step', (e) => this.step(e.detail.time, e.detail.timeDelta));
 
-    this.playerLimbs = document.querySelectorAll('[motion-tracker]');
-
-    // TODO components interested by game time change should register themselves,
-    // rather than puppeteer reaching out to them
     this.puppets = document.querySelectorAll('[puppet]');
-    this.gameTimer = document.querySelector('[game-time]');
   },
-  tick: function(_time, timeDelta) {
-    let timeChanged = false;
+  step: function(time, timeDelta) {
+    for (el of this.puppets) {
+      const delta = Math.sin(time/1000);
 
-    for (el of this.playerLimbs) {
-      if (el.is('player-moving')) {
-        this.gameTime += timeDelta;
-        timeChanged = true;
-        break;
-      }
-    }
-
-    if (timeChanged) {
-      this.gameTimer.emit('game-tick', { time: this.gameTime, timeDelta }, false);
-
-      for (el of this.puppets) {
-        el.emit('game-tick', { time: this.gameTime, timeDelta }, false);
-      }
+      el.object3D.position.x = 2*delta;
+      el.object3D.rotation.z = -delta;
     }
   }
 })
