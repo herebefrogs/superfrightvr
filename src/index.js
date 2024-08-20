@@ -6,6 +6,7 @@
 import "./primitives/a-pyramid.js"
 import "./systems/game-time.js"
 import "./systems/puppeteer.js"
+import "./components/debug-collision.js"
 import "./components/game-time.js"
 import "./components/motion-tracker.js"
 import "./components/puppet.js"

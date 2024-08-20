@@ -5,23 +5,29 @@
     <script src="game.js"></script>
   </head>
   <body>
-    <a-scene>
-      <a-pyramid color="orange" position="0.25 1.6 -0.5" scale="0.25 0.25 0.25" material="opacity: 0.5; side: 'double'">
-        <a-text 
+    <a-scene obb-collider="showColliders: false">
+      <a-pyramid color="orange" position="0 1.3 -0.5" scale="0.25 0.25 0.25" material="opacity: 0.5; side: 'double'">
+        <a-text
+          id="grab_1"
           value="GRAB"
           align="center"
           color="white"
           font="monoid"
           position="0 0.25 0.1"
+          obb-collider="size: 0.1 0.1 0.1"
         ></a-text>
       </a-pyramid>
 
+      <a-box id="box_1" position="1 1.5 -4" color="teal" width="0.5" height="0.5" depth="0.5" obb-collider></a-box>
+
       <a-cylinder
+        id="puppet_1"
         puppet
-        position="0 0.75 -4"
+        position="0 1 -4"
         radius="0.5"
         height="2"
         color="#FFC65D"
+        obb-collider
       >
         <a-sphere position="0 0.5 0.5" radius="0.25" color="#EF2D5E">
         </a-sphere>
@@ -45,15 +51,26 @@
           position="0 0.65 -1.5"
           game-time
           ></a-text>
+          <a-text 
+          value="debug collision"
+          align="center"
+          color="black"
+          font="monoid"
+          width="5"
+          position="0 -0.25 -2.5"
+          debug-collision
+          ></a-text>
       </a-camera>
 
       <a-entity id="leftHand"
-                hand-controls="hand: left; handModelStyle: toon; color: #ffcccc"
+                hand-controls="hand: left; handModelStyle: toon"
                 motion-tracker
+                obb-collider
       ></a-entity>
       <a-entity id="rightHand"
-                hand-controls="hand: right; handModelStyle: toon; color: #ffcccc"
+                hand-controls="hand: right; handModelStyle: toon"
                 motion-tracker
+                obb-collider
       ></a-entity>
 
     </a-scene>
