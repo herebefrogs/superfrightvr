@@ -5,7 +5,7 @@
     <script src="game.js"></script>
   </head>
   <body>
-    <a-scene obb-collider="showColliders: false">
+    <a-scene obb-collider="showColliders: false" debug-console>
       <a-pyramid color="orange" position="0 1.3 -0.5" scale="0.25 0.25 0.25" material="opacity: 0.5; side: 'double'">
         <a-text
           id="grab_1"
@@ -18,8 +18,6 @@
         ></a-text>
       </a-pyramid>
 
-      <a-box id="box_1" position="1 1.5 -4" color="teal" width="0.5" height="0.5" depth="0.5" obb-collider></a-box>
-
       <a-cylinder
         id="puppet_1"
         puppet
@@ -27,7 +25,6 @@
         radius="0.5"
         height="2"
         color="#FFC65D"
-        obb-collider
       >
         <a-sphere position="0 0.5 0.5" radius="0.25" color="#EF2D5E">
         </a-sphere>
@@ -42,7 +39,6 @@
       <a-sky color="#ddd"></a-sky>
 
       <a-camera motion-tracker>
-        <a-cursor></a-cursor>
         <a-text 
           value="0.00s"
           align="center"
@@ -50,15 +46,6 @@
           font="monoid"
           position="0 0.65 -1.5"
           game-time
-          ></a-text>
-          <a-text 
-          value="debug collision"
-          align="center"
-          color="black"
-          font="monoid"
-          width="5"
-          position="0 -0.25 -2.5"
-          debug-collision
           ></a-text>
       </a-camera>
 
