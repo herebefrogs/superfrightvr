@@ -5,6 +5,7 @@ AFRAME.registerSystem('puppeteer', {
     this.puppets = document.querySelectorAll('[puppet]');
   },
   step: function(time, timeDelta) {
+    // TODO temporary
     for (el of this.puppets) {
       const delta = Math.sin(time/1000);
 

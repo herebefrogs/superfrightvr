@@ -4,9 +4,12 @@
 // to bundle anything
 
 import "./primitives/a-pyramid.js"
-import "./systems/game-time.js"
-import "./systems/puppeteer.js"
 import "./components/debug-console.js"
 import "./components/game-time.js"
+import "./components/gesture-tracker.js"
 import "./components/motion-tracker.js"
+import "./components/portal.js"
 import "./components/puppet.js"
+import "./systems/game-time.js"
+import "./systems/gesture-tracker.js"
+import "./systems/puppeteer.js"
