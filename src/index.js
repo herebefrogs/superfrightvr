@@ -4,10 +4,12 @@
 // to bundle anything
 
 import "./primitives/a-pyramid.js"
+import "./primitives/a-gun.js"
 import "./components/debug-console.js"
 import "./components/game-time.js"
 import "./components/gesture-tracker.js"
 import "./components/motion-tracker.js"
+import "./components/sync-stance.js"
 import "./components/portal.js"
 import "./components/puppet.js"
 import "./systems/game-time.js"

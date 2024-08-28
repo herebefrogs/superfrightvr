@@ -1,6 +1,10 @@
+bugs
+- entities in a level that's hidden aren't paused
+- gun is rotated 90 deg because so is the hand model (though I don't know where that is corrected)
+
 game:
-- moving between a title screen, lobby and levels
-- grabbing/releasing a gun
+x moving between a title screen, lobby and levels
+x grabbing/releasing a gun
 - shooting a target
 - physics
 - stop game when 13s have passed
