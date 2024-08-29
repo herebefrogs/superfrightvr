@@ -16,3 +16,10 @@ Grabbing objects:
 2. adding a child to a hand-controls/occulus-touch-control's entity does attach it, but does not render it :( So the naive and preferred way of nesting objects that AFRAME is pushing forward as the golden path isn't working here.
 
 3. hand-controls/occulus-touch-controls's hand model is actually facing downward when rotation is 0, 0, 0. That gets corrected somewhere somehow, but when syncing the controller's rotation to another entity (to emulate grabbing an object) then the entity is clearly facing the wrong direction. With the x/y axis swap of the Euler referencial then it's hard to fix.
+
+
+
+Debugging headset:
+1. https://developer.oculus.com/meta-quest-developer-hub/
+Recording videos
+2. https://www.meta.com/help/quest/articles/in-vr-experiences/social-features-and-sharing/record-video-oculus/

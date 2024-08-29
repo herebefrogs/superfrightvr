@@ -15,7 +15,7 @@ AFRAME.registerSystem('gesture-tracker', {
       }
       else if (hand.is('holding-gun') && !hand.is('grabbing')) {
         hand.removeState('holding-gun');
-        this.dropGun(hand.components['gesture-tracker'].target);
+        this.dropGun(hand, hand.components['gesture-tracker'].target);
       }
     }
   },
@@ -36,9 +36,15 @@ AFRAME.registerSystem('gesture-tracker', {
     gun.setAttribute('sync-stance', { src: '#' + hand.id });
     gun.setAttribute('gun', { pointDown: true });
 
-  },
-  dropGun: function(gun) {
+    gun.setAttribute('gravity', false);
+ },
+  dropGun: function(hand, gun) {
+    hand.removeState('holding-gun');
+    // NOTE: most likely true, otherwise the player won't be able to grab the gun again
+    // until the hand & gun exist each other so another obbcollisionstarted event can be emitted
+    hand.addState('hovering-gun');
+
     gun.removeAttribute('sync-stance');
-    // TODO gun should now be subject to gravity and dropping
+    gun.setAttribute('gravity', true);
   }
 });
