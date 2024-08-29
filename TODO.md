@@ -1,6 +1,6 @@
 bugs
 - entities in a level that's hidden aren't paused
-- gun is rotated 90 deg because so is the hand model (though I don't know where that is corrected)
+x gun is rotated 90 deg because so is the hand model (though I don't know where that is corrected)
 
 game:
 x moving between a title screen, lobby and levels

@@ -34,6 +34,8 @@ AFRAME.registerSystem('gesture-tracker', {
 
     // instead, actively sync the hand's position/rotation to the gun
     gun.setAttribute('sync-stance', { src: '#' + hand.id });
+    gun.setAttribute('gun', { pointDown: true });
+
   },
   dropGun: function(gun) {
     gun.removeAttribute('sync-stance');
