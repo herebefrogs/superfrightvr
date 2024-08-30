@@ -36,12 +36,12 @@ AFRAME.registerComponent('gun', {
     grip.object3D.rotation.x = -Math.PI/8
     this.gimbal.appendChild(grip);
 
-    // TODO there could also be a front sight, a hammer and a trigger
+    // TODO there could also be a front sight, a hammer and a trigger...
 
     this.el.appendChild(this.gimbal);
   },
-  play: function() { this.el.setAttribute('obb-collider', { size: '0.1 0.1 0.1' }); },
-  pause: function() { this.el.removeAttribute('obb-collider'); },
+  _play: function() { this.el.setAttribute('obb-collider', { size: 0.1 }); },
+  _pause: function() { this.el.removeAttribute('obb-collider'); },
   update: function(oldData) {
     this.gimbal.object3D.rotation.x = this.data.pointDown ? -Math.PI/2 : 0;
   }

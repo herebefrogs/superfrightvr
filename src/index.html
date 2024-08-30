@@ -6,7 +6,7 @@
   </head>
   <body>
     <a-scene obb-collider="showColliders: true" debug-console debug>
-      <a-entity id="title" visible="true">
+      <a-entity id="title" level>
         <a-text
           value="SuperFRIGHT"
           align="center"
@@ -28,7 +28,7 @@
         </a-pyramid>
       </a-entity>
 
-      <a-entity id="level_1" visible="false">
+      <a-entity id="level_1" level="gameTimeTracked: true">
         <a-gun gravity position="0 1.6 -0.5"></a-gun>
 
         <a-cylinder
@@ -47,6 +47,36 @@
           width="5"
           height="5"
           color="#7BC8A4"
+        ></a-plane>
+
+        <a-pyramid
+        color="green"
+        position="-0.25 1.5 -0.5"
+        width="0.20"
+        height="0.175"
+        material="opacity: 0.35"
+        portal="to: #level_2"
+      >
+        <a-text
+          value="GRAB"
+          align="center"
+          color="white"
+          font="monoid"
+          width="1.75"
+          position="0 -0.04 0.05"
+        ></a-text>
+      </a-pyramid>
+      </a-entity>
+
+      <a-entity id="level_2" level="gameTimeTracked: true">
+        <a-gun gravity position="0.25 1.6 -0.5"></a-gun>
+
+        <a-plane
+          position="0 0 -3"
+          rotation="-90 0 0"
+          width="5"
+          height="5"
+          color="blue"
         ></a-plane>
       </a-entity>
 

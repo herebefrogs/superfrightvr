@@ -9,6 +9,16 @@ Documentation misses:
 
 3. registerGeometry, primitive, shader, mentioned as footnotes of components. They should be first class citizen in the Core API section.
 
+4. doc says obb-collider size defaults to 0 0 0, but is fact it's just 0
+
+5. Entity doc is missing getChildEntities method
+
+6. Pivot component undocumented (in extras/components source folder)
+
+FRAMEWORK issues
+
+1. obb-collider should be playable/pausable instead of running on every tick
+
 
 Grabbing objects:
 1. grabbable component not in doc, just a footnote of some guide. It seems to go in pair with hand-tracking-grab-controls which plain doesn't work (or the doc is missing so pretty important info to make it work)
