@@ -1,7 +1,11 @@
 AFRAME.registerPrimitive('a-gun', {
   defaultComponents: {
     gun: {},
-    'dynamic-collider': { size: 0.1 }
+    'dynamic-collider': { size: 0.1 },
+    raycaster: {
+      enabled: false,
+      objects: '#world',
+    }
   },
   mapping: {
     pointDown: 'gun.pointDown'
@@ -41,7 +45,13 @@ AFRAME.registerComponent('gun', {
 
     this.el.appendChild(this.gimbal);
   },
-  update: function(oldData) {
+  update: function() {
     this.gimbal.object3D.rotation.x = this.data.pointDown ? -Math.PI/2 : 0;
-  }
+    this.el.setAttribute('raycaster',
+      this.data.pointDown
+        // correct the raycaster line direction if needed, and move the origin in front of the gun's nozzle
+        ? { direction: '0 -1 0', origin: '0 -0.2 -0.08' }
+        : { direction: '0 0 -1', origin: '0 0.09 -0.2' }
+    );
+  },
 });

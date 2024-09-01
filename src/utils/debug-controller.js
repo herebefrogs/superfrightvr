@@ -21,6 +21,12 @@ window.DEBUG = {
       hand.removeState('grabbing');
     }, delay);
   },
+  buttonEvent: (handId, event, delay) => {
+    setTimeout(() => {
+      const hand = document.querySelector(handId);
+      hand.emit(event);
+    }, delay);
+  },
   loadLevel: (levelId, delay) => {
     setTimeout(() => {
       const sceneEl = document.querySelector('a-scene');

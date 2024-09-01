@@ -5,6 +5,7 @@
 
 import "./utils/debug-console.js"  // TODO remove for shipping game
 import "./utils/debug-controller.js"
+import "./primitives/a-bullet.js"
 import "./primitives/a-gun.js"
 import "./primitives/a-portal.js"
 import "./primitives/a-pyramid.js"
@@ -13,10 +14,11 @@ import "./components/game-time.js"
 import "./components/gravity.js"
 import "./components/gesture-tracker.js"
 import "./components/level.js"
+import "./components/linear-motion.js"
 import "./components/motion-tracker.js"
 import "./components/puppet.js"
 import "./components/sync-stance.js"
 import "./systems/game-time.js"
 import "./systems/gesture-tracker.js"
 import "./systems/puppeteer.js"
-import "./systems/conductor.js" // must be loaded after game-time due to event listeners registration
+import "./systems/level.js" // must be loaded after game-time due to event listeners registration

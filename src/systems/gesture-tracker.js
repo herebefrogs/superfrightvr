@@ -24,6 +24,10 @@ AFRAME.registerSystem('gesture-tracker', {
         hand.addState('hovering-gun');
         this.dropGun(target);
       }
+      else if (hand.is('holding-gun') && hand.is('shooting')) {
+        hand.removeState('shooting');
+        this.shootGun(target);
+      }
     }
   },
   grabGun: function(gun, hand) {
@@ -32,12 +36,40 @@ AFRAME.registerSystem('gesture-tracker', {
 
     // instead, actively sync the hand's position/rotation to the gun
     gun.setAttribute('sync-stance', { src: '#' + hand.id });
-    gun.setAttribute('gun', { pointDown: true });
-
+    gun.setAttribute('gun', { pointDown: this.el.is('vr-mode') });
+    gun.setAttribute('raycaster', { enabled: true });
     gun.setAttribute('gravity', false);
  },
   dropGun: function(gun) {
     gun.removeAttribute('sync-stance');
+    gun.setAttribute('raycaster', { enabled: false });
     gun.setAttribute('gravity', true);
+  },
+  shootGun: function(gun) {
+    // NOTE we should only call shootGun when it's true, but it's safer to check
+    if (gun.components.raycaster.data.enabled) {
+      const world = document.querySelector('#world');
+
+      // FIXME this is wrong: the normal is going to be the same if the gun still points at the same face (e.g. if the sphere was a box it would be very apparent)
+      // so the bullet isn't going to come out of the gun straight most of the time, breaking the illusion and being frustrating to aim
+      const intersection = gun.components.raycaster.getIntersection(world)
+      const normal = intersection.normal;
+      const direction = { x: -normal.x, y: -normal.y, z: -normal.z };
+
+      const bullet = document.createElement('a-bullet');
+      const origin = gun.getAttribute('position');
+      const rotation = gun.getAttribute('rotation');
+
+      // TODO add the raycaster's origin to the gun position, currently hard coded
+      bullet.setAttribute('position', `${origin.x} ${origin.y + 0.08} ${origin.z - 0.22}`);
+      bullet.setAttribute('rotation', `${rotation.x} ${rotation.y} ${rotation.z}`);
+
+      bullet.setAttribute('direction', `${direction.x} ${direction.y} ${direction.z}`);
+
+      const level = this.el.systems.level.activeLevel;
+      level.appendChild(bullet);
+
+      this.el.systems.puppeteer.linearMovers.push(bullet);
+    }
   }
 });

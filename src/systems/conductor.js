@@ -18,6 +18,7 @@ AFRAME.registerSystem('conductor', {
 
     // DEBUG.loadLevel('#level_1', 0)
     // DEBUG.grabGun('#leftHand', '#level_1', 500);
+    // DEBUG.buttonEvent('#leftHand', 'triggerdown', 1000);
     // DEBUG.grabPortal('#rightHand', '#level_1', 1000);
     // DEBUG.drop('#leftHand', 1500);
 
@@ -36,6 +37,8 @@ AFRAME.registerSystem('conductor', {
 
     // make hand controllers' release their grabbed objects
     this.hands.forEach(hand => { hand.components['gesture-tracker']?.reset() })
+    // remove all objects moved by the puppeteer in this level
+    this.el.systems.puppeteer.reset();
 
     this.el.emit('level-loaded', { level: activeLevel });
   },

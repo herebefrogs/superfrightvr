@@ -8,12 +8,12 @@ window.DEBUG = {
       // log in dev console as normal
       console.log(...arguments);
       // keep track of the last 5 messages
-      msgs.push([...arguments].join(' '));
+      msgs.push([...arguments].map(e => JSON.stringify(e)).join(' '));
       while (msgs.length > 5) {
         msgs.shift();
       }
       // log last 5 messages in console UI
-      consoleEl.setAttribute('value', msgs.join('\n'));
+      consoleEl?.setAttribute('value', msgs.join('\n'));
     }, 100);
   }  
 };

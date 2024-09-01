@@ -5,7 +5,7 @@
     <script src="game.js"></script>
   </head>
   <body>
-    <a-scene obb-collider="showColliders: false">
+    <a-scene obb-collider="showColliders: false" debug-console>
       <a-entity id="title" level>
         <a-text
           value="SuperFRIGHT"
@@ -17,11 +17,11 @@
         ></a-text>
 
         <a-portal to="#level_1" text-value="GRAB" text-width="1.75"
-          position="0 1.5 -0.5"></a-portal>
+          position="0 1.2 -0.5"></a-portal>
       </a-entity>
 
       <a-entity id="level_1" level="gameTimeTracked: true">
-        <a-gun gravity position="0 1.6 -0.5"></a-gun>
+        <a-gun gravity position="0 1.5 -0.5"></a-gun>
 
         <a-cylinder
           id="puppet_1"
@@ -42,11 +42,11 @@
         ></a-plane>
 
         <a-portal to="#level_2" text-value="Level 2" text-width="1.75"
-          position="0.25 1.5 -0.5"></a-portal>
+          position="0.5 1.2 -0.5"></a-portal>
       </a-entity>
 
       <a-entity id="level_2" level="gameTimeTracked: true">
-        <a-gun gravity position="0.25 1.6 -0.5"></a-gun>
+        <a-gun gravity position="0 1.5 -0.5"></a-gun>
 
         <a-plane
           position="0 0 -3"
@@ -56,11 +56,12 @@
           color="blue"
         ></a-plane>
         <a-portal to="#title" text-value="Title" text-width="1.75"
-        position="0 1.5 -0.5"></a-portal>
+        position="-0.5 1.2 -0.5"></a-portal>
 
       </a-entity>
 
       <a-sky color="#ddd"></a-sky>
+      <a-sphere id="world" color="blue" radius="1000" material="shader: flat; wireframe: true; side: back"></a-sphere>
 
       <a-camera motion-tracker>
         <!-- sorta HUD -->
@@ -76,14 +77,14 @@
 
       <a-entity id="leftHand"
                 hand-controls="hand: left; handModelStyle: toon"
-                obb-collider="size: 0.1 0.1 0.1"
+                obb-collider="size: 0.1"
                 position="-0.25 1.6 0"
                 motion-tracker
                 gesture-tracker
       ></a-entity>
       <a-entity id="rightHand"
                 hand-controls="hand: right; handModelStyle: toon"
-                obb-collider="size: 0.1 0.1 0.1"
+                obb-collider="size: 0.1"
                 position="0.25 1.6 0"
                 motion-tracker
                 gesture-tracker
