@@ -12,11 +12,8 @@ AFRAME.registerComponent('level', {
     this.el.object3D.visible = this.data.active;
     this.el[this.data.active ? 'play' : 'pause']();
 
-    for (const collider of document.querySelectorAll(`#${this.el.id} a-gun`)) {
-      collider.components.gun[this.data.active ? '_play' : '_pause']();
-    }
-    for (const collider of document.querySelectorAll(`#${this.el.id} [portal]`)) {
-      collider.components.portal[this.data.active ? '_play' : '_pause']();
+    for (const el of document.querySelectorAll(`#${this.el.id} [dynamic-collider]`)) {
+      el.components['dynamic-collider'][this.data.active ? '_play' : '_pause']();
     }
   }
 })

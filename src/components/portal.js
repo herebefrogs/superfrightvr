@@ -1,7 +1,9 @@
 AFRAME.registerComponent('portal', {
+  dependencies: ['dynamic-collider'],
   schema: {
     to: { type: 'string' },
   },
-  _play: function() { this.el.setAttribute('obb-collider', { size: 0.15 }) },
-  _pause: function() { this.el.removeAttribute('obb-collider') }
+  init: function() {
+    this.el.setAttribute('dynamic-collider', { size: 0.15 })
+  }
 });

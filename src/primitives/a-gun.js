@@ -1,6 +1,7 @@
 AFRAME.registerPrimitive('a-gun', {
   defaultComponents: {
     gun: {},
+    'dynamic-collider': { size: 0.1 }
   },
   mapping: {
     pointDown: 'gun.pointDown'
@@ -40,8 +41,6 @@ AFRAME.registerComponent('gun', {
 
     this.el.appendChild(this.gimbal);
   },
-  _play: function() { this.el.setAttribute('obb-collider', { size: 0.1 }); },
-  _pause: function() { this.el.removeAttribute('obb-collider'); },
   update: function(oldData) {
     this.gimbal.object3D.rotation.x = this.data.pointDown ? -Math.PI/2 : 0;
   }

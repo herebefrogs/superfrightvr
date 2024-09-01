@@ -15,6 +15,14 @@ AFRAME.registerSystem('conductor', {
     sceneEl.addEventListener('load-level', (e) => this.loadLevel(e.detail.levelId));
 
     // DEBUG
+    // simulate grabbing a portal
+    // setTimeout(() => {
+    //   const hand = document.querySelector('#leftHand');
+    //   hand.components['gesture-tracker'].target = document.querySelector('a-pyramid')
+    //   hand.addState('hovering-portal');
+    //   hand.addState('grabbing');
+    // }, 1500)
+    // simulate loading a level
     // setTimeout(() => {
     //   sceneEl.emit('load-level', { levelId: '#level_1' })
     // }, 1500)
