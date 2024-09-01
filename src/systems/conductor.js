@@ -8,27 +8,20 @@
  * - 'level-loaded' emitted on the scene after current active level changed
  */
 AFRAME.registerSystem('conductor', {
-  init: function() {   
-    this.loadLevel('#title');
+  init: function() {
+    this.hands = document.querySelectorAll('[gesture-tracker]');
 
     const sceneEl = this.el;
     sceneEl.addEventListener('load-level', (e) => this.loadLevel(e.detail.levelId));
 
-    // DEBUG
-    // simulate grabbing a portal
-    // setTimeout(() => {
-    //   const hand = document.querySelector('#leftHand');
-    //   hand.components['gesture-tracker'].target = document.querySelector('a-portal')
-    //   hand.addState('hovering-portal');
-    //   hand.addState('grabbing');
-    // }, 1500)
-    // simulate loading a level
-    // setTimeout(() => {
-    //   sceneEl.emit('load-level', { levelId: '#level_1' })
-    // }, 1500)
-    // setTimeout(() => {
-    //   sceneEl.emit('load-level', { levelId: '#level_2' })
-    // }, 3000)
+    this.loadLevel('#title');
+
+    // DEBUG.loadLevel('#level_1', 0)
+    // DEBUG.grabGun('#leftHand', '#level_1', 500);
+    // DEBUG.grabPortal('#rightHand', '#level_1', 1000);
+    // DEBUG.drop('#leftHand', 1500);
+
+    // DEBUG.log('foo')
   },
   loadLevel: function(levelId) {
     let activeLevel = this.activeLevel;
@@ -40,6 +33,9 @@ AFRAME.registerSystem('conductor', {
     activeLevel = document.querySelector(levelId)
     this.toggleLevel(activeLevel, true)
     this.activeLevel = activeLevel;
+
+    // make hand controllers' release their grabbed objects
+    this.hands.forEach(hand => { hand.components['gesture-tracker']?.reset() })
 
     this.el.emit('level-loaded', { level: activeLevel });
   },

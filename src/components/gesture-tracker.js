@@ -25,4 +25,11 @@ AFRAME.registerComponent('gesture-tracker', {
       this.target = null;
     }
   },
+  reset: function() {
+    // release the target and any state that could be associated with it
+    this.target = null;
+    this.el.removeState('holding-gun');
+    this.el.removeState('hovering-gun');
+    this.el.removeState('hovering-portal');
+  }
 });

@@ -1,5 +1,5 @@
 bugs
-- holding a gun while changing level crashes the game when the gun is released (something to do with the target... fix in conductor or gesture-tracker)
+x holding a gun while changing level crashes the game when the gun is released (something to do with the target... fix in conductor or gesture-tracker)
 - gravity/physis should stop affecting objects in inactive levels
 x entities in a level that's hidden aren't paused
 x gun is rotated 90 deg because so is the hand model (though I don't know where that is corrected)

@@ -3,10 +3,11 @@
 // they don't import each other so that's the only way for esbuild
 // to bundle anything
 
+import "./utils/debug-console.js"  // TODO remove for shipping game
+import "./utils/debug-controller.js"
 import "./primitives/a-gun.js"
 import "./primitives/a-portal.js"
 import "./primitives/a-pyramid.js"
-import "./components/debug-console.js"  // TODO remove for shipping
 import "./components/dynamic-collider.js"
 import "./components/game-time.js"
 import "./components/gravity.js"
