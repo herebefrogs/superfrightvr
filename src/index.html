@@ -16,23 +16,8 @@
           position="0 3 -5"
         ></a-text>
 
-        <a-pyramid
-          color="orange"
-          position="0 1.5 -0.5"
-          width="0.20"
-          height="0.175"
-          material="opacity: 0.35"
-          portal="to: #level_1"
-        >
-          <a-text
-            value="GRAB"
-            align="center"
-            color="white"
-            font="monoid"
-            width="1.75"
-            position="0 -0.04 0.05"
-          ></a-text>
-        </a-pyramid>
+        <a-portal to="#level_1" text-value="GRAB" text-width="1.75"
+          position="0 1.5 -0.5"></a-portal>
       </a-entity>
 
       <a-entity id="level_1" level="gameTimeTracked: true">
@@ -56,23 +41,8 @@
           color="#7BC8A4"
         ></a-plane>
 
-        <a-pyramid
-        color="green"
-        position="-0.25 1.5 -0.5"
-        width="0.20"
-        height="0.175"
-        material="opacity: 0.35"
-        portal="to: #level_2"
-      >
-        <a-text
-          value="GRAB"
-          align="center"
-          color="white"
-          font="monoid"
-          width="1.75"
-          position="0 -0.04 0.05"
-        ></a-text>
-      </a-pyramid>
+        <a-portal to="#level_2" text-value="Level 2" text-width="1.75"
+          position="0.25 1.5 -0.5"></a-portal>
       </a-entity>
 
       <a-entity id="level_2" level="gameTimeTracked: true">
@@ -85,6 +55,9 @@
           height="5"
           color="blue"
         ></a-plane>
+        <a-portal to="#title" text-value="Title" text-width="1.75"
+        position="0 1.5 -0.5"></a-portal>
+
       </a-entity>
 
       <a-sky color="#ddd"></a-sky>

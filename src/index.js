@@ -4,6 +4,7 @@
 // to bundle anything
 
 import "./primitives/a-gun.js"
+import "./primitives/a-portal.js"
 import "./primitives/a-pyramid.js"
 import "./components/debug-console.js"  // TODO remove for shipping
 import "./components/dynamic-collider.js"
@@ -12,7 +13,6 @@ import "./components/gravity.js"
 import "./components/gesture-tracker.js"
 import "./components/level.js"
 import "./components/motion-tracker.js"
-import "./components/portal.js"
 import "./components/puppet.js"
 import "./components/sync-stance.js"
 import "./systems/game-time.js"

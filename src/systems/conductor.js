@@ -18,7 +18,7 @@ AFRAME.registerSystem('conductor', {
     // simulate grabbing a portal
     // setTimeout(() => {
     //   const hand = document.querySelector('#leftHand');
-    //   hand.components['gesture-tracker'].target = document.querySelector('a-pyramid')
+    //   hand.components['gesture-tracker'].target = document.querySelector('a-portal')
     //   hand.addState('hovering-portal');
     //   hand.addState('grabbing');
     // }, 1500)

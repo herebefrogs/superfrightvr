@@ -1,5 +1,6 @@
 bugs
-- entities in a level that's hidden aren't paused
+- gravity/physis should stop affecting objects in inactive levels
+x entities in a level that's hidden aren't paused
 x gun is rotated 90 deg because so is the hand model (though I don't know where that is corrected)
 
 game:
