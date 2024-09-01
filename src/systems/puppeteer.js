@@ -18,7 +18,7 @@ AFRAME.registerSystem('puppeteer', {
 
     for (let el of this.gravitas) {
       if (el.getAttribute('gravity')) {
-        el.object3D.position.y -= GRAVITY/3*timeDelta/1000;
+        el.object3D.position.y = Math.max(0, el.object3D.position.y - GRAVITY/3*timeDelta/1000);
       }
     }
   }
