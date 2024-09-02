@@ -1,13 +1,10 @@
 /**
  * System overseeing the game.
  * 
- * Side-effects:
- * - game-time-on state on scene to indicate whether the current active level calls for increasing game time when player moves
- * 
- * Events:
+\* Events:
  * - 'level-loaded' emitted on the scene after current active level changed
  */
-AFRAME.registerSystem('conductor', {
+AFRAME.registerSystem('level', {
   init: function() {
     this.hands = document.querySelectorAll('[gesture-tracker]');
 
@@ -15,6 +12,7 @@ AFRAME.registerSystem('conductor', {
     sceneEl.addEventListener('load-level', (e) => this.loadLevel(e.detail.levelId));
 
     this.loadLevel('#title');
+    // this.loadLevel('#level_1');
 
     // DEBUG.loadLevel('#level_1', 0)
     // DEBUG.grabGun('#leftHand', '#level_1', 500);
