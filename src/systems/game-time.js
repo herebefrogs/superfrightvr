@@ -3,7 +3,7 @@
  *
  * Property: game-time in sec
  *
- * Events: 'step' emitted on the scene (equivalent of AFRAME's 'tick' event but only when game time has been increased). Params: time and timeDelta both in sec.
+ * Events: 'tick' emitted on the scene. Params: time and timeDelta both in sec.
  */
 AFRAME.registerSystem('game-time', {
   schema: { type: 'number', default: 0 },
@@ -19,13 +19,14 @@ AFRAME.registerSystem('game-time', {
     const sceneEl = this.el;
 
     if (sceneEl.is('game-time-tracked')) {
+      timeDelta /= 1000;
       for (limb of this.playerLimbs) {
         if (limb.is('player-moving')) {
           this.data += timeDelta;
 
           this.gameTimeHUD.setAttribute('game-time', this.data);
 
-          sceneEl.emit('step', { time: this.data, timeDelta });
+          sceneEl.emit('tick', { time: this.data, timeDelta });
           break;
         }
       }

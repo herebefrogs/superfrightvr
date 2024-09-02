@@ -19,6 +19,9 @@ FRAMEWORK issues
 
 1. obb-collider should be playable/pausable instead of running on every tick
 
+2. push for el.getAttribute('component_name').attribute_name but also available el.components.component_name.data.attribute_name, as least in read only
+setAttribute() probably fires the right events 'componentchanged'
+
 
 Grabbing objects:
 1. grabbable component not in doc, just a footnote of some guide. It seems to go in pair with hand-tracking-grab-controls which plain doesn't work (or the doc is missing so pretty important info to make it work)
