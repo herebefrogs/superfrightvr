@@ -30,7 +30,7 @@ window.DEBUG = {
   loadLevel: (levelId, delay) => {
     setTimeout(() => {
       const sceneEl = document.querySelector('a-scene');
-      sceneEl.emit('load-level', { levelId })
+      sceneEl.emit('loadlevel', { levelId })
     }, delay)
   }
 }

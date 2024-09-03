@@ -9,7 +9,7 @@ AFRAME.registerSystem('level', {
     this.hands = document.querySelectorAll('[gesture-tracker]');
 
     const sceneEl = this.el;
-    sceneEl.addEventListener('load-level', (e) => this.loadLevel(e.detail.levelId));
+    sceneEl.addEventListener('loadlevel', (e) => this.loadLevel(e.detail.levelId));
 
     // the true "main()"
     sceneEl.addEventListener('loaded', (e) => {

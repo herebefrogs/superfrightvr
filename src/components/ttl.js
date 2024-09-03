@@ -2,7 +2,7 @@
  * Time To Live keeps track of game time left to live.
  * 
  * Events
- * - 'ttl-reached' event when ttl reached
+ * - 'ttlreached' event when ttl reached
  */
 AFRAME.registerComponent('ttl', {
   schema: { type: 'number', default: 10 },
@@ -15,7 +15,7 @@ AFRAME.registerComponent('ttl', {
 
     if (this.timeLeft < 0) {
       this.el.removeAttribute('ttl')
-      this.el.emit('ttl-reached', { el: this.el });
+      this.el.emit('ttlreached', { el: this.el });
     }
   }
 });

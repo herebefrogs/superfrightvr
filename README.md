@@ -41,7 +41,7 @@ comp.gesture-tracker -> grabbing state
                      -> hovering-gun state
                      -> shooting state
 
-grabbing + hovering-portal states -> sys.gesture-tracker -> load-level event
+grabbing + hovering-portal states -> sys.gesture-tracker -> loadlevel event
 
 grabbing + hovering-gun states -> sys.gesture-tracker -> holding-gun state + comp.sync-stance on <a-gun>
 

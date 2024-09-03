@@ -9,7 +9,7 @@ AFRAME.registerSystem('gesture-tracker', {
       if (hand.is('hovering-portal') && hand.is('grabbing')) {
         hand.removeState('hovering-portal');
         hand.removeState('grabbing')
-        this.el.emit('load-level', { levelId: gesture.getTarget('hovering-portal').components.portal.data.to });
+        this.el.emit('loadlevel', { levelId: gesture.getTarget('hovering-portal').components.portal.data.to });
       }
       else if (hand.is('hovering-gun') && hand.is('grabbing') && !gesture.getTarget('hovering-gun').is('grabbed')) {
         hand.removeState('hovering-gun');

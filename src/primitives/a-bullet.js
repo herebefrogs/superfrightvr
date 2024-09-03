@@ -19,7 +19,7 @@ AFRAME.registerComponent('bullet', {
         this.updateTrail(this.el.getAttribute('linear-motion').distanceTravelled);
       }
     },
-    'ttl-reached': function(e) {
+    ttlreached: function(e) {
       this.removeBullet(e.detail.el);
     }
   },
