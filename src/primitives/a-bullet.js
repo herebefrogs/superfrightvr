@@ -1,9 +1,9 @@
 AFRAME.registerPrimitive('a-bullet', {
   defaultComponents: {
     bullet: {},
-    'linear-motion': {
-      speed: 1,
-    },
+    'dynamic-collider': { on: true },
+    'linear-motion': { speed: 1 },
+    'ttl': 5,
   },
   mappings: {
     direction: 'linear-motion.direction'
