@@ -21,6 +21,12 @@ window.DEBUG = {
       hand.removeState('grabbing');
     }, delay);
   },
+  move: (handId, position, delay) => {
+    setTimeout(() => {
+      const hand = document.querySelector(handId);
+      hand.setAttribute('position', position);
+    }, delay);
+  },
   buttonEvent: (handId, event, delay) => {
     setTimeout(() => {
       const hand = document.querySelector(handId);
