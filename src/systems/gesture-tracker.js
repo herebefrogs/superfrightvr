@@ -4,33 +4,33 @@ AFRAME.registerSystem('gesture-tracker', {
   },
   tick: function() {
     for (const hand of this.hands) {
-      const target = hand.components['gesture-tracker'].target;
+      const gesture = hand.components['gesture-tracker'];
 
       if (hand.is('hovering-portal') && hand.is('grabbing')) {
         hand.removeState('hovering-portal');
         hand.removeState('grabbing')
-        this.el.emit('load-level', { levelId: target.getAttribute('portal').to });
+        this.el.emit('load-level', { levelId: gesture.getTarget('hovering-portal').components.portal.data.to });
       }
-      else if (hand.is('hovering-gun') && hand.is('grabbing')) {
+      else if (hand.is('hovering-gun') && hand.is('grabbing') && !gesture.getTarget('hovering-gun').is('grabbed')) {
         hand.removeState('hovering-gun');
         hand.addState('holding-gun');
-
-        this.grabGun(target, hand);
+        this.grabGun(gesture.updateTarget('hovering-gun', 'holding-gun'), hand);
       }
       else if (hand.is('holding-gun') && !hand.is('grabbing')) {
         hand.removeState('holding-gun');
         // NOTE: most likely true, otherwise the player won't be able to grab the gun again
         // until the hand & gun exist each other so another obbcollisionstarted event can be emitted
         hand.addState('hovering-gun');
-        this.dropGun(target);
+        this.dropGun(gesture.updateTarget('holding-gun', 'hovering-gun'));
       }
       else if (hand.is('holding-gun') && hand.is('shooting')) {
         hand.removeState('shooting');
-        this.shootGun(target);
+        this.shootGun(gesture.getTarget('holding-gun'));
       }
     }
   },
   grabGun: function(gun, hand) {
+    gun.addState('grabbed');
     // FIXME that would be ideal but the gun doesn't get rendered even though it gets attached to the hand!
     // hand.appendChild(gun)
 
@@ -41,6 +41,7 @@ AFRAME.registerSystem('gesture-tracker', {
     gun.setAttribute('gravity', false);
  },
   dropGun: function(gun) {
+    gun.removeState('grabbed');
     gun.removeAttribute('sync-stance');
     gun.setAttribute('raycaster', { enabled: false });
     gun.setAttribute('gravity', true);

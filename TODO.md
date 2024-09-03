@@ -1,13 +1,16 @@
 bugs
-x holding a gun while changing level crashes the game when the gun is released (something to do with the target... fix in conductor or gesture-tracker)
+- bullet origin is wrong (not the muzzle of the gun)
 - gravity/physis should stop affecting objects in inactive levels
+x holding gun with 2 hands crashes game (one hand has the other as a target, so gun methods don't work on it)
+x holding a gun while changing level crashes the game when the gun is released (something to do with the target... fix in conductor or gesture-tracker)
 x entities in a level that's hidden aren't paused
 x gun is rotated 90 deg because so is the hand model (though I don't know where that is corrected)
 
 game:
 x moving between a title screen, lobby and levels
 x grabbing/releasing a gun
-- shooting a target
+x make bullet
+- hit a target
 - physics (so you can throw stuff at enemies)
 - stop game when 13s have passed
 - implement interesting puppet motions/behaviours

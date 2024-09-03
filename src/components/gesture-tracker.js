@@ -6,28 +6,57 @@ AFRAME.registerComponent('gesture-tracker', {
     triggerdown: function(e) { this.el.addState('shooting') },
     triggerup: function(e) {   this.el.removeState('shooting') },
     obbcollisionstarted: function (e) {
-      // NOTE: unfortunately, there is no 'object' time for target to be defined as a schema property
-      this.target = e.detail.withEl;
-      if (this.target.components.portal) {
-        this.el.addState('hovering-portal');
+      const target = e.detail.withEl;
+
+      if (target.components['gesture-tracker']) {
+        // a hand cannot grab another hand
+        return;
       }
-      else if (this.target.components.gun) {
+
+      if (target.components.portal) {
+        this.el.addState('hovering-portal');
+        this.targets['hovering-portal'] = target;
+      }
+      else if (target.components.gun) {
         this.el.addState('hovering-gun');
+        this.targets['hovering-gun'] = target;
       }
     },
     obbcollisionended: function(e) {
-      if (this.target?.components.portal) {
+      const target = e.detail.withEl;
+
+      if (target.components['gesture-tracker']) {
+        // a hand cannot grab another hand
+        return;
+      }
+
+      if (target.components.portal) {
         this.el.removeState('hovering-portal');
+        delete this.targets['hovering-portal'];
       }
-      else if (this.target?.components.gun) {
+      else if (target.components.gun) {
         this.el.removeState('hovering-gun');
+        delete this.targets['hovering-gun'];
       }
-      this.target = null;
     }
+  },
+  init: function() {
+    this.targets = {}
+  },
+  getTarget: function(state) {
+    return this.targets[state]
+  },
+  updateTarget: function(oldState, newState) {
+    this.targets[newState] = this.targets[oldState];
+    delete this.targets[oldState];
+    return this.targets[newState];
   },
   reset: function() {
     // release the target and any state that could be associated with it
-    this.target = null;
+    for (state in this.targets) {
+      this.targets[state].removeState('grabbed');
+    }
+    this.targets = {};
     this.el.removeState('holding-gun');
     this.el.removeState('hovering-gun');
     this.el.removeState('hovering-portal');

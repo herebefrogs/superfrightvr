@@ -1,7 +1,7 @@
 const grabEntity = (handId, levelId, delay, entityType) => {
   setTimeout(() => {
     const hand = document.querySelector(handId);
-    hand.components['gesture-tracker'].target = document.querySelector(`${levelId} a-${entityType}`)
+    hand.components['gesture-tracker'].targets[`hovering-${entityType}`] = document.querySelector(`${levelId} a-${entityType}`)
     hand.addState(`hovering-${entityType}`);
     hand.addState('grabbing');
   }, delay)

@@ -13,12 +13,13 @@ AFRAME.registerSystem('level', {
 
     this.loadLevel('#title');
     // this.loadLevel('#level_1');
+    // DEBUG.grabPortal('#right', '#level_1', 100);
 
     // DEBUG.loadLevel('#level_1', 0)
-    // DEBUG.grabGun('#leftHand', '#level_1', 500);
-    // DEBUG.buttonEvent('#leftHand', 'triggerdown', 1000);
-    // DEBUG.grabPortal('#rightHand', '#level_1', 1000);
-    // DEBUG.drop('#leftHand', 1500);
+    // DEBUG.grabGun('#left', '#level_1', 500);
+    // DEBUG.buttonEvent('#left', 'triggerdown', 1000);
+    // DEBUG.grabPortal('#right', '#level_1', 1000);
+    // DEBUG.drop('#left', 1500);
 
     // DEBUG.log('foo')
   },
