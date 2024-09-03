@@ -64,13 +64,17 @@ AFRAME.registerSystem('gesture-tracker', {
       // TODO add the raycaster's origin to the gun position, currently hard coded
       bullet.setAttribute('position', `${origin.x} ${origin.y + 0.08} ${origin.z - 0.22}`);
       bullet.setAttribute('rotation', `${rotation.x} ${rotation.y} ${rotation.z}`);
+      // HACK: so it seems schema defaults only work for markup, not entities created programmatically :(
+      bullet.setAttribute('ttl', 10);
+      // HACK: this is already defined in the primitive's default component
+      // but isn't enabled when the child-attached is received by the scene/puppeteer system
+      // unless explicitely set :facepalm:
+      bullet.setAttribute('linear-motion', { speed: 1 })
 
       bullet.setAttribute('direction', `${direction.x} ${direction.y} ${direction.z}`);
 
       const level = this.el.systems.level.activeLevel;
       level.appendChild(bullet);
-
-      this.el.systems.puppeteer.linearMovers.push(bullet);
     }
   }
 });

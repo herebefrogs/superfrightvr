@@ -6,6 +6,9 @@ AFRAME.registerSystem('puppeteer', {
   init: function() {
     this.el.addEventListener('tick', (e) => this._tick(e.detail.time, e.detail.timeDelta));
 
+    this.el.addEventListener('child-attached', (e) => { this.trackEntity(e.detail.el) })
+    this.el.addEventListener('child-detached', (e) => { this.untrackEntity(e.detail.el) })
+
     this.reset();
   },
   reset: function() {
@@ -42,6 +45,16 @@ AFRAME.registerSystem('puppeteer', {
 
       const deltaD = Math.sqrt(deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ);
       el.setAttribute('linear-motion', { distanceTravelled: linearMotion.data.distanceTravelled + deltaD })
+    }
+  },
+  trackEntity: function(el) {
+    if (el.components['linear-motion']) {
+      this.linearMovers.push(el);
+    }
+  },
+  untrackEntity: function(el) {
+    if (el.components['linear-motion']) {
+      this.linearMovers = this.linearMovers.filter(e => e !== el);
     }
   }
 })

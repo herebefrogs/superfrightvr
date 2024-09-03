@@ -13,6 +13,16 @@ AFRAME.registerPrimitive('a-bullet', {
 const MAX_BULLET_TRAIL = 2;
 
 AFRAME.registerComponent('bullet', {
+  events: {
+    componentchanged: function(e) {
+      if (e.detail.name === 'linear-motion') {
+        this.updateTrail(this.el.getAttribute('linear-motion').distanceTravelled);
+      }
+    },
+    'ttl-reached': function(e) {
+      this.removeBullet(e.detail.el);
+    }
+  },
   init: function() {
     const vrMode = this.el.sceneEl.is('vr-mode');
 
@@ -33,30 +43,31 @@ AFRAME.registerComponent('bullet', {
       // however on desktop, the gun model isn't rotated so the bullet must be
       x: vrMode ? 0 : 90,
     });
-    this.el.appendChild(bullet);
 
-    this.trajectory = document.createElement('a-entity');
-    this.trajectory.setAttribute('line', {
+    // bullet trail
+    const trail = document.createElement('a-entity');
+    trail.setAttribute('line', {
       color: 'black',
       opacity: 0.15,
       start: '0 0 0',
       end: `0 0 0`
     });
-    this.trajectory.setAttribute('rotation', {
+    trail.setAttribute('rotation', {
       // NOTE for reason I don't understand yet, the line is draw downward without this extra rotation
       x: -90
     });
-    bullet.appendChild(this.trajectory);
-  },
-  events: {
-    componentchanged: function(e) {
-      if (e.detail.name === 'linear-motion') {
-        const distanceTravelled = this.el.getAttribute('linear-motion').distanceTravelled;
+    bullet.appendChild(trail);
 
-        if (distanceTravelled <= MAX_BULLET_TRAIL) {
-          this.trajectory.setAttribute('line', { end: `0 0 ${distanceTravelled}` });
-        }
-      }
+    this.trail = trail;
+    this.el.appendChild(bullet);
+  },
+  updateTrail: function(distanceTravelled) {
+    if (distanceTravelled <= MAX_BULLET_TRAIL) {
+      this.trail.setAttribute('line', { end: `0 0 ${distanceTravelled}` });
     }
   },
+  removeBullet: function(el) {
+    el.parentNode.removeChild(el);
+    el.destroy();
+  }
 })
