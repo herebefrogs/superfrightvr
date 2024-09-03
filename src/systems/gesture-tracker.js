@@ -61,7 +61,7 @@ AFRAME.registerSystem('gesture-tracker', {
       const origin = gun.getAttribute('position');
       const rotation = gun.getAttribute('rotation');
 
-      // TODO add the raycaster's origin to the gun position, currently hard coded
+      // TODO add the raycaster's origin to the gun position, currently hard coded (and wrong)
       bullet.setAttribute('position', `${origin.x} ${origin.y + 0.08} ${origin.z - 0.22}`);
       bullet.setAttribute('rotation', `${rotation.x} ${rotation.y} ${rotation.z}`);
       // HACK: so it seems schema defaults only work for markup, not entities created programmatically :(
@@ -73,8 +73,7 @@ AFRAME.registerSystem('gesture-tracker', {
 
       bullet.setAttribute('direction', `${direction.x} ${direction.y} ${direction.z}`);
 
-      const level = this.el.systems.level.activeLevel;
-      level.appendChild(bullet);
+      this.el.systems.level.activeLevel.appendChild(bullet);
     }
   }
 });

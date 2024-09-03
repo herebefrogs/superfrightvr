@@ -1,7 +1,7 @@
 bugs
 - actually no, if you hold a gun and grab a portal, then grab or fire in the new level, the game crashes so some target from level 1 still carries over level 2
 - bullet origin is wrong (not the muzzle of the gun)
-- gravity/physis should stop affecting objects in inactive levels
+x gravity/physis should stop affecting objects in inactive levels
 x holding gun with 2 hands crashes game (one hand has the other as a target, so gun methods don't work on it)
 x holding a gun while changing level crashes the game when the gun is released (something to do with the target... fix in conductor or gesture-tracker)
 x entities in a level that's hidden aren't paused

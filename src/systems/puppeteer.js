@@ -8,13 +8,6 @@ AFRAME.registerSystem('puppeteer', {
 
     this.el.addEventListener('child-attached', (e) => { this.trackEntity(e.detail.el) })
     this.el.addEventListener('child-detached', (e) => { this.untrackEntity(e.detail.el) })
-
-    this.reset();
-  },
-  reset: function() {
-    this.linearMovers = [];
-    this.puppets = document.querySelectorAll('[puppet]');
-    this.gravitas = document.querySelectorAll('[gravity]');
   },
   _tick: function(time, timeDelta) {
     // TODO temporary
@@ -47,14 +40,25 @@ AFRAME.registerSystem('puppeteer', {
       el.setAttribute('linear-motion', { distanceTravelled: linearMotion.data.distanceTravelled + deltaD })
     }
   },
+  reset: function() {
+    this.linearMovers = [];
+    this.gravitas = document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [gravity]`);
+    this.puppets = document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [puppet]`);
+  },
   trackEntity: function(el) {
     if (el.components['linear-motion']) {
       this.linearMovers.push(el);
+    }
+    if (el.components['gravity']) {
+      this.gravitas.push(el);
     }
   },
   untrackEntity: function(el) {
     if (el.components['linear-motion']) {
       this.linearMovers = this.linearMovers.filter(e => e !== el);
     }
-  }
+    if (el.components['gravity']) {
+      this.gravitas = this.gravitas.filter(e => e !== el);
+    }
+  },
 })

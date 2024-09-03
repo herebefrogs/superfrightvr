@@ -11,17 +11,21 @@ AFRAME.registerSystem('level', {
     const sceneEl = this.el;
     sceneEl.addEventListener('load-level', (e) => this.loadLevel(e.detail.levelId));
 
-    this.loadLevel('#title');
-    // this.loadLevel('#level_1');
-    // DEBUG.grabPortal('#right', '#level_1', 100);
+    // the true "main()"
+    sceneEl.addEventListener('loaded', (e) => {
+      this.loadLevel('#title');
+  
+      // this.loadLevel('#level_1');
+      // DEBUG.grabPortal('#right', '#level_1', 100);
 
-    DEBUG.loadLevel('#level_1', 0)
-    DEBUG.grabGun('#left', '#level_1', 500);
-    DEBUG.buttonEvent('#left', 'triggerdown', 1000);
-    // DEBUG.grabPortal('#right', '#level_1', 1000);
-    // DEBUG.drop('#left', 1500);
+      // DEBUG.loadLevel('#level_1', 0)
+      // DEBUG.grabGun('#left', '#level_1', 500);
+      // DEBUG.buttonEvent('#left', 'triggerdown', 1000);
+      // DEBUG.grabPortal('#right', '#level_1', 1000);
+      // DEBUG.drop('#left', 1500);
 
-    // DEBUG.log('foo')
+      // DEBUG.log('foo')
+    })
   },
   loadLevel: function(levelId) {
     let activeLevel = this.activeLevel;
