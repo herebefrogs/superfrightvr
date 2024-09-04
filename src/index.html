@@ -27,11 +27,11 @@
         ></a-text>
 
         <a-portal to="#level_1" text-value="GRAB" text-width="1.75"
-          position="0 1.2 -0.5"></a-portal>
+          position="0 1.45 -0.5"></a-portal>
       </a-entity>
 
       <a-entity id="level_1" level="gameTimeTracked: true">
-        <a-gun gravity position="-0.75 1.1 -0.5" health="group: friend"></a-gun>
+        <a-gun position="0.55 1.1 -0.5" gravity health="group: friend"></a-gun>
 
         <a-cone
           id="puppet_1"
@@ -45,6 +45,7 @@
           linear-motion="direction: 0 0 1; speed: 0.75"
           health="group: foe"
           dynamic-collider
+          puppet
         >
           <a-dodecahedron position="0 0.75 0.15" radius="0.25" color="#EF2D5E"></a-dodecahedron>
           <a-pyramid position="0.40 0.15 0.4" rotation="115 35 10" scale="0.25 0.75 0.25" color="#EF2D5E"></a-pyramid>
@@ -52,7 +53,7 @@
         </a-cone>
 
         <a-portal to="#level_2" text-value="Level 2" text-width="1.75"
-          position="0.75 1.2 -0.5" visible="false"></a-portal>
+          position="-0.55 1.2 -0.5" visible="false"></a-portal>
 
         <a-cylinder
           id="room1"
@@ -64,12 +65,12 @@
           rotation="-90 0 0"
           >
         </a-cylinder>
-        <a-box id="table1" width="3" depth="1" height="1.5" color="#f8fbfe" position="-2 0 -1"></a-box>
-        <a-box id="table2" width="3" depth="1" height="1.5" color="#f8fbfe" position="2 0 -1"></a-box>
+        <a-box id="table1" width="3" depth="1.5" height="1.5" color="#f8fbfe" position="-2 0 -1"></a-box>
+        <a-box id="table2" width="3" depth="1.5" height="1.5" color="#f8fbfe" position="2 0 -1"></a-box>
       </a-entity>
 
       <a-entity id="level_2" level="gameTimeTracked: true">
-        <a-gun gravity position="0 1.5 -0.5" health="group: friend"></a-gun>
+        <a-gun gravity position="0 1.5 -0.4" health="group: friend"></a-gun>
 
         <a-plane
           position="0 0 -3"
@@ -79,7 +80,7 @@
           color="blue"
         ></a-plane>
         <a-portal to="#title" text-value="Title" text-width="1.75"
-        position="-0.5 1.2 -0.5"></a-portal>
+        position="-0.5 1.2 -0.4"></a-portal>
 
       </a-entity>
 

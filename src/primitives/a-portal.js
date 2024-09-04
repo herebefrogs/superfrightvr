@@ -31,6 +31,13 @@ AFRAME.registerComponent('portal', {
     textValue: { type: 'string' },
     textWidth: { type: 'number' }
   },
+  events: {
+    componentchanged: function(e) {
+      if (e.detail.name === 'visible' && this.el.getAttribute('visible')) {
+        this.el.components['dynamic-collider']._play();
+      }
+    }
+  },
   init: function() {
     const data = this.data;
     const text = document.createElement('a-entity');

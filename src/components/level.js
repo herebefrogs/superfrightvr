@@ -13,7 +13,10 @@ AFRAME.registerComponent('level', {
     this.el[this.data.active ? 'play' : 'pause']();
 
     for (const el of document.querySelectorAll(`#${this.el.id} [dynamic-collider]`)) {
-      el.components['dynamic-collider'][this.data.active ? '_play' : '_pause']();
+      if (el.getAttribute('visible')) {
+        console.log('level.update', el.tagName, el.id, el.getAttribute('visible'))
+        el.components['dynamic-collider'][this.data.active ? '_play' : '_pause']();
+      }
     }
   }
 })

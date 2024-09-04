@@ -30,10 +30,23 @@ AFRAME.registerSystem('puppeteer', {
       const deltaD = Math.sqrt(deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ);
       el.setAttribute('linear-motion', { distanceTravelled: linearMotion.data.distanceTravelled + deltaD })
     }
+
+    for (let el of this.puppets) {
+      if (!el.components.health.data.hp) {
+        this.puppets = this.puppets.filter(p => p !== el);
+      }
+    }
+    if (!this.puppets.length) {
+      // // stop game time
+      // this.el.removeState('game-time-tracked');
+      this.portal.setAttribute('visible', true);
+    }
   },
   reset: function() {
     this.linearMovers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [linear-motion]`)];
     this.gravitas = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [gravity]`)];
+    this.puppets = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [puppet]`)];
+    this.portal = document.querySelector(`#${this.el.systems.level.activeLevel?.id} a-portal`)
   },
   trackEntity: function(el) {
     if (el.components['linear-motion']) {
