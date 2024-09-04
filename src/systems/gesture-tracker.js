@@ -65,6 +65,7 @@ AFRAME.registerSystem('gesture-tracker', {
       bullet.setAttribute('position', `${origin.x} ${origin.y + 0.08} ${origin.z - 0.22}`);
       bullet.setAttribute('rotation', `${rotation.x} ${rotation.y} ${rotation.z}`);
       bullet.setAttribute('linear-motion', { direction: `${direction.x} ${direction.y} ${direction.z}` })
+      bullet.setAttribute('health', { group: gun.components.health.data.group });
 
       this.el.systems.level.activeLevel.appendChild(bullet);
     }

@@ -2,7 +2,7 @@ AFRAME.registerPrimitive('a-bullet', {
   defaultComponents: {
     bullet: {},
     'dynamic-collider': { on: true },
-    'linear-motion': { speed: 1 },
+    'linear-motion': { speed: 1.5 },
     'ttl': 5,
   },
   mappings: {
@@ -21,7 +21,16 @@ AFRAME.registerComponent('bullet', {
     },
     ttlreached: function(e) {
       this.removeBullet(e.detail.el);
-    }
+    },
+    obbcollisionstarted: function (e) {
+      const target = e.detail.withEl;
+      if (target.components.health) {
+        if (this.el.components.health.data.group !== target.components.health.data.group) {
+          target.setAttribute('health', { hp: 0 });
+          this.el.setAttribute('health', { hp: 0 })
+        }
+      }
+    },
   },
   init: function() {
     const vrMode = this.el.sceneEl.is('vr-mode');

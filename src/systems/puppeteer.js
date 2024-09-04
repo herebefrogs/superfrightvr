@@ -10,15 +10,6 @@ AFRAME.registerSystem('puppeteer', {
     this.el.addEventListener('child-detached', (e) => { this.untrackEntity(e.detail.el) })
   },
   _tick: function(time, timeDelta) {
-    // TODO temporary
-    for (let el of this.puppets) {
-      const delta = Math.sin(time);
-
-      el.object3D.position.x = 2*delta;
-      el.object3D.rotation.z = -delta;
-    }
-    // END temporary
-
     for (let el of this.gravitas) {
       if (el.getAttribute('gravity') && el.object3D.position.y > FLOOR_HEIGHT) {
         el.object3D.position.y = Math.max(FLOOR_HEIGHT, el.object3D.position.y - GRAVITY*timeDelta);
@@ -41,9 +32,8 @@ AFRAME.registerSystem('puppeteer', {
     }
   },
   reset: function() {
-    this.linearMovers = [];
-    this.gravitas = document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [gravity]`);
-    this.puppets = document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [puppet]`);
+    this.linearMovers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [linear-motion]`)];
+    this.gravitas = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [gravity]`)];
   },
   trackEntity: function(el) {
     if (el.components['linear-motion']) {

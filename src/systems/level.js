@@ -20,8 +20,8 @@ AFRAME.registerSystem('level', {
       // DEBUG.grabGun('#left', '#level_1', 500);
       // DEBUG.move('#left', '0 1.5 -0.5', 750);
       // DEBUG.buttonEvent('#left', 'triggerdown', 1000);
-      // DEBUG.grabPortal('#right', '#level_1', 1000);
       // DEBUG.drop('#left', 1500);
+      // DEBUG.grabPortal('#right', '#level_1', 1000);
 
       // DEBUG.log('foo')
     })

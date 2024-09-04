@@ -10,10 +10,20 @@
         <a-text
           value="SuperFRIGHT VR"
           align="center"
-          color="white"
+          color="#e26"
           font="monoid"
           width="20"
           position="0 3 -5"
+        ></a-text>
+
+        <a-text
+          value="13 seconds to beat 13 enemies"
+          align="center"
+          color="black"
+          font="monoid"
+          width="5"
+          height="2"
+          position="0 1.8 -5"
         ></a-text>
 
         <a-portal to="#level_1" text-value="GRAB" text-width="1.75"
@@ -21,33 +31,45 @@
       </a-entity>
 
       <a-entity id="level_1" level="gameTimeTracked: true">
-        <a-gun gravity position="0 1.5 -0.5"></a-gun>
+        <a-gun gravity position="-0.75 1.1 -0.5" health="group: friend"></a-gun>
 
-        
-        <!-- puppet -->
-        <a-cylinder
+        <a-cone
           id="puppet_1"
-          position="0 1 -4"
-          radius="0.5"
-          height="2"
-          color="#FFC65D"
+          position="0 1 -5"
+          radius-bottom="0.2"
+          radius-top="0.4"
+          segments-radial="6"
+          segments-height="1"
+          color="#e26"
+          material="shader: phong"
+          linear-motion="direction: 0 0 1; speed: 0.75"
+          health="group: foe"
+          dynamic-collider
         >
-          <a-sphere position="0 0.5 0.5" radius="0.25" color="#EF2D5E" dynamic-collider health></a-sphere>
-        </a-cylinder>
-        <a-plane
-          position="0 0 -3"
-          rotation="-90 0 0"
-          width="5"
-          height="5"
-          color="#7BC8A4"
-        ></a-plane>
+          <a-dodecahedron position="0 0.75 0.15" radius="0.25" color="#EF2D5E"></a-dodecahedron>
+          <a-pyramid position="0.40 0.15 0.4" rotation="115 35 10" scale="0.25 0.75 0.25" color="#EF2D5E"></a-pyramid>
+          <a-pyramid position="-0.40 0.15 0.4" rotation="115 -25 0" scale="0.25 0.75 0.25" color="#EF2D5E"></a-pyramid>
+        </a-cone>
 
         <a-portal to="#level_2" text-value="Level 2" text-width="1.75"
-          position="0.5 1.2 -0.5"></a-portal>
+          position="0.75 1.2 -0.5" visible="false"></a-portal>
+
+        <a-cylinder
+          id="room1"
+          radius="3" height="30"
+          segments-radial="3" segments-height="1"
+          geometry="openEnded: true"
+          material="shader: phong; color: #ddd; side: back"
+          position="0 1.5 0"
+          rotation="-90 0 0"
+          >
+        </a-cylinder>
+        <a-box id="table1" width="3" depth="1" height="1.5" color="#f8fbfe" position="-2 0 -1"></a-box>
+        <a-box id="table2" width="3" depth="1" height="1.5" color="#f8fbfe" position="2 0 -1"></a-box>
       </a-entity>
 
       <a-entity id="level_2" level="gameTimeTracked: true">
-        <a-gun gravity position="0 1.5 -0.5"></a-gun>
+        <a-gun gravity position="0 1.5 -0.5" health="group: friend"></a-gun>
 
         <a-plane
           position="0 0 -3"
@@ -61,7 +83,7 @@
 
       </a-entity>
 
-      <a-sky color="#ddd"></a-sky>
+      <a-sky color="#dff"></a-sky>
       <a-sphere id="world" color="blue" radius="1000" material="shader: flat; wireframe: true; side: back"></a-sphere>
 
       <a-camera motion-tracker>
@@ -81,14 +103,14 @@
                depth="0.3"
                position="0 0.9 0.35"
                obb-collider
-               health
+               health="group: friend"
         ></a-box>
       </a-camera>
 
       <a-entity id="left"
                 hand-controls="hand: left; handModelStyle: toon"
                 position="-0.5 1 0"
-                health
+                health="group: friend"
                 obb-collider="size: 0.1"
                 motion-tracker
                 gesture-tracker
@@ -96,7 +118,7 @@
       <a-entity id="right"
                 hand-controls="hand: right; handModelStyle: toon"
                 position="0.5 1 0"
-                health
+                health="group: friend"
                 obb-collider="size: 0.1"
                 motion-tracker
                 gesture-tracker
