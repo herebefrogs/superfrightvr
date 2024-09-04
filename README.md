@@ -1,8 +1,8 @@
-# JS13KGAMES 2024
+# SuperFRIGHT VR
 
 ## What is this?
 
-Superhot meets Fear of Number 13
+SuperHOT VR meets Fear of Number 13 for JS13KGAMES 2024
 
 ## How to play?
 
