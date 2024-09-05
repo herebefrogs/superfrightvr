@@ -56,8 +56,8 @@ AFRAME.registerComponent('bullet', {
     // bullet trail
     const trail = document.createElement('a-entity');
     trail.setAttribute('line', {
-      color: 'black',
-      opacity: 0.15,
+      color: 'red',
+      opacity: 0.45,
       start: '0 0 0',
       end: `0 0 0`
     });
