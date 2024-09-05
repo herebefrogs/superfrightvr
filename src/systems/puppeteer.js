@@ -16,19 +16,30 @@ AFRAME.registerSystem('puppeteer', {
       }
     }
 
-    for (let el of this.linearMovers) {
+    for (let el of this.walkers) {
       const linearMotion = el.components['linear-motion']
-      const delta = linearMotion.data.speed * timeDelta;
+      const { speed, direction, distanceTravelled } = linearMotion.data;
+      const delta = speed * timeDelta;
 
-      const deltaX = linearMotion.data.direction.x * delta;
-      const deltaY = linearMotion.data.direction.y * delta;
-      const deltaZ = linearMotion.data.direction.z * delta;
+      const deltaX = direction.x * delta;
+      const deltaY = direction.y * delta;
+      const deltaZ = direction.z * delta;
       el.object3D.position.x += deltaX;
       el.object3D.position.y += deltaY;
       el.object3D.position.z += deltaZ;
 
       const deltaD = Math.sqrt(deltaX*deltaX + deltaY*deltaY + deltaZ*deltaZ);
-      el.setAttribute('linear-motion', { distanceTravelled: linearMotion.data.distanceTravelled + deltaD })
+      el.setAttribute('linear-motion', { distanceTravelled: distanceTravelled + deltaD })
+    }
+
+    for (let el of this.spinners) {
+      const spinMotion = el.components['spin-motion'];
+      const { speed, direction } = spinMotion.data;
+      const delta = speed * timeDelta;
+      el.object3D.rotation.x += direction.x * delta;
+      el.object3D.rotation.y += direction.y * delta;
+      el.object3D.rotation.z += direction.z * delta;
+
     }
 
     for (let el of this.puppets) {
@@ -43,14 +54,18 @@ AFRAME.registerSystem('puppeteer', {
     }
   },
   reset: function() {
-    this.linearMovers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [linear-motion]`)];
+    this.walkers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [linear-motion]`)];
+    this.spinners = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [spin-motion]`)];
     this.gravitas = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [gravity]`)];
     this.puppets = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [puppet]`)];
     this.portal = document.querySelector(`#${this.el.systems.level.activeLevel?.id} a-portal`)
   },
   trackEntity: function(el) {
     if (el.components['linear-motion']) {
-      this.linearMovers.push(el);
+      this.walkers.push(el);
+    }
+    if (el.components['spin-motion']) {
+      this.spinners.push(el);
     }
     if (el.components['gravity']) {
       this.gravitas.push(el);
@@ -58,7 +73,10 @@ AFRAME.registerSystem('puppeteer', {
   },
   untrackEntity: function(el) {
     if (el.components['linear-motion']) {
-      this.linearMovers = this.linearMovers.filter(e => e !== el);
+      this.walkers = this.walkers.filter(e => e !== el);
+    }
+    if (el.components['spin-motion']) {
+      this.spinners = this.spinners.filter(e => e !== el);
     }
     if (el.components['gravity']) {
       this.gravitas = this.gravitas.filter(e => e !== el);
