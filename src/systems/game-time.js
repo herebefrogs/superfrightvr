@@ -1,3 +1,5 @@
+SLOWMO_RATIO = 2;
+
 /**
  * Keep track of game time. Increases it when the player moves and the current active level calls for it. (e.g. game time isn't tracked on title screen)
  *
@@ -19,16 +21,18 @@ AFRAME.registerSystem('game-time', {
     const sceneEl = this.el;
 
     if (sceneEl.is('game-time-tracked')) {
-      timeDelta /= 1000;
+      let slowMotion = 0;
       for (limb of this.playerLimbs) {
-        if (limb.is('player-moving')) {
-          this.data += timeDelta;
+        slowMotion = Math.max(limb.components['motion-tracker'].slowMotion, slowMotion);
+      }
 
-          this.gameTimeHUD.setAttribute('game-time', this.data);
+      timeDelta = slowMotion / SLOWMO_RATIO * timeDelta / 1000;
+      this.data += timeDelta;
 
-          sceneEl.emit('tick', { time: this.data, timeDelta });
-          break;
-        }
+      if (timeDelta) {
+        this.gameTimeHUD.setAttribute('game-time', this.data);
+
+        sceneEl.emit('tick', { time: this.data, timeDelta });
       }
     }
   },

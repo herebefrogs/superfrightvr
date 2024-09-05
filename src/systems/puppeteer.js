@@ -1,6 +1,6 @@
-const GRAVITY = 0.98 / 3;
+GRAVITY = 0.98 / SLOWMO_RATIO;
 // we don't want objects to fall too close to the floor or they'll be hard to grab again
-const FLOOR_HEIGHT = 0.25;
+FLOOR_HEIGHT = 0.1;
 
 AFRAME.registerSystem('puppeteer', {
   init: function() {

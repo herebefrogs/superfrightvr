@@ -11,8 +11,12 @@
  * Side-effect: add 'player-moving' state on its entity if motion is detected, or removes it if static.
  */
 
-const POSITION_THRESHOLD = 0.001;
-const ROTATION_THRESHOLD = 0.0001;
+POSITION_MIN_MOTION = 0.000001;
+POSITION_MAX_MOTION = 0.001;
+ROTATION_MIN_MOTION = 0.000001;
+ROTATION_MAX_MOTION = 0.001;
+
+const lerp = (x, min, max) => THREE.MathUtils.mapLinear(THREE.MathUtils.clamp(x, min, max), min, max, 0, 1);
 
 function vector3FromEuler(rot) {
   return new THREE.Vector3(rot.x, rot.y, rot.z);
@@ -24,27 +28,17 @@ AFRAME.registerComponent('motion-tracker', {
     this.prevPos = this.el.object3D.position.clone();
     this.prevRot = vector3FromEuler(this.el.object3D.rotation);
   },
-  // TODO pause/resume this behaviour on pause/play
   tick: function() {
+    const currRot = vector3FromEuler(this.el.object3D.rotation);
+    const deltaR = this.prevRot.distanceToSquared(currRot);
     const deltaP = this.prevPos.distanceToSquared(this.el.object3D.position);
 
-    if (deltaP > POSITION_THRESHOLD) {
-      // only clone vector once it's necessary
-      this.prevPos = this.el.object3D.position.clone();
-      
-      this.el.addState('player-moving');
-    } else {
-      // perform rotation check when position check fails as it requires
-      // the creation of a vector just to perform the test
-      const currRot = vector3FromEuler(this.el.object3D.rotation);
-      const deltaR = this.prevRot.distanceToSquared(currRot);
-      
-      if (deltaR > ROTATION_THRESHOLD) {
-        this.prevRot = currRot;
-        this.el.addState('player-moving');
-      } else {
-        this.el.removeState('player-moving');
-      }
-    }
+    this.slowMotion = Math.max(
+      lerp(deltaP, POSITION_MIN_MOTION, POSITION_MAX_MOTION),
+      lerp(deltaR, ROTATION_MIN_MOTION, ROTATION_MAX_MOTION),
+    );
+
+    this.prevRot = currRot;
+    this.prevPos = this.el.object3D.position.clone();
   }
 })
