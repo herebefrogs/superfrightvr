@@ -18,10 +18,12 @@ AFRAME.registerSystem('level', {
       // DEBUG.loadLevel('#level_1', 0)
       // DEBUG.grabPortal('#right', '#title', 100);
       // DEBUG.grabGun('#left', '#level_1', 500);
+      // DEBUG.move('#left', '-1 1.5 -0.5', 550);
+      // DEBUG.shoot('#left', 600);
       // DEBUG.move('#left', '0 1.5 -0.5', 750);
-      // DEBUG.buttonEvent('#left', 'triggerdown', 1000);
-      // DEBUG.grabPortal('#right', '#level_1', 1000);
+      // DEBUG.punch('#left', 1000);
       // DEBUG.drop('#left', 1500);
+      // DEBUG.grabPortal('#right', '#level_1', 2000);
 
       // DEBUG.log('foo')
     })

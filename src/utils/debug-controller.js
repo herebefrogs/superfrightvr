@@ -27,10 +27,17 @@ window.DEBUG = {
       hand.setAttribute('position', position);
     }, delay);
   },
-  buttonEvent: (handId, event, delay) => {
+  shoot: (handId, delay) => {
     setTimeout(() => {
       const hand = document.querySelector(handId);
-      hand.emit(event);
+      hand.emit('triggerdown');
+    }, delay);
+  },
+  punch: (handId, delay) => {
+    setTimeout(() => {
+      const hand = document.querySelector(handId);
+      hand.removeState('grabbing');
+      hand.emit('triggerdown');
     }, delay);
   },
   loadLevel: (levelId, delay) => {
