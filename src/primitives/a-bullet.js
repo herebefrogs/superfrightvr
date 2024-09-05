@@ -3,15 +3,23 @@ AFRAME.registerPrimitive('a-bullet', {
     bullet: {},
     'dynamic-collider': { on: true },
     'linear-motion': { speed: 1.5 },
-    'ttl': 5,
+    'ttl': 20,
   },
   mappings: {
     direction: 'linear-motion.direction'
   }
 });
 
-const MAX_BULLET_TRAIL = 2;
+const MAX_BULLET_TRAIL = 2.5;
 
+/**
+ * Handle bullet geometry and events
+ * 
+ * React to events:
+ * - componentchanged -> lengthen the trail to match the bullet motion
+ * - ttlreached -> garbage collect bullets which didn't hit their mark
+ * - obbcollisionstarted -> kill targets with 'health' component
+ */
 AFRAME.registerComponent('bullet', {
   events: {
     componentchanged: function(e) {
@@ -24,11 +32,10 @@ AFRAME.registerComponent('bullet', {
     },
     obbcollisionstarted: function (e) {
       const target = e.detail.withEl;
-      if (target.components.health) {
-        if (this.el.components.health.data.group !== target.components.health.data.group) {
-          target.setAttribute('health', { hp: 0 });
-          this.el.setAttribute('health', { hp: 0 })
-        }
+      if (target.components.health && (this.el.components.health.data.group !== target.components.health.data.group)) {
+        // kill target, expend the bullet
+        target.setAttribute('health', { hp: 0 });
+        this.el.setAttribute('health', { hp: 0 });
       }
     },
   },
@@ -66,9 +73,9 @@ AFRAME.registerComponent('bullet', {
       x: -90
     });
     bullet.appendChild(trail);
+    this.el.appendChild(bullet);
 
     this.trail = trail;
-    this.el.appendChild(bullet);
   },
   updateTrail: function(distanceTravelled) {
     if (distanceTravelled <= MAX_BULLET_TRAIL) {
@@ -76,6 +83,7 @@ AFRAME.registerComponent('bullet', {
     }
   },
   removeBullet: function(el) {
+    // remove bullet entity from scene and garbage collect
     el.parentNode.removeChild(el);
     el.destroy();
   }
