@@ -18,3 +18,14 @@ AFRAME.registerComponent('spin-motion', {
     speed: { type: 'number', default: 1 },
   }
 })
+
+/**
+ * Keep track of the direction, and speed of an entity spinning along one or more of its axes
+ */
+AFRAME.registerComponent('sinlinear-motion', {
+  schema: {
+    direction: { type: 'vec3', default: '0 0 0' },
+    speed: { type: 'number', default: 1 },
+    alpha: { type: 'number', default: 0 }
+  }
+})

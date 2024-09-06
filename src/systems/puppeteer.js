@@ -32,6 +32,21 @@ AFRAME.registerSystem('puppeteer', {
       el.setAttribute('linear-motion', { distanceTravelled: distanceTravelled + deltaD })
     }
 
+    for (let el of this.sinWalkers) {
+      const sinLinearMotion = el.components['sinlinear-motion']
+      let { speed, direction, alpha } = sinLinearMotion.data;
+      alpha += Math.PI * timeDelta;
+      const delta = speed * timeDelta * Math.sin(alpha);
+
+      const deltaX = direction.x * delta;
+      const deltaY = direction.y * delta;
+      const deltaZ = direction.z * delta;
+      el.object3D.position.x += deltaX;
+      el.object3D.position.y += deltaY;
+      el.object3D.position.z += deltaZ;
+      el.setAttribute('sinlinear-motion', { alpha });
+    }
+
     for (let el of this.spinners) {
       const spinMotion = el.components['spin-motion'];
       const { speed, direction } = spinMotion.data;
@@ -55,6 +70,7 @@ AFRAME.registerSystem('puppeteer', {
   },
   reset: function() {
     this.walkers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [linear-motion]`)];
+    this.sinWalkers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [sinlinear-motion]`)];
     this.spinners = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [spin-motion]`)];
     this.gravitas = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [gravity]`)];
     this.puppets = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [puppet]`)];
@@ -67,6 +83,9 @@ AFRAME.registerSystem('puppeteer', {
     if (el.components['spin-motion']) {
       this.spinners.push(el);
     }
+    if (el.components['sinlinear-motion']) {
+      this.sinWalkers.push(el);
+    }
     if (el.components['gravity']) {
       this.gravitas.push(el);
     }
@@ -77,6 +96,9 @@ AFRAME.registerSystem('puppeteer', {
     }
     if (el.components['spin-motion']) {
       this.spinners = this.spinners.filter(e => e !== el);
+    }
+    if (el.components['sinlinear-motion']) {
+      this.sinWalkers = this.sinWalkers.filter(e => e !== el);
     }
     if (el.components['gravity']) {
       this.gravitas = this.gravitas.filter(e => e !== el);
