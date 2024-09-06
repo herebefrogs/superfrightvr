@@ -13,28 +13,28 @@
           color="#ef2d5e"
           font="monoid"
           width="20"
-          position="0 3 -5"
+          position="0 2.5 -5"
         ></a-text>
 
         <a-text
-          value="press GRIP to GRAB objects\npress TRIGGER to shoot or punch" position="0 1.8 -5"
+          value="press GRIP to GRAB objects\npress TRIGGER to shoot or punch" position="0 1.6 -5"
           align="center" color="black" font="monoid" width="5" height="2"
         ></a-text>
 
         <a-portal to="#level_1" text-value="GRAB" text-width="1.75"
-          position="0 1.25 -0.5"></a-portal>
+          position="0 1 -0.65"></a-portal>
       </a-entity>
 
       <a-entity id="level_1" level="gameTimeTracked: true">
         <!-- grabbable stuff -->
-        <a-gun position="0 1.35 -0.5" gravity health="group: friend"></a-gun>
-        <a-portal position="0 1.25 -0.5" to="#level_2" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
+        <a-gun position="0 1.2 -0.5" gravity health="group: friend"></a-gun>
+        <a-portal position="0 1 -0.65" to="#level_2" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
         <!-- enemy -->
         <a-tetrahedron
           puppet
-          radius="1" color="#ef2d5e" 
-          position="0 1.5 -3" spin-motion="direction: 1 1 1; speed: 2"
+          radius="1" color="#ef2d5e"
+          position="0 1.25 -3" spin-motion="direction: 1 1 1; speed: 2"
           health="group: foe"
           dynamic-collider="size: 1"
         >
@@ -50,7 +50,7 @@
 
       <a-entity id="level_2" level="gameTimeTracked: true">
         <!-- grabbable stuff -->
-        <a-portal position="0 1.25 -0.5" to="#level_3" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
+        <a-portal position="0 1 -0.65" to="#level_3" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
         <!-- enemy -->
         <a-box
@@ -74,7 +74,7 @@
 
       <a-entity id="level_3" level="gameTimeTracked: true">
         <!-- grabbable stuff -->
-        <a-portal position="0 1.2 -0.5" to="#level_4" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
+        <a-portal position="0 1 -0.65" to="#level_4" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
         <!-- enemy -->
         <a-cone
@@ -113,13 +113,13 @@
       <a-entity id="level_4" level="gameTimeTracked: true">
         <!-- grabbable stuff -->
         <a-gun position="0 1.2 -0.4" gravity health="group: friend"></a-gun>
-        <a-portal position="0 1.2 -0.5" to="#level_5" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
+        <a-portal position="0 1 -0.65" to="#level_5" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
         <!-- enemy -->
         <a-cone
           puppet
           height="1" radius-bottom="0.2" radius-top="0.4" segments-radial="6" segments-height="1" color="#e26" 
-          position="0 1.1 -3"
+          position="0 0.9 -3"
           health="group: foe"
           dynamic-collider
         >
@@ -144,7 +144,7 @@
         </a-box>
       </a-entity>
 
-      <a-portal id="retry" position="0 1.25 -0.5" text-value="RETRY" text-width="1.4" visible="false"></a-portal>
+      <a-portal id="retry" position="0 1 -0.65" text-value="RETRY" text-width="1.4" visible="false"></a-portal>
       <a-sky color="#ddd"></a-sky>
       <a-sphere id="world" color="blue" radius="1000" material="shader: flat; wireframe: true; side: back"></a-sphere>
 
