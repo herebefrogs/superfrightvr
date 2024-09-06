@@ -63,8 +63,7 @@ AFRAME.registerSystem('puppeteer', {
       }
     }
     if (!this.puppets.length) {
-      // // stop game time
-      // this.el.removeState('game-time-tracked');
+      this.el.removeState('game-time-tracked');
       this.portal.setAttribute('visible', true);
     }
   },

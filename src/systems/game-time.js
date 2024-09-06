@@ -20,20 +20,20 @@ AFRAME.registerSystem('game-time', {
   tick: function(_time, timeDelta) {
     const sceneEl = this.el;
 
-    if (sceneEl.is('game-time-tracked')) {
-      let slowMotion = 0;
-      for (limb of this.playerLimbs) {
-        slowMotion = Math.max(limb.components['motion-tracker'].slowMotion, slowMotion);
-      }
+    let slowMotion = 0;
+    for (limb of this.playerLimbs) {
+      slowMotion = Math.max(limb.components['motion-tracker'].slowMotion, slowMotion);
+    }
 
-      timeDelta = slowMotion / SLOWMO_RATIO * timeDelta / 1000;
-      this.data += timeDelta;
+    timeDelta = slowMotion / SLOWMO_RATIO * timeDelta / 1000;
 
-      if (timeDelta) {
+    if (timeDelta) {
+      if (sceneEl.is('game-time-tracked')) {
+        this.data += timeDelta;
         this.gameTimeHUD.setAttribute('game-time', this.data);
-
-        sceneEl.emit('tick', { time: this.data, timeDelta });
       }
+
+      sceneEl.emit('tick', { time: this.data, timeDelta });
     }
   },
   toggleGameTimeHUDVisibility: function(visible) {
