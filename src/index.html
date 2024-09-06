@@ -72,11 +72,48 @@
         </a-cylinder>
       </a-entity>
 
-      <!-- 3rd level should be "move your body" with enemy firing at the player -->
       <a-entity id="level_3" level="gameTimeTracked: true">
         <!-- grabbable stuff -->
-        <a-gun position="0 1.2 -0.4" gravity health="group: friend"></a-gun>
         <a-portal position="0 1.2 -0.5" to="#level_4" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
+
+        <!-- enemy -->
+        <a-cone
+          position="0 0.9 -5"
+          color="#e26" radius-bottom="0.2" radius-top="0.4" segments-radial="6" segments-height="1"
+          puppet
+          health="group: foe"
+          dynamic-collider
+          linear-motion="direction: 0 0 1; speed: 0.8"
+        >
+          <a-dodecahedron position="0 0.75 0.15" radius="0.25" color="#ef2d5e"></a-dodecahedron>
+        </a-cone>
+        <a-entity position="-0.4 1.24 -4.5" rotation="90 0 0" linear-motion="direction: 0.15 0 1; speed: 2.5">
+          <a-pyramid
+            spin-motion="direction: 0 -1 0; speed: 2" scale="0.25 0.75 0.25" color="#ef2d5e"
+            puppet dynamic-collider health="group: foe" ttl="3.5"
+          ></a-pyramid>
+        </a-entity>
+        <a-entity position="0.4 1.24 -4.5" rotation="90 0 0" linear-motion="direction: -0.15 0 1; speed: 1.5">
+          <a-pyramid
+           spin-motion="direction: 0 1 0; speed: 2" scale="0.25 0.75 0.25" color="#ef2d5e"
+           puppet dynamic-collider health="group: foe" ttl="3.5"
+          ></a-pyramid>
+        </a-entity>
+
+        <a-text value="MOVE YOUR BODY" align="center" font="monoid" width="15" position="0 2 -5.5"></a-text>
+        <!-- room -->
+        <a-cylinder
+          radius="3" height="30" segments-radial="6" segments-height="1" theta-start="30"
+          geometry="openEnded: true" material="color: #ddd; side: back"
+          position="0 1.5 0" rotation="-90 0 0"
+          >
+        </a-cylinder>
+      </a-entity>
+
+      <a-entity id="level_4" level="gameTimeTracked: true">
+        <!-- grabbable stuff -->
+        <a-gun position="0 1.2 -0.4" gravity health="group: friend"></a-gun>
+        <a-portal position="0 1.2 -0.5" to="#level_5" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
         <!-- enemy -->
         <a-cone
@@ -86,10 +123,10 @@
           health="group: foe"
           dynamic-collider
         >
-          <a-dodecahedron position="0 0.75 0.15" radius="0.25" color="#EF2D5E"></a-dodecahedron>
+          <a-dodecahedron position="0 0.75 0.15" radius="0.25" color="#ef2d5e"></a-dodecahedron>
           <a-entity spin-motion="direction: 0 1 0; speed: 2">
-            <a-pyramid position="-0.7 0.25 0" rotation="0 0 95" scale="0.25 0.75 0.25" color="#EF2D5E"></a-pyramid>
-            <a-pyramid position="0.7 0.25 0" rotation="0 0 -95" scale="0.25 0.75 0.25" color="#EF2D5E"></a-pyramid>
+            <a-pyramid position="-0.7 0.25 0" rotation="0 0 95" scale="0.25 0.75 0.25" color="#ef2d5e"></a-pyramid>
+            <a-pyramid position="0.7 0.25 0" rotation="0 0 -95" scale="0.25 0.75 0.25" color="#ef2d5e"></a-pyramid>
           </a-entity>
         </a-cone>
 
@@ -105,38 +142,6 @@
           <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="-3 0 -3"></a-box>
           <a-text value="13" align="center" font="monoid" width="15" position="0 1 -3"></a-text>
         </a-box>
-      </a-entity>
-
-      <a-entity id="level_4" level="gameTimeTracked: true">
-        <!-- grabbable stuff -->
-        <a-portal position="0 1.2 -0.5" to="#level_5" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
-
-        <!-- enemy -->
-        <a-cone
-          puppet
-          position="0 0.9 -1.1"
-          radius-bottom="0.2" radius-top="0.4" segments-radial="6" segments-height="1"
-          color="#e26" 
-          health="group: foe"
-          dynamic-collider
-        >
-          <a-dodecahedron position="0 0.75 0.15" radius="0.25" color="#EF2D5E"></a-dodecahedron>
-          <a-entity position="0.48 0.05 0" rotation="180 0 -45">
-            <a-pyramid spin-motion="direction: 0 -1 0" scale="0.25 0.75 0.25" color="#EF2D5E"></a-pyramid>
-          </a-entity>
-          <a-entity position="-0.48 0.05 0" rotation="180 0 45" >
-            <a-pyramid spin-motion="direction: 0 1 0" scale="0.25 0.75 0.25" color="#EF2D5E"></a-pyramid>
-          </a-entity>
-        </a-cone>
-      
-        <a-text value="13" align="center" font="monoid" width="15" position="0 2.5 -5.5"></a-text>
-        <!-- room -->
-        <a-cylinder
-          radius="3" height="30" segments-radial="6" segments-height="1" theta-start="30"
-          geometry="openEnded: true" material="color: #ddd; side: back"
-          position="0 1.5 0" rotation="-90 0 0"
-          >
-        </a-cylinder>
       </a-entity>
 
       <a-sky color="#ddd"></a-sky>
