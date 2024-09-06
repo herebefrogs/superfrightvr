@@ -1,7 +1,7 @@
 AFRAME.registerPrimitive('a-gun', {
   defaultComponents: {
     gun: {},
-    'dynamic-collider': { size: 0.1 },
+    'dynamic-collider': { size: 0.15 },
     raycaster: {
       enabled: false,
       objects: '#world',

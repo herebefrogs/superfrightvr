@@ -144,6 +144,7 @@
         </a-box>
       </a-entity>
 
+      <a-portal id="retry" position="0 1.25 -0.5" text-value="RETRY" text-width="1.4" visible="false"></a-portal>
       <a-sky color="#ddd"></a-sky>
       <a-sphere id="world" color="blue" radius="1000" material="shader: flat; wireframe: true; side: back"></a-sphere>
 
@@ -159,10 +160,10 @@
           ></a-text>
         <!-- sorta player head & body -->
         <a-box id="player"
-               height="1.8"
+               height="1.5"
                width="0.5"
-               depth="0.3"
-               position="0 0.9 0.35"
+               depth="0.01"
+               position="0 0.9 0"
                obb-collider
                health="group: friend"
         ></a-box>

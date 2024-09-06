@@ -28,7 +28,7 @@ AFRAME.registerComponent('bullet', {
       }
     },
     ttlreached: function(e) {
-      this.removeBullet(e.detail.el);
+      this.el.setAttribute('health', { hp: 0 });
     },
     obbcollisionstarted: function (e) {
       const target = e.detail.withEl;
@@ -82,9 +82,4 @@ AFRAME.registerComponent('bullet', {
       this.trail.setAttribute('line', { end: `0 0 ${distanceTravelled}` });
     }
   },
-  removeBullet: function(el) {
-    // remove bullet entity from scene and garbage collect
-    el.parentNode.removeChild(el);
-    el.destroy();
-  }
 })

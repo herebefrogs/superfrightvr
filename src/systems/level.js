@@ -18,7 +18,7 @@ AFRAME.registerSystem('level', {
 
       this.loadLevel(levelId);
   
-      DEBUG.loadLevel('#level_1', 0)
+      // DEBUG.loadLevel('#level_1', 0)
       // DEBUG.grabPortal('#right', '#title', 100);
       // DEBUG.grabGun('#left', '#level_1', 500);
       // DEBUG.move('#left', '-1 1.5 -0.5', 550);

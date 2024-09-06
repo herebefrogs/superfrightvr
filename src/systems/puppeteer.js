@@ -4,6 +4,12 @@ FLOOR_HEIGHT = 0.1;
 
 AFRAME.registerSystem('puppeteer', {
   init: function() {
+    this.playerLimbs = [
+      ...document.querySelectorAll('[gesture-tracker]'),
+      document.querySelector('#player')
+    ];
+    this.retry = document.querySelector('#retry');
+
     this.el.addEventListener('tick', (e) => this._tick(e.detail.time, e.detail.timeDelta));
 
     this.el.addEventListener('child-attached', (e) => { this.trackEntity(e.detail.el) })
@@ -62,10 +68,28 @@ AFRAME.registerSystem('puppeteer', {
         this.puppets = this.puppets.filter(p => p !== el);
       }
     }
+
     if (!this.puppets.length) {
-      this.el.removeState('game-time-tracked');
-      this.portal.setAttribute('visible', true);
+      // level beaten
+      this.showNextLevelPortal();
+    } else if (!this.retry.getAttribute('visible')) {
+      for (limb of this.playerLimbs) {
+        if (!limb.getAttribute('health')?.hp) {
+          // player beaten
+          this.showRetry();
+          break;
+        }
+      }
     }
+  },
+  showNextLevelPortal: function() {
+    this.el.removeState('game-time-tracked');
+    this.portal.setAttribute('visible', true);
+  },
+  showRetry: function() {
+    // TODO would be a good time to play a broken sounds
+    this.retry.setAttribute('portal', { to: '#' + this.el.systems.level.activeLevel.id })
+    this.retry.setAttribute('visible', true);
   },
   reset: function() {
     this.walkers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [linear-motion]`)];

@@ -17,9 +17,18 @@ AFRAME.registerComponent('health', {
     obbcollisionstarted: function(e) {
       const target = e.detail.withEl;
       if (target.components.health) {
-        if ((this.el.components.health.data.group !== target.components.health.data.group)
-            // player is punching without a gun in hand
-            && this.el.is('shooting') && !this.el.is('holding-gun')) {
+        const targetGroup = target.components.health.data.group
+        const elGroup = this.el.components.health.data.group;
+        if (
+            // we don't care about collision within the same group (e.g. player hands)
+            (elGroup !== targetGroup)
+            && (
+              // player is punching without a gun in hand
+              (elGroup === 'friend' && this.el.is('shooting') && !this.el.is('holding-gun'))
+              // enemy is punching player who isn't punching back
+              || (elGroup === 'foe' && target.components['motion-tracker'] && !target.is('shooting'))
+            )
+          ) {
           // kill target
           target.setAttribute('health', { hp: 0 });
         }
@@ -28,8 +37,11 @@ AFRAME.registerComponent('health', {
   },
   update: function(oldData) {
     if (this.data.hp <= 0) {
-      // TODO should animate death
-      this.el.parentNode.removeChild(this.el)
+
+      if (!this.el.components['motion-tracker'] && !this.el.parentNode.components['motion-tracker']) {
+        // TODO should animate death
+        this.el.parentNode.removeChild(this.el)
+      }
     }
   }
 })
