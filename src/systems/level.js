@@ -13,7 +13,10 @@ AFRAME.registerSystem('level', {
 
     // the true "main()"
     sceneEl.addEventListener('loaded', (e) => {
-      this.loadLevel('#title');
+      // jump straight to a particular level if indicated by a URL param
+      const levelId = new URLSearchParams(location.search).get('levelId') || '#title';
+
+      this.loadLevel(levelId);
   
       DEBUG.loadLevel('#level_1', 0)
       // DEBUG.grabPortal('#right', '#title', 100);
@@ -30,6 +33,11 @@ AFRAME.registerSystem('level', {
   },
   loadLevel: function(levelId) {
     let activeLevel = this.activeLevel;
+
+    if (activeLevel && '#'+activeLevel.id === levelId) {
+      location.search = '?levelId=' + levelId
+      return;
+    }
 
     if (activeLevel) {
       this.toggleLevel(activeLevel, false)
