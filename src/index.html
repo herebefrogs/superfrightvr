@@ -141,7 +141,7 @@
           <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="3 0 -3"></a-box>
           <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="-3 0 3"></a-box>
           <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="-3 0 -3"></a-box>
-          <a-text value="13" align="center" font="monoid" width="15" position="0 1 -3"></a-text>
+          <a-text value="JUST SHOOT 13, KNUCKLEHEADS!" align="center" font="monoid" width="15" position="0 1 -3"></a-text>
         </a-box>
       </a-entity>
 
@@ -177,15 +177,21 @@
                 obb-collider="size: 0.1"
                 motion-tracker
                 gesture-tracker
-      ></a-entity>
+      >
+        <a-text value="1" color="black" font="monoid" align="center"
+          width="1" position="-0.028 0.05 0" rotation="185 90 0"></a-text>
+      </a-entity>
       <a-entity id="right"
-                hand-controls="hand: right; handModelStyle: toon"
-                position="0.5 1 0"
-                health="group: friend"
-                obb-collider="size: 0.1"
-                motion-tracker
-                gesture-tracker
-      ></a-entity>
+          hand-controls="hand: right; handModelStyle: toon"
+          position="0.5 1 0"
+          health="group: friend"
+          obb-collider="size: 0.1"
+          motion-tracker
+          gesture-tracker
+      >
+        <a-text value="3" color="black" font="monoid" align="center"
+        width="1" position="0.028 0.05 0" rotation="185 -90 0"></a-text>
+      </a-entity>
 
     </a-scene>
   </body>
