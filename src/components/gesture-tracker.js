@@ -1,5 +1,4 @@
 AFRAME.registerComponent('gesture-tracker', {
-  dependencies: ['hand-controls', 'obb-collider'],
   events: {
     gripdown: function(e) { this.el.addState('grabbing') },
     gripup: function(e) {  this.el.removeState('grabbing') },

@@ -11,8 +11,8 @@
  * Side-effect: add 'player-moving' state on its entity if motion is detected, or removes it if static.
  */
 
-POSITION_MIN_MOTION = 0.000001;
-POSITION_MAX_MOTION = 0.001;
+POSITION_MIN_MOTION = 0.0000001;
+POSITION_MAX_MOTION = 0.00001;
 ROTATION_MIN_MOTION = 0.000001;
 ROTATION_MAX_MOTION = 0.001;
 
