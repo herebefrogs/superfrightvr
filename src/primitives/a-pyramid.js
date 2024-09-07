@@ -7,6 +7,9 @@ AFRAME.registerPrimitive('a-pyramid', {
       segmentsHeight: 1,
       radiusTop: 0,
     },
+    material: {
+      flatShading: true,
+    }
   },
   mappings: {
     color: 'material.color',

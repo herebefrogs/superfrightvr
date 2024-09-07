@@ -14,7 +14,8 @@ AFRAME.registerPrimitive('a-portal', {
     },
     material: {
       color: 'black',
-      opacity: 0.45
+      opacity: 0.45,
+      flatShading: true
     },
     'dynamic-collider': { size: 0.15 },
   },
