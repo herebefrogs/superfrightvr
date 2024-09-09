@@ -41,6 +41,9 @@ AFRAME.registerComponent('health', {
       if (!this.el.components['motion-tracker'] && !this.el.parentNode.components['motion-tracker']) {
         // TODO should animate death
         this.el.parentNode.removeChild(this.el)
+        if (this.el.components['sniper']) {
+          this.el.setAttribute('sniper', { enabled: false });
+        }
       }
     }
   }
