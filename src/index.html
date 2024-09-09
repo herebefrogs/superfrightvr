@@ -124,10 +124,10 @@
         <a-portal position="0 1 -0.65" to="#level_5" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
         <!-- enemy -->
-        <a-entity position="-0.5 2 -3" rotation="0 0 0" spin-motion="direction: 0 -0.5 0" sinlinear-motion="direction: 2 -1 0">
+        <a-entity position="0 2 -3" rotation="0 0 0" spin-motion="direction: 0 -0.5 0" sinlinear-motion="direction: 0 -1 0">
           <a-dodecahedron radius="0.5" material="color: #ef2d5e; flatShading: true"
             spin-motion="direction: 1 -1 0; speed: 2"
-            puppet dynamic-collider health="group: foe" >
+            puppet sniper="firstShotDelay: 1.5" dynamic-collider health="group: foe" >
           </a-dodecahedron>
 
           <a-entity rotation="0 0 0" >

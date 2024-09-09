@@ -59,7 +59,7 @@ AFRAME.registerSystem('gesture-tracker', {
       const rotation = gun.getAttribute('rotation');
 
       // NOTE y and z should be swapped, but given the gun model is pointing downward to account
-      // for hand model also corrected by AFRAME, it works as is
+      // for hand model orientation that AFRAME autocorrects, it works as is
       const nozzlePosition = new THREE.Vector3(0, -0.22, -0.08);
       const origin = gun.object3D.localToWorld(nozzlePosition);
 

@@ -17,5 +17,8 @@ AFRAME.registerComponent('level', {
         el.components['dynamic-collider'][this.data.active ? '_play' : '_pause']();
       }
     }
+    for (const el of document.querySelectorAll(`#${this.el.id} [sniper]`)) {
+      el.setAttribute('sniper', { enabled: this.data.active });
+    }
   }
 })

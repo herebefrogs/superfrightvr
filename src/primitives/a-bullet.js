@@ -3,10 +3,10 @@ AFRAME.registerPrimitive('a-bullet', {
     bullet: {},
     'dynamic-collider': { on: true },
     'linear-motion': { speed: 2 },
-    'ttl': 20,
+    'ttl': 15,
   },
   mappings: {
-    direction: 'linear-motion.direction'
+    direction: 'linear-motion.direction',
   }
 });
 
@@ -21,6 +21,9 @@ const MAX_BULLET_TRAIL = 2.5;
  * - obbcollisionstarted -> kill targets with 'health' component
  */
 AFRAME.registerComponent('bullet', {
+  schema: {
+    fromPlayer : { type: 'boolean', default: true },
+  },
   events: {
     componentchanged: function(e) {
       if (e.detail.name === 'linear-motion') {
@@ -40,8 +43,6 @@ AFRAME.registerComponent('bullet', {
     },
   },
   init: function() {
-    const vrMode = this.el.sceneEl.is('vr-mode');
-
     const bullet = document.createElement('a-entity');
     bullet.setAttribute('geometry', {
       primitive: 'cylinder',
@@ -54,11 +55,10 @@ AFRAME.registerComponent('bullet', {
     bullet.setAttribute('material', {
       color: 'black',
     });
-    bullet.setAttribute('rotation', {
-      // NOTE because the gun model is pointing down in VR, the bullet cylinder normally stand up will be rendered flat
-      // however on desktop, the gun model isn't rotated so the bullet must be
-      x: vrMode ? 0 : 90,
-    });
+    // cylinder is standing up, with tail going up, but gets rotated 90 by the gun/hand controller extra rotation
+    // so it ends up horizontal with the trail staying behind... but if it comes from an enemy, it must face away
+    // and there is not that hand controller extra rotation
+    bullet.object3D.rotation.x = this.data.fromPlayer ? 0 : -Math.PI/2;
 
     // bullet trail
     const trail = document.createElement('a-entity');
@@ -69,10 +69,6 @@ AFRAME.registerComponent('bullet', {
       start: '0 0 0',
       end: `0 0 0`
     });
-    trail.setAttribute('rotation', {
-      // NOTE for reason I don't understand yet, the line is draw downward without this extra rotation
-      x: -90
-    });
     bullet.appendChild(trail);
     this.el.appendChild(bullet);
 
@@ -80,7 +76,7 @@ AFRAME.registerComponent('bullet', {
   },
   updateTrail: function(distanceTravelled) {
     if (distanceTravelled <= MAX_BULLET_TRAIL) {
-      this.trail.setAttribute('line', { end: `0 0 ${distanceTravelled}` });
+      this.trail.setAttribute('line', { end: `0 ${distanceTravelled} 0` });
     }
   },
 })
