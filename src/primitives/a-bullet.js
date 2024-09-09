@@ -65,6 +65,7 @@ AFRAME.registerComponent('bullet', {
     trail.setAttribute('line', {
       color: 'red',
       opacity: 0.45,
+      transparent: true,
       start: '0 0 0',
       end: `0 0 0`
     });
