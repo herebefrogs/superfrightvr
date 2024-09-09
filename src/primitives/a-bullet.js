@@ -2,7 +2,7 @@ AFRAME.registerPrimitive('a-bullet', {
   defaultComponents: {
     bullet: {},
     'dynamic-collider': { on: true },
-    'linear-motion': { speed: 1.5 },
+    'linear-motion': { speed: 2 },
     'ttl': 20,
   },
   mappings: {

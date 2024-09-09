@@ -17,9 +17,14 @@
         ></a-text>
 
         <a-text
-          value="press GRIP to GRAB objects\npress TRIGGER to shoot or punch" position="0 1.6 -5"
-          align="center" color="black" font="monoid" width="5" height="2"
-        ></a-text>
+          value="A GAME BY JEROME LECOMTE FOR JS13K 2024" position="0 1.8 -5"
+          align="center" color="black" font="monoid" width="5" height="2">
+        </a-text>
+        <a-text
+          value="press GRIP to GRAB objects\npress TRIGGER to shoot or punch" position="0 0.5 -5"
+          align="center" color="black" font="monoid" width="5" height="2">
+        </a-text>
+
 
         <a-portal to="#level_1" text-value="GRAB" text-width="1.75"
           position="0 1 -0.65"></a-portal>
@@ -78,25 +83,26 @@
         <a-portal position="0 1 -0.65" to="#level_4" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
         <!-- enemy -->
-        <a-cone
+        <a-octahedron
           position="0 0.9 -5"
-          radius-bottom="0.2" radius-top="0.4" segments-radial="6" segments-height="1" material="color: #ef2d5e; flatShading: true"
+          radius="1" scale="0.5 1 0.5" material="color: #ef2d5e; flatShading: true"
           puppet
           health="group: foe"
           dynamic-collider
-          linear-motion="direction: 0 0 1; speed: 0.8"
+          linear-motion="direction: 0 0 1; speed: 0.8" spin-motion="direction: 0 1 0; speed: 1"
         >
-          <a-dodecahedron position="0 0.75 0.15" radius="0.25" color="#ef2d5e"></a-dodecahedron>
-        </a-cone>
+        </a-octahedron>
         <a-entity position="-0.4 1.24 -4.5" rotation="90 0 0" linear-motion="direction: 0.15 0 1; speed: 2.5">
           <a-pyramid
-            spin-motion="direction: 0 -1 0; speed: 2" scale="0.25 0.75 0.25" color="#ef2d5e"
+            scale="0.25 0.75 0.25" rotation="0 45 0" color="#ef2d5e"
+            spin-motion="direction: 0 -1 0; speed: 2"
             puppet dynamic-collider health="group: foe" ttl="3.5"
           ></a-pyramid>
         </a-entity>
         <a-entity position="0.4 1.24 -4.5" rotation="90 0 0" linear-motion="direction: -0.15 0 1; speed: 1.5">
           <a-pyramid
-           spin-motion="direction: 0 1 0; speed: 2" scale="0.25 0.75 0.25" color="#ef2d5e"
+           scale="0.25 0.75 0.25" rotation="0 45 0" color="#ef2d5e"
+           spin-motion="direction: 0 1 0; speed: 2"
            puppet dynamic-collider health="group: foe" ttl="3.5"
           ></a-pyramid>
         </a-entity>
@@ -113,8 +119,88 @@
 
       <a-entity id="level_4" level="gameTimeTracked: true">
         <!-- grabbable stuff -->
-        <a-gun position="0 1.2 -0.4" gravity health="group: friend"></a-gun>
+        <a-gun position="-0.35 1.2 -0.4" gravity health="group: friend"></a-gun>
+        <a-gun position="0.35 1.2 -0.4" gravity health="group: friend"></a-gun>
         <a-portal position="0 1 -0.65" to="#level_5" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
+
+        <!-- enemy -->
+        <a-entity position="-0.5 2 -3" rotation="0 0 0" spin-motion="direction: 0 -0.5 0" sinlinear-motion="direction: 2 -1 0">
+          <a-dodecahedron radius="0.5" material="color: #ef2d5e; flatShading: true"
+            spin-motion="direction: 1 -1 0; speed: 2"
+            puppet dynamic-collider health="group: foe" >
+          </a-dodecahedron>
+
+          <a-entity rotation="0 0 0" >
+            <a-pyramid
+              width="0.25" depth="0.25" position="0.75 0 0" sinlinear-motion="direction: 2.5 0 0" rotation="180 135 45" color="#ef2d5e"
+              puppet dynamic-collider health="group: foe">
+            </a-pyramid>
+          </a-entity>
+          <a-entity rotation="0 45 0">
+            <a-pyramid
+              width="0.25" depth="0.25" position="0.75 0 0" sinlinear-motion="direction: 2.5 0 0" rotation="180 135 45" color="#ef2d5e"
+              puppet dynamic-collider health="group: foe">
+            </a-pyramid>
+          </a-entity>
+          <a-entity rotation="0 90 0">
+            <a-pyramid
+              width="0.25" depth="0.25" position="0.75 0 0" sinlinear-motion="direction: 2.5 0 0" rotation="180 135 45" color="#ef2d5e"
+              puppet dynamic-collider health="group: foe">
+            </a-pyramid>
+          </a-entity>
+          <a-entity rotation="0 135 0">
+            <a-pyramid
+              width="0.25" depth="0.25" position="0.75 0 0" sinlinear-motion="direction: 2.5 0 0" rotation="180 135 45" color="#ef2d5e"
+              puppet dynamic-collider health="group: foe">
+            </a-pyramid>
+          </a-entity>
+          <a-entity rotation="0 180 0">
+            <a-pyramid
+              width="0.25" depth="0.25" position="0.75 0 0" sinlinear-motion="direction: 2.5 0 0" rotation="180 135 45" color="#ef2d5e"
+              puppet dynamic-collider health="group: foe">
+            </a-pyramid>
+          </a-entity>
+          <a-entity rotation="0 -45 0">
+            <a-pyramid
+              width="0.25" depth="0.25" position="0.75 0 0" sinlinear-motion="direction: 2.5 0 0" rotation="180 135 45" color="#ef2d5e"
+              puppet dynamic-collider health="group: foe">
+            </a-pyramid>
+          </a-entity>
+          <a-entity rotation="0 -90 0">
+            <a-pyramid
+              width="0.25" depth="0.25" position="0.75 0 0" sinlinear-motion="direction: 2.5 0 0" rotation="180 135 45" color="#ef2d5e"
+              puppet dynamic-collider health="group: foe">
+            </a-pyramid>
+          </a-entity>
+          <a-entity rotation="0 -135 0">
+            <a-pyramid
+              width="0.25" depth="0.25" position="0.75 0 0" sinlinear-motion="direction: 2.5 0 0" rotation="180 135 45" color="#ef2d5e"
+              puppet dynamic-collider health="group: foe">
+            </a-pyramid>
+          </a-entity>
+        </a-entity>
+
+        <!-- room -->
+        <a-box
+          width="12" depth="12" height="5"
+          color="#f8fbfe" material="side: back"
+          position="0 2.5 -4"
+        >
+          <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="3 0 3"></a-box>
+          <a-box width="0.5" depth="6" height="0.5" color="#f8fbfe" position="-3 1.4 0"></a-box>
+          <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="3 0 -3"></a-box>
+          <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="-3 0 3"></a-box>
+          <a-box width="0.5" depth="6" height="0.5" color="#f8fbfe" position="3 1.4 0"></a-box>
+          <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="-3 0 -3"></a-box>
+          <a-text value="JAIL SUBJECT 13\nKNOWS" align="center" font="monoid" width="15" position="0 1 -5"></a-text>
+        </a-box>
+      </a-entity>
+
+      <a-entity id="level_5" level="gameTimeTracked: true">
+        <!-- grabbable stuff -->
+        <a-gun position="-1 1.2 -0.4" gravity health="group: friend"></a-gun>
+        <a-gun position="1 1.2 -0.4" gravity health="group: friend"></a-gun>
+        <a-portal position="0 1 -0.65" to="#level_6" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
         <!-- enemy -->
         <a-cone
@@ -131,6 +217,16 @@
           </a-entity>
         </a-cone>
 
+        <a-torus-knot
+        arc="180" p="5" q="11" radius="0.25" radius-tubular="0.05"
+        material="color: #ef2d5e; flatShading: true"
+        position="1 1.25 -3"
+        spin-motion="direction: 0 0 1; speed: 4"
+        puppet
+        health="group: foe"
+        dynamic-collider>
+      </a-torus-knot>
+
         <!-- room -->
         <a-box
           width="12" depth="12" height="5"
@@ -143,6 +239,53 @@
           <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="-3 0 -3"></a-box>
           <a-text value="JUST SHOOT 13, KNUCKLEHEADS!" align="center" font="monoid" width="15" position="0 1 -3"></a-text>
         </a-box>
+      </a-entity>
+
+      <a-entity id="level_6" level="gameTimeTracked: true">
+        <!-- grabbable stuff -->
+        <a-gun position="-1 1.2 -0.4" gravity health="group: friend"></a-gun>
+        <a-gun position="1 1.2 -0.4" gravity health="group: friend"></a-gun>
+        <a-portal position="0 1 -0.65" to="#level_7" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
+
+        <!-- enemy -->
+        <a-entity rotate="45 0 0">
+        <a-sphere position="0 1.5 -2" radius="0.25" segments-width="20" segments-height="10" material="color: #ef2d5e; flatShading: true">
+          <a-cone
+            height="0.75" radius-bottom="0.4" radius-top="0.25" segments-radial="20" segments-height="1" material="color: #ef2d5e; flatShading: true"
+            position="0 -0.38 0"
+          ></a-cone>
+          <a-cylinder radius="0.025" height="0.25" material="color: #ef2d5e; flatShading: true" rotation="90 0 0" position="0 0.2 0.25">
+            <a-cylinder radius="0.04" height="0.08" material="color: #ef2d5e; flatShading: true" position="0 0.07 0">
+            </a-cylinder>
+          </a-cylinder>
+          <a-cylinder radius="0.025" height="0.5" material="color: #ef2d5e; flatShading: true" rotation="90 0 0" position="-0.1 -0.1 0.45">
+            <a-cylinder radius="0.04" height="0.08" material="color: #ef2d5e; flatShading: true" position="0 0.2 0">
+            </a-cylinder>
+          </a-cylinder>
+          <a-cylinder radius="0.01" height="0.25" material="color: #ef2d5e; flatShading: true" rotation="90 0 0" position="0.1 -0.1 0.35">
+            <a-cylinder radius="0.03" height="0.22" segments-radial="6" segments-height="4" geometry="openEnded: true" material="color: #ef2d5e; flatShading: true; wireframe: true">
+            </a-cylinder>
+          </a-cylinder>
+        </a-sphere>
+        </a-entity>
+      <!-- room -->
+        <a-box
+          width="12" depth="12" height="5"
+          color="#f8fbfe" material="side: back"
+          position="0 2.5 -4"
+        >
+          <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="3 0 3"></a-box>
+          <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="3 0 -3"></a-box>
+          <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="-3 0 3"></a-box>
+          <a-box width="1" depth="1" height="5" color="#f8fbfe"  position="-3 0 -3"></a-box>
+          <a-text value="GOD ALL MIGHTY!\nEXTERMINATE SWIFTLY" align="center" font="monoid" width="13" position="0 1 -5"></a-text>
+        </a-box>
+      </a-entity>
+
+
+      <a-entity id="level_7" level>
+        <a-text value="THANK YOU FOR PLAYING!" align="center" font="monoid" width="10" height="10" position="0 1.8 -5.5"></a-text>
+        <a-text value="NO 3D SHAPES WERE HURT\nIN THE MAKING OF THIS GAME\n(IT'S ALL VIRTUAL ANYWAY)" align="center" font="monoid" width="10" height="5" position="0 0.25 -5.5"></a-text>
       </a-entity>
 
       <a-portal id="retry" position="0 1 -0.65" text-value="RETRY" text-width="1.4" visible="false"></a-portal>
