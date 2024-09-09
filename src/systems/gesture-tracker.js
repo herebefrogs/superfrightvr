@@ -51,18 +51,19 @@ AFRAME.registerSystem('gesture-tracker', {
     if (gun.components.raycaster.data.enabled) {
       const world = document.querySelector('#world');
 
-      // FIXME this is wrong: the normal is going to be the same if the gun still points at the same face (e.g. if the sphere was a box it would be very apparent)
-      // so the bullet isn't going to come out of the gun straight most of the time, breaking the illusion and being frustrating to aim
       const intersection = gun.components.raycaster.getIntersection(world)
       const normal = intersection.normal;
       const direction = { x: -normal.x, y: -normal.y, z: -normal.z };
 
       const bullet = document.createElement('a-bullet');
-      const origin = gun.getAttribute('position');
       const rotation = gun.getAttribute('rotation');
 
-      // TODO add the raycaster's origin to the gun position, currently hard coded (and wrong)
-      bullet.setAttribute('position', `${origin.x} ${origin.y + 0.08} ${origin.z - 0.22}`);
+      // NOTE y and z should be swapped, but given the gun model is pointing downward to account
+      // for hand model also corrected by AFRAME, it works as is
+      const nozzlePosition = new THREE.Vector3(0, -0.22, -0.08);
+      const origin = gun.object3D.localToWorld(nozzlePosition);
+
+      bullet.setAttribute('position', `${origin.x} ${origin.y} ${origin.z}`);
       bullet.setAttribute('rotation', `${rotation.x} ${rotation.y} ${rotation.z}`);
       bullet.setAttribute('linear-motion', { direction: `${direction.x} ${direction.y} ${direction.z}` })
       bullet.setAttribute('health', { group: gun.components.health.data.group });
