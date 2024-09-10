@@ -301,7 +301,8 @@
       <a-sky color="#ddd"></a-sky>
       <a-sphere id="world" color="blue" radius="1000" material="shader: flat; wireframe: true; side: back"></a-sphere>
 
-      <a-camera motion-tracker wasd-controls="acceleration:25">
+      <!-- sorta player head & body -->
+      <a-camera motion-tracker health="group: friend" obb-collider="size: 0.2">
         <!-- sorta HUD -->
         <a-text 
           value="0.00s"
@@ -311,15 +312,6 @@
           position="0 0.65 -1.5"
           game-time
           ></a-text>
-        <!-- sorta player head & body -->
-        <a-box id="player"
-               height="1.5"
-               width="0.5"
-               depth="0.01"
-               position="0 0.9 0"
-               obb-collider
-               health="group: friend"
-        ></a-box>
       </a-camera>
 
       <a-entity id="left"

@@ -4,10 +4,7 @@ FLOOR_HEIGHT = 0.1;
 
 AFRAME.registerSystem('puppeteer', {
   init: function() {
-    this.playerLimbs = [
-      ...document.querySelectorAll('[gesture-tracker]'),
-      document.querySelector('#player')
-    ];
+    this.playerLimbs = [...document.querySelectorAll('[motion-tracker]')];
     this.retry = document.querySelector('#retry');
 
     this.el.addEventListener('tick', (e) => this._tick(e.detail.time, e.detail.timeDelta));

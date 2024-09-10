@@ -28,7 +28,7 @@ AFRAME.registerComponent('sniper', {
     const sniperPosition = object3D.localToWorld(object3D.position.clone());
     const playerDirection = this.playerHead.position.clone()
     // head is a bit too high, aim at upper torso
-    playerDirection.y -= 0.2;
+    playerDirection.y -= 0.05;
     playerDirection.sub(sniperPosition).normalize();
 
     const bullet = document.createElement('a-bullet');
