@@ -85,7 +85,7 @@ AFRAME.registerSystem('puppeteer', {
       this.el.addState('level-cleared')
       this.el.removeState('game-time-tracked');
 
-      if (this.el.is('title') || this.el.is('level_7')) {
+      if (this.el.is('title') || this.el.is('end')) {
         speak('Super. Fright!')
 
         this.speakInterval = setInterval(() => {
