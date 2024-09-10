@@ -65,6 +65,7 @@ AFRAME.registerSystem('puppeteer', {
 
     for (let el of this.puppets) {
       if (!el.components.health.data.hp) {
+        zzfx(2.1,.05,315,.02,.02,.25,3,2.2,0,0,0,0,.02,0,32,.1,.17,.7,.07,.42,-1696); 
         this.puppets = this.puppets.filter(p => p !== el);
       }
     }
@@ -83,13 +84,43 @@ AFRAME.registerSystem('puppeteer', {
     }
   },
   showNextLevelPortal: function() {
-    this.el.removeState('game-time-tracked');
-    this.portal.setAttribute('visible', true);
+    if (!this.el.is('level-cleared')) {
+      this.el.addState('level-cleared')
+      this.el.removeState('game-time-tracked');
+
+      if (this.el.is('title') || this.el.is('level_7')) {
+        speak('Super. Fright!')
+
+        this.speakInterval = setInterval(() => {
+          speak('Super. Fright!')
+        }, 7500);
+      } else {
+        // give some time for the 'enemy hit' sound to play & complete
+        setTimeout(() => {
+          zzfx(1.7,.05,281,.04,.13,.35,0,1.7,0,-22,227,.09,.09,.3,0,0,.17,.6,.21,.28,-1463);  // portal appear
+          this.portal.setAttribute('visible', true);
+        }, 1000);
+      }
+    }
   },
   showRetry: function() {
-    // TODO would be a good time to play a broken sounds
-    this.retry.setAttribute('portal', { to: '#' + this.el.systems.level.activeLevel.id })
-    this.retry.setAttribute('visible', true);
+    if (!this.el.is('game-over')) {
+      this.el.addState('game-over')
+      zzfx(1,.05,148,.02,.01,.18,3,.2,.1,.8,0,-0.05,0,.1,-4,.3,0,.68,.08,.01,103); 
+
+      // give some time for the 'player hit' sound to play & complete
+      setTimeout(() => {
+        zzfx(1.7,.05,507,.07,.23,.17,0,2.5,0,7,-85,.07,.02,0,0,0,.15,.72,.15,0,0);
+        this.retry.setAttribute('portal', { to: '#' + this.el.systems.level.activeLevel.id })
+        this.retry.setAttribute('visible', true);
+      }, 1000)
+    }
+  },
+  stopSpeak: function() {
+    if (this.speakInterval) {
+      clearInterval(this.speakInterval)
+      this.speakInterval = 0;
+    }
   },
   reset: function() {
     this.walkers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [linear-motion]`)];

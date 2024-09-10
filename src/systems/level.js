@@ -18,8 +18,8 @@ AFRAME.registerSystem('level', {
 
       this.loadLevel(levelId);
   
-      // DEBUG.loadLevel('#level_1', 0)
-      // DEBUG.grabPortal('#right', '#title', 100);
+      // DEBUG.loadLevel('#level_7', 0)
+      // DEBUG.grabPortal('#right', '#title', 10000);
       // DEBUG.grabGun('#left', '#level_1', 500);
       // DEBUG.move('#left', '-1 1.5 -0.5', 550);
       // DEBUG.shoot('#left', 600);
@@ -59,5 +59,8 @@ AFRAME.registerSystem('level', {
     const sceneEl = this.el;
     sceneEl[active ? 'addState' : 'removeState'](levelEl.id);
     sceneEl[levelEl.getAttribute('level').gameTimeTracked ? 'addState' : 'removeState']('game-time-tracked');
+    sceneEl.removeState('level-cleared');
+    sceneEl.removeState('game-over')
+    sceneEl.systems.puppeteer.stopSpeak();
   }
 });

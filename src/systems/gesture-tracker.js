@@ -9,11 +9,13 @@ AFRAME.registerSystem('gesture-tracker', {
       if (hand.is('hovering-portal') && hand.is('grabbing')) {
         hand.removeState('hovering-portal');
         hand.removeState('grabbing')
+        zzfx(1,.05,166,.07,.11,.15,0,2.8,-3,-186,0,0,.1,0,0,.1,0,.55,.26,0,0);  // portal grabbed
         this.el.emit('loadlevel', { levelId: gesture.getTarget('hovering-portal').components.portal.data.to });
       }
       else if (hand.is('hovering-gun') && hand.is('grabbing') && !gesture.getTarget('hovering-gun').is('grabbed')) {
         hand.removeState('hovering-gun');
         hand.addState('holding-gun');
+
         this.grabGun(gesture.updateTarget('hovering-gun', 'holding-gun'), hand);
       }
       else if (hand.is('holding-gun') && !hand.is('grabbing')) {
@@ -30,8 +32,10 @@ AFRAME.registerSystem('gesture-tracker', {
     }
   },
   grabGun: function(gun, hand) {
+    zzfx(1,.05,43,0,.44,.03,1,1.8,-18,-58,0,0,.01,.4,0,.1,0,.77,.11,0,0); // drop gun
     gun.addState('grabbed');
     // FIXME that would be ideal but the gun doesn't get rendered even though it gets attached to the hand!
+    // REASON: re-parenting isn't supported in AFRAME, advised to sync position/rotation from hand to gun
     // hand.appendChild(gun)
 
     // instead, actively sync the hand's position/rotation to the gun
@@ -41,6 +45,7 @@ AFRAME.registerSystem('gesture-tracker', {
     gun.setAttribute('gravity', false);
  },
   dropGun: function(gun) {
+    zzfx(1,.05,43,0,.44,.03,1,1.8,-18,-58,0,0,.01,.4,0,.1,0,.77,.11,0,0); // drop gun
     gun.removeState('grabbed');
     gun.removeAttribute('sync-stance');
     gun.setAttribute('raycaster', { enabled: false });
@@ -49,6 +54,7 @@ AFRAME.registerSystem('gesture-tracker', {
   shootGun: function(gun) {
     // NOTE we should only call shootGun when it's true, but it's safer to check
     if (gun.components.raycaster.data.enabled) {
+      zzfx(1,.05,62,.01,.07,.4,2,2.8,6,-8,0,0,0,1.4,28,.4,0,.4,.1,.46,181); // gun shot
       const world = document.querySelector('#world');
 
       const intersection = gun.components.raycaster.getIntersection(world)

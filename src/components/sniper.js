@@ -22,6 +22,8 @@ AFRAME.registerComponent('sniper', {
     }
   },
   fireBullet: function() {
+    zzfx(1,.05,62,.01,.07,.4,2,2.8,6,-8,0,0,0,1.4,28,.4,0,.4,.1,.46,181); // gun shot
+
     const object3D = this.el.object3D
     const sniperPosition = object3D.localToWorld(object3D.position.clone());
     const playerDirection = this.playerHead.position.clone()
