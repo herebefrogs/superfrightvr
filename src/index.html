@@ -194,11 +194,12 @@
           <a-box width="1" depth="1" height="5" color="#f7fafd"  position="-3 0 -3"></a-box>
           <a-text value="JAIL SUBJECT 13\nKNOWS" align="center" font="monoid" width="15" position="0 1 -5"></a-text>
         </a-box>
+        <a-plane height="12" width="12" position="0 0.01 -4" rotation="-90 0 0"></a-plane>
       </a-entity>
 
       <a-entity id="last_level" level="gameTimeTracked: true">
         <!-- grabbable stuff -->
-        <a-gun position="-1 1.2 -0.4" gravity health="group: friend"></a-gun>
+        <a-gun position="0 1.5 -0.75" gravity health="group: friend"></a-gun>
         <a-portal position="0 1 -0.65" to="#end" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
         <!-- enemy -->
@@ -210,7 +211,49 @@
             p="5" q="11" radius="0.25" radius-tubular="0.05"
             material="color: #ef2d5e; flatShading: true"
             puppet
-            sniper="firstShotDelay: 0.25; frequency: 0.5"
+            sniper="firstShotDelay: 0.25; frequency: 0.75"
+            health="group: foe"
+            dynamic-collider>
+            <a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35 0" color="#ef2d5e"></a-pyramid>
+            <a-entity rotation="0 0 60"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+            <a-entity rotation="0 0 120"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+            <a-entity rotation="0 0 180"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+            <a-entity rotation="0 0 240"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+            <a-entity rotation="0 0 300"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+          </a-torus-knot>
+        </a-entity>
+
+        <a-entity position="-6 1.25 -4"
+          spin-motion="direction: 0 0 1; speed: 4"
+          linear-motion="direction: 1.25 0 1; speed: 0.33"
+          sinlinear-motion="direction: -1 0 0"
+          rotation="0 55 0">
+          <a-torus-knot
+            p="5" q="11" radius="0.25" radius-tubular="0.05"
+            material="color: #ef2d5e; flatShading: true"
+            puppet
+            sniper="firstShotDelay: 0.75; frequency: 1.5"
+            health="group: foe"
+            dynamic-collider>
+            <a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35 0" color="#ef2d5e"></a-pyramid>
+            <a-entity rotation="0 0 60"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+            <a-entity rotation="0 0 120"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+            <a-entity rotation="0 0 180"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+            <a-entity rotation="0 0 240"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+            <a-entity rotation="0 0 300"><a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35" color="#ef2d5e"></a-pyramid></a-entity>
+          </a-torus-knot>
+        </a-entity>
+
+        <a-entity position="6 1.25 -4"
+          spin-motion="direction: 0 0 1; speed: 4"
+          linear-motion="direction: -1.25 0 1; speed: 0.33"
+          sinlinear-motion="direction: -1 0 0"
+          rotation="0 -55 0">
+          <a-torus-knot
+            p="5" q="11" radius="0.25" radius-tubular="0.05"
+            material="color: #ef2d5e; flatShading: true"
+            puppet
+            sniper="firstShotDelay: 0.55; frequency: 1.5"
             health="group: foe"
             dynamic-collider>
             <a-pyramid width="0.1" depth="0.1" height="0.5" position="0.45 0 0.45" rotation="90 35 0" color="#ef2d5e"></a-pyramid>
@@ -224,6 +267,7 @@
 
         <!-- room -->
         <a-plane height="100" width="100" rotation="-90 0 0"></a-plane>
+        <!-- tombs -->
         <a-box width="1" depth="0.2" height="1" color="#f7fafd" position="-5 0.5 -5" rotation="0 0 10">
           <a-cylinder color="#f7fafd"  height="0.2" radius="0.5" position="0 0.5 0" rotation="90 0 0"></a-cylinder>
           <a-text value="JUST" align="center" font="monoid" width="8" position="0 0.25 0.1"></a-text>  
@@ -240,6 +284,19 @@
           <a-text value="KNUCKLE-\nHEADS!" align="center" font="monoid" width="5" position="0 0.25 0.1"></a-text>  
         </a-box>
 
+        <a-box width="1.5" depth="0.25" height="0.75" position="0 0.375 -1" color="#f7fafd">
+          <a-cylinder color="#f7fafd"  height="0.25" radius="0.5" position="0 0.4 0" rotation="90 0 0" health="group: friend; hp: 999" dynamic-collider></a-cylinder>
+          <a-text value="GOD\nALL MIGHTY\nEXTERMINATE\nSWIFTLY" align="center" font="monoid" width="3" height="10" position="0 0.4 0.15"></a-text>  
+        </a-box>
+        <a-box width="1" depth="0.2" height="1" color="#f7fafd" position="-2 0.55 -2.5" rotation="0 0 -5"></a-box>
+        <a-box width="1" depth="0.2" height="1" color="#f7fafd" position="4.5 0 -1.25" rotation="0 -35 -10">
+          <a-cylinder color="#f7fafd"  height="0.2" radius="0.5" position="0 0.5 0" rotation="90 0 0"></a-cylinder>
+        </a-box>
+        <a-box width="1" depth="0.2" height="2.5" color="#f7fafd" position="-4.25 0 -1.5" rotation="0 40 15">
+          <a-cylinder color="#f7fafd"  height="0.2" radius="0.5" position="0 1.7 0" rotation="90 0 0"></a-cylinder>
+        </a-box>
+
+        <!-- crypt -->
         <a-box width="4" depth="5" height="5" color="#f7fafd" position="-8 3.5 -15" rotation="0 10 0">
           <a-box width="5" depth="6" height="0.5" color="#f7fafd" position="0 3.25 0"></a-box>
           <a-box width="4.5" depth="5.5" height="0.5" color="#f7fafd" position="0 2.75 0"></a-box>
@@ -249,20 +306,10 @@
           <a-box width="3" depth="0.5" height="1" color="#f7fafd" position="0 5.5 2.5"></a-box>
         </a-box>
 
+        <!-- full moon -->
         <a-circle radius="50" position="200 250 -250" rotation="0 -25 0"></a-circle>
 
-        <a-box width="1" depth="0.2" height="1" color="#f7fafd" position="-2 0 -2.5" rotation="0 0 -15">
-          <a-cylinder color="#f7fafd"  height="0.2" radius="0.5" position="0 0.5 0" rotation="90 0 0"></a-cylinder>
-        </a-box>
-
-        
-        <a-box width="1" depth="0.2" height="1" color="#f7fafd" position="2 0 -2.25" rotation="0 0 -10">
-          <a-cylinder color="#f7fafd"  height="0.2" radius="0.5" position="0 0.5 0" rotation="90 0 0"></a-cylinder>
-        </a-box>
-        
-        <a-box width="1" depth="0.2" height="2.5" color="#f7fafd" position="-4.25 0 -1.5" rotation="0 40 15">
-          <a-cylinder color="#f7fafd"  height="0.2" radius="0.5" position="0 1.7 0" rotation="90 0 0"></a-cylinder>
-        </a-box>
+        <!-- walls -->
         <a-box width="50" depth="0.1" height="5" color="#f7fafd" position="0 2.5 -25"></a-box>
         <a-box width="50" depth="0.1" height="5" color="#f7fafd" position="-15 2.5 0" rotation="0 90 0"></a-box>
         <a-box width="50" depth="0.1" height="5" color="#f7fafd" position="15 2.5 0" rotation="0 90 0"></a-box>
