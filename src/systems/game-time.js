@@ -12,10 +12,10 @@ AFRAME.registerSystem('game-time', {
   init: function() {
     this.playerLimbs = document.querySelectorAll('[motion-tracker]');
 
-    this.gameTimeHUD = document.querySelector('[game-time]');
+    // this.gameTimeHUD = document.querySelector('[game-time]');
 
-    const sceneEl = this.el;
-    sceneEl.addEventListener('level-loaded', () => { this.toggleGameTimeHUDVisibility(sceneEl.is('game-time-tracked')); })
+    // const sceneEl = this.el;
+    // sceneEl.addEventListener('level-loaded', () => { this.toggleGameTimeHUDVisibility(sceneEl.is('game-time-tracked')); })
   },
   tick: function(_time, timeDelta) {
     const sceneEl = this.el;
@@ -30,7 +30,7 @@ AFRAME.registerSystem('game-time', {
     if (timeDelta) {
       if (sceneEl.is('game-time-tracked')) {
         this.data += timeDelta;
-        this.gameTimeHUD.setAttribute('game-time', this.data);
+        // this.gameTimeHUD.setAttribute('game-time', this.data);
       }
 
       sceneEl.emit('tick', { time: this.data, timeDelta });
