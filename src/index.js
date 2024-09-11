@@ -3,8 +3,8 @@
 // they don't import each other so that's the only way for esbuild
 // to bundle anything
 
-import "./utils/debug-console.js"  // TODO remove for shipping game
-import "./utils/debug-controller.js"
+// import "./utils/debug-console.js"  // TODO remove for shipping game
+// import "./utils/debug-controller.js"
 import "./utils/speech.js"
 import "./utils/zzfx.js"
 import "./primitives/a-bullet.js"
