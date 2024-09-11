@@ -36,8 +36,8 @@ AFRAME.registerComponent('bullet', {
     obbcollisionstarted: function (e) {
       const target = e.detail.withEl;
       if (target.components.health && (this.el.components.health.data.group !== target.components.health.data.group)) {
-        // kill target, expend the bullet
-        target.setAttribute('health', { hp: 0 });
+        // hurt target, expend the bullet
+        target.setAttribute('health', { hp: target.components.health.data.hp - 1 });
         this.el.setAttribute('health', { hp: 0 });
       }
     },

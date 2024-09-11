@@ -29,8 +29,8 @@ AFRAME.registerComponent('health', {
               || (elGroup === 'foe' && target.components['motion-tracker'] && !target.is('shooting'))
             )
           ) {
-          // kill target
-          target.setAttribute('health', { hp: 0 });
+          // hurt target
+          target.setAttribute('health', { hp: target.components.health.data.hp - 1 });
         }
       }
     },
