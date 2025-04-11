@@ -11,6 +11,8 @@ window.DEBUG = {
   ...window.DEBUG,
   grabGun: (handId, levelId, delay) => {
     grabEntity(handId, levelId, delay, 'gun');
+    const gun = document.querySelector(`${levelId} a-gun`);
+    gun.setAttribute('gun', { pointDown: false });
   },
   grabPortal: (handId, levelId, delay) => {
     grabEntity(handId, levelId, delay, 'portal');
@@ -25,6 +27,12 @@ window.DEBUG = {
     setTimeout(() => {
       const hand = document.querySelector(handId);
       hand.setAttribute('position', position);
+    }, delay);
+  },
+  rotate: (handId, rotation, delay) => {
+    setTimeout(() => {
+      const hand = document.querySelector(handId);
+      hand.setAttribute('rotation', rotation);
     }, delay);
   },
   shoot: (handId, delay) => {
