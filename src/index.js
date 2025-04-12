@@ -5,7 +5,7 @@
 
 // import "./utils/debug-console.js"  // TODO remove for shipping game
 // import "./utils/debug-controller.js"
-import "./utils/speech.js"
+// import "./utils/speech.js"
 import "./utils/zzfx.js"
 import "./primitives/a-bullet.js"
 import "./primitives/a-gun.js"

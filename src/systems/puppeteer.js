@@ -85,19 +85,11 @@ AFRAME.registerSystem('puppeteer', {
       this.el.addState('level-cleared')
       this.el.removeState('game-time-tracked');
 
-      if (this.el.is('title') || this.el.is('end')) {
-        speak('Super. Fright!')
-
-        this.speakInterval = setInterval(() => {
-          speak('Super. Fright!')
-        }, 7500);
-      } else {
-        // give some time for the 'enemy hit' sound to play & complete
-        setTimeout(() => {
-          zzfx(1.7,.05,281,.04,.13,.35,0,1.7,0,-22,227,.09,.09,.3,0,0,.17,.6,.21,.28,-1463);  // portal appear
-          this.portal.setAttribute('visible', true);
-        }, 1000);
-      }
+      // give some time for the 'enemy hit' sound to play & complete
+      setTimeout(() => {
+        zzfx(1.7,.05,281,.04,.13,.35,0,1.7,0,-22,227,.09,.09,.3,0,0,.17,.6,.21,.28,-1463);  // portal appear
+        this.portal.setAttribute('visible', true);
+      }, 1000);
     }
   },
   showRetry: function() {
@@ -111,12 +103,6 @@ AFRAME.registerSystem('puppeteer', {
         this.retry.setAttribute('portal', { to: '#' + document.querySelector('[level]').id })
         this.retry.setAttribute('visible', true);
       }, 1000)
-    }
-  },
-  stopSpeak: function() {
-    if (this.speakInterval) {
-      clearInterval(this.speakInterval)
-      this.speakInterval = 0;
     }
   },
   reset: function() {

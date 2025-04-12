@@ -57,10 +57,8 @@ AFRAME.registerSystem('level', {
     // so it's always active...
     levelEl.setAttribute('level', { active });
     const sceneEl = this.el;
-    sceneEl[active ? 'addState' : 'removeState'](levelEl.id);
     sceneEl[levelEl.getAttribute('level').gameTimeTracked ? 'addState' : 'removeState']('game-time-tracked');
     sceneEl.removeState('level-cleared');
     sceneEl.removeState('game-over')
-    sceneEl.systems.puppeteer.stopSpeak();
   }
 });
