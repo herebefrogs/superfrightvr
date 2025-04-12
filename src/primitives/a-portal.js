@@ -35,8 +35,8 @@ AFRAME.registerComponent('portal', {
   },
   events: {
     componentchanged: function(e) {
-      if (e.detail.name === 'visible' && this.el.getAttribute('visible')) {
-        this.el.components['dynamic-collider']._play();
+      if (e.detail.name === 'visible') {
+        this.el.components['dynamic-collider'][this.el.getAttribute('visible') ? '_play' : '_pause']();
       }
     }
   },

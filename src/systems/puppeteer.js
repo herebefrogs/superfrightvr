@@ -126,6 +126,8 @@ AFRAME.registerSystem('puppeteer', {
     this.gravitas = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [gravity]`)];
     this.puppets = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [puppet]`)];
     this.portal = document.querySelector(`#${this.el.systems.level.activeLevel?.id} a-portal`)
+    this.retry.setAttribute('visible', false);
+    this.playerLimbs.forEach(limb => limb.setAttribute('health', { hp: 1 }))
   },
   trackEntity: function(el) {
     if (el.components['linear-motion']) {

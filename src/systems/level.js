@@ -12,13 +12,9 @@ AFRAME.registerSystem('level', {
     sceneEl.addEventListener('loadlevel', (e) => this.loadLevel(e.detail.levelId));
 
     // the true "main()"
-    sceneEl.addEventListener('loaded', (e) => {
-      // jump straight to a particular level if indicated by a URL param
-      const levelId = new URLSearchParams(location.search).get('levelId') || '#title';
-
-      this.loadLevel(levelId);
+    sceneEl.addEventListener('loaded', () => {
+      this.loadLevel('#title');
   
-      // DEBUG.loadLevel('#level_7', 0)
       // DEBUG.grabPortal('#right', '#title', 10000);
       // DEBUG.grabGun('#left', '#level_1', 500);
       // DEBUG.move('#left', '-1 1.5 -0.5', 550);
@@ -34,16 +30,18 @@ AFRAME.registerSystem('level', {
   loadLevel: function(levelId) {
     let activeLevel = this.activeLevel;
 
-    if (activeLevel && '#'+activeLevel.id === levelId) {
-      location.search = '?levelId=' + levelId
-      return;
-    }
-
     if (activeLevel) {
       this.toggleLevel(activeLevel, false)
+      document.querySelector('a-scene').removeChild(activeLevel)
     }
 
-    activeLevel = document.querySelector(levelId)
+    // clone the level templates
+    const levelTemplates = document.createElement('div');
+    levelTemplates.innerHTML = document.querySelector(`#level_templates`).innerHTML;
+    // pick the level we need
+    activeLevel = levelTemplates.querySelector(`${levelId}`)
+
+    document.querySelector('a-scene').appendChild(activeLevel)
     this.toggleLevel(activeLevel, true)
     this.activeLevel = activeLevel;
 

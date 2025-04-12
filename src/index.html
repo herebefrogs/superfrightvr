@@ -6,6 +6,49 @@
   </head>
   <body>
     <a-scene>
+      <a-portal id="retry" position="0 1 -0.65" text-value="RETRY" text-width="1.4" visible="false"></a-portal>
+      <a-sky color="#ddd"></a-sky>
+      <a-sphere id="world" color="blue" radius="1000" material="shader: flat; wireframe: true; side: back"></a-sphere>
+
+      <!-- sorta player head & body -->
+      <a-camera motion-tracker health="group: friend" obb-collider="size: 0.2">
+        <!-- sorta HUD -->
+        <!-- <a-text
+          value="0.00s"
+          align="center"
+          color="black"
+          font="monoid"
+          position="0 0.65 -1.5"
+          game-time
+          ></a-text> -->
+      </a-camera>
+
+      <a-entity id="left"
+                hand-controls="hand: left; handModelStyle: toon"
+                position="-0.5 1 0"
+                health="group: friend"
+                obb-collider="size: 0.1"
+                motion-tracker
+                gesture-tracker
+      >
+        <a-text value="1" color="black" font="monoid" align="center"
+          width="1" position="-0.028 0.05 0" rotation="185 90 0"></a-text>
+      </a-entity>
+      <a-entity id="right"
+          hand-controls="hand: right; handModelStyle: toon"
+          position="0.5 1 0"
+          health="group: friend"
+          obb-collider="size: 0.1"
+          motion-tracker
+          gesture-tracker
+      >
+        <a-text value="3" color="black" font="monoid" align="center"
+        width="1" position="0.028 0.05 0" rotation="185 -90 0"></a-text>
+      </a-entity>
+
+    </a-scene>
+
+    <script id="level_templates" type="text/html">
       <a-entity id="title" level>
         <a-text
           value="SUP3RFR1GHT VR"
@@ -331,47 +374,6 @@
         <a-text value="THANK YOU FOR PLAYING!" align="center" color="black" font="monoid" width="8" position="0 1.6 -5"></a-text>
         <a-text value="NO 3D SHAPES WERE HARMED\nIN THE MAKING OF THIS GAME\n(IT'S ALL VIRTUAL ANYWAY)" align="center" color="black" font="monoid" width="8" position="0 0.25 -5.5"></a-text>
       </a-entity>
-
-      <a-portal id="retry" position="0 1 -0.65" text-value="RETRY" text-width="1.4" visible="false"></a-portal>
-      <a-sky color="#ddd"></a-sky>
-      <a-sphere id="world" color="blue" radius="1000" material="shader: flat; wireframe: true; side: back"></a-sphere>
-
-      <!-- sorta player head & body -->
-      <a-camera motion-tracker health="group: friend" obb-collider="size: 0.2">
-        <!-- sorta HUD -->
-        <!-- <a-text 
-          value="0.00s"
-          align="center"
-          color="black"
-          font="monoid"
-          position="0 0.65 -1.5"
-          game-time
-          ></a-text> -->
-      </a-camera>
-
-      <a-entity id="left"
-                hand-controls="hand: left; handModelStyle: toon"
-                position="-0.5 1 0"
-                health="group: friend"
-                obb-collider="size: 0.1"
-                motion-tracker
-                gesture-tracker
-      >
-        <a-text value="1" color="black" font="monoid" align="center"
-          width="1" position="-0.028 0.05 0" rotation="185 90 0"></a-text>
-      </a-entity>
-      <a-entity id="right"
-          hand-controls="hand: right; handModelStyle: toon"
-          position="0.5 1 0"
-          health="group: friend"
-          obb-collider="size: 0.1"
-          motion-tracker
-          gesture-tracker
-      >
-        <a-text value="3" color="black" font="monoid" align="center"
-        width="1" position="0.028 0.05 0" rotation="185 -90 0"></a-text>
-      </a-entity>
-
-    </a-scene>
+    </script>
   </body>
 </html>
