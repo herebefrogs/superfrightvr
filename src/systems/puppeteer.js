@@ -108,7 +108,7 @@ AFRAME.registerSystem('puppeteer', {
       // give some time for the 'player hit' sound to play & complete
       setTimeout(() => {
         zzfx(1.7,.05,507,.07,.23,.17,0,2.5,0,7,-85,.07,.02,0,0,0,.15,.72,.15,0,0);
-        this.retry.setAttribute('portal', { to: '#' + this.el.systems.level.activeLevel.id })
+        this.retry.setAttribute('portal', { to: '#' + document.querySelector('[level]').id })
         this.retry.setAttribute('visible', true);
       }, 1000)
     }
@@ -120,12 +120,12 @@ AFRAME.registerSystem('puppeteer', {
     }
   },
   reset: function() {
-    this.walkers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [linear-motion]`)];
-    this.sinWalkers = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [sinlinear-motion]`)];
-    this.spinners = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [spin-motion]`)];
-    this.gravitas = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [gravity]`)];
-    this.puppets = [...document.querySelectorAll(`#${this.el.systems.level.activeLevel?.id} [puppet]`)];
-    this.portal = document.querySelector(`#${this.el.systems.level.activeLevel?.id} a-portal`)
+    this.walkers = [...document.querySelectorAll('[level] [linear-motion]')];
+    this.sinWalkers = [...document.querySelectorAll('[level] [sinlinear-motion]')];
+    this.spinners = [...document.querySelectorAll('[level] [spin-motion]')];
+    this.gravitas = [...document.querySelectorAll('[level] [gravity]')];
+    this.puppets = [...document.querySelectorAll('[level] [puppet]')];
+    this.portal = document.querySelector('[level] a-portal')
     this.retry.setAttribute('visible', false);
     this.playerLimbs.forEach(limb => limb.setAttribute('health', { hp: 1 }))
   },

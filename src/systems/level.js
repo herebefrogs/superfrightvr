@@ -53,6 +53,8 @@ AFRAME.registerSystem('level', {
     this.el.emit('level-loaded', { level: activeLevel });
   },
   toggleLevel: function(levelEl, active) {
+    // TODO the concept of "active" is unnecessary now that there is only 1 level in the scene at all time
+    // so it's always active...
     levelEl.setAttribute('level', { active });
     const sceneEl = this.el;
     sceneEl[active ? 'addState' : 'removeState'](levelEl.id);

@@ -39,6 +39,6 @@ AFRAME.registerComponent('sniper', {
     bullet.setAttribute('linear-motion', { direction: playerDirection })
     bullet.setAttribute('health', { group: this.el.components.health.data.group })
 
-    this.el.sceneEl.systems.level.activeLevel.appendChild(bullet);
+    document.querySelector('[level]').appendChild(bullet);
   }
 });
