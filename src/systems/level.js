@@ -14,6 +14,9 @@ AFRAME.registerSystem('level', {
     // the true "main()"
     sceneEl.addEventListener('loaded', () => {
       this.loadLevel('#title');
+
+      // hack to avoid "next portal appears" sound
+      this.el.addState('level-cleared');
   
       // DEBUG.grabPortal('#right', '#title', 10000);
       // DEBUG.grabGun('#left', '#level_1', 500);
@@ -45,6 +48,11 @@ AFRAME.registerSystem('level', {
     document.querySelector('a-scene').appendChild(newLevel)
     this.toggleLevel(newLevel, true)
 
+    // some scene state cleanups
+    this.el[newLevel.getAttribute('level').gameTimeTracked ? 'addState' : 'removeState']('game-time-tracked');
+    this.el.removeState('level-cleared');
+    this.el.removeState('game-over')
+
     // make hand controllers' release their grabbed objects
     this.hands.forEach(hand => { hand.components['gesture-tracker']?.reset() })
     // remove all objects moved by the puppeteer in this level
@@ -56,9 +64,5 @@ AFRAME.registerSystem('level', {
     // TODO the concept of "active" is unnecessary now that there is only 1 level in the scene at all time
     // so it's always active...
     levelEl.setAttribute('level', { active });
-    const sceneEl = this.el;
-    sceneEl[levelEl.getAttribute('level').gameTimeTracked ? 'addState' : 'removeState']('game-time-tracked');
-    sceneEl.removeState('level-cleared');
-    sceneEl.removeState('game-over')
   }
 });

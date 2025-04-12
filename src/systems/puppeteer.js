@@ -62,7 +62,7 @@ AFRAME.registerSystem('puppeteer', {
 
     for (let el of this.puppets) {
       if (!el.components.health.data.hp) {
-        zzfx(2.1,.05,315,.02,.02,.25,3,2.2,0,0,0,0,.02,0,32,.1,.17,.7,.07,.42,-1696); 
+        zzfx(2.1,.05,315,.02,.02,.25,3,2.2,0,0,0,0,.02,0,32,.1,.17,.7,.07,.42,-1696);  // enemy death
         this.puppets = this.puppets.filter(p => p !== el);
       }
     }
@@ -82,7 +82,7 @@ AFRAME.registerSystem('puppeteer', {
   },
   showNextLevelPortal: function() {
     if (!this.el.is('level-cleared')) {
-      this.el.addState('level-cleared')
+      this.el.addState('level-cleared');
       this.el.removeState('game-time-tracked');
 
       // give some time for the 'enemy hit' sound to play & complete
