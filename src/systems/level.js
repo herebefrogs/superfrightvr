@@ -32,10 +32,7 @@ AFRAME.registerSystem('level', {
   },
   loadLevel: function(levelId) {
     const oldLevel = document.querySelector('[level]');
-
     if (oldLevel) {
-      // TODO is this necessary? most actions in toggleLevel are on the scene and could be done only once
-      this.toggleLevel(oldLevel, false)
       document.querySelector('a-scene').removeChild(oldLevel)
     }
 
@@ -46,7 +43,6 @@ AFRAME.registerSystem('level', {
     const newLevel = levelTemplates.querySelector(`${levelId}`)
 
     document.querySelector('a-scene').appendChild(newLevel)
-    this.toggleLevel(newLevel, true)
 
     // some scene state cleanups
     this.el[newLevel.getAttribute('level').gameTimeTracked ? 'addState' : 'removeState']('game-time-tracked');
@@ -60,9 +56,4 @@ AFRAME.registerSystem('level', {
 
     this.el.emit('level-loaded', { level: newLevel });
   },
-  toggleLevel: function(levelEl, active) {
-    // TODO the concept of "active" is unnecessary now that there is only 1 level in the scene at all time
-    // so it's always active...
-    levelEl.setAttribute('level', { active });
-  }
 });
