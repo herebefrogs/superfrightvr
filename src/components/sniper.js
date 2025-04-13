@@ -2,7 +2,6 @@ AFRAME.registerComponent('sniper', {
   schema: {
     frequency: { type: 'number', default: 1.5 },      // in s
     firstShotDelay: { type: 'number', default: 0.5 }, // in s
-    enabled: { type: 'boolean', default: false }
   },
   init: function() {
     this.nextShotDelay = this.data.firstShotDelay;
@@ -11,14 +10,14 @@ AFRAME.registerComponent('sniper', {
     this.el.sceneEl.addEventListener('tick', (e) => { this._tick(e.detail.time, e.detail.timeDelta) })
   },
   _tick: function(time, timeDelta) {
-    if (this.data.enabled) {
+    if (this.el.isPlaying) {
       this.nextShotDelay -= timeDelta;
   
       if (this.nextShotDelay <= 0) {
         this.nextShotDelay += this.data.frequency;
   
         this.fireBullet();
-    }
+      }
     }
   },
   fireBullet: function() {

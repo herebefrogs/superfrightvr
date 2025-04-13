@@ -38,12 +38,11 @@ AFRAME.registerComponent('health', {
   update: function(oldData) {
     if (this.data.hp <= 0) {
 
+      // this check makes sure that a gun or a player limb doesn't get removed from the scene after being hit
       if (!this.el.components['motion-tracker'] && !this.el.parentNode.components['motion-tracker']) {
         // TODO should animate death
         this.el.parentNode.removeChild(this.el)
-        if (this.el.components['sniper']) {
-          this.el.setAttribute('sniper', { enabled: false });
-        }
+        this.el.pause();
       }
     }
   }
