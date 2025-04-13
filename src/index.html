@@ -49,7 +49,7 @@
     </a-scene>
 
     <script id="level_templates" type="text/html">
-      <a-entity id="title" level>
+      <a-level id="title">
         <a-text
           value="SUP3RFR1GHT VR"
           align="center"
@@ -71,9 +71,9 @@
 
         <a-portal to="#level_1" text-value="GRAB" text-width="1.75"
           position="0 1 -0.65"></a-portal>
-      </a-entity>
+      </a-level>
 
-      <a-entity id="level_1" level="gameTimeTracked: true">
+      <a-level id="level_1" game-time-tracked>
         <!-- grabbable stuff -->
         <a-gun position="0 1.2 -0.5" gravity health="group: friend"></a-gun>
         <a-portal position="0 1 -0.65" to="#level_2" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
@@ -95,9 +95,9 @@
         >
           <a-text value="TIME MOVES\nWHEN YOU MOVE" align="center" font="monoid" width="12" position="0 5.5 1" rotation="90 0 0"></a-text>
         </a-cylinder>
-      </a-entity>
+      </a-level>
 
-      <a-entity id="level_2" level="gameTimeTracked: true">
+      <a-level id="level_2" game-time-tracked>
         <!-- grabbable stuff -->
         <a-portal position="0 1 -0.65" to="#level_3" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
@@ -119,9 +119,9 @@
         >
           <a-text value="PUNCH THRU" align="center" font="monoid" width="15" position="0 5.5 1" rotation="90 0 0"></a-text>
         </a-cylinder>
-      </a-entity>
+      </a-level>
 
-      <a-entity id="level_3" level="gameTimeTracked: true">
+      <a-level id="level_3" game-time-tracked>
         <!-- grabbable stuff -->
         <a-portal position="0 1 -0.65" to="#level_4" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
 
@@ -159,9 +159,9 @@
           >
           <a-text value="MOVE YOUR BODY" align="center" font="monoid" width="15" position="0 5.5 1" rotation="90 0 0"></a-text>
         </a-cylinder>
-      </a-entity>
+      </a-level>
 
-      <a-entity id="level_4" level="gameTimeTracked: true">
+      <a-level id="level_4" game-time-tracked>
         <!-- grabbable stuff -->
         <a-gun position="-0.35 1.2 -0.4" gravity health="group: friend"></a-gun>
         <a-gun position="0.35 1.2 -0.4" gravity health="group: friend"></a-gun>
@@ -239,9 +239,9 @@
           <a-text value="JAIL SUBJECT 13\nKNOWS" align="center" font="monoid" width="15" position="0 1 -5"></a-text>
         </a-box>
         <a-plane height="12" width="12" position="0 0.01 -4" rotation="-90 0 0"></a-plane>
-      </a-entity>
+      </a-level>
 
-      <a-entity id="last_level" level="gameTimeTracked: true">
+      <a-level id="last_level" game-time-tracked>
         <!-- grabbable stuff -->
         <a-gun position="0 1.5 -0.75" gravity health="group: friend"></a-gun>
         <a-portal position="0 1 -0.65" to="#end" text-value="GRAB" text-width="1.75" visible="false"></a-portal>
@@ -359,9 +359,9 @@
         <a-box width="50" depth="0.1" height="5" color="#f7fafd" position="15 2.5 0" rotation="0 90 0"></a-box>
         <a-box width="75" depth="0.1" height="5" color="#f7fafd" position="0 2.5 5"></a-box>
 
-      </a-entity>
+      </a-level>
 
-      <a-entity id="end" level>
+      <a-level id="end">
         <a-text
           value="SUP3RFR1GHT VR"
           align="center"
@@ -373,7 +373,7 @@
         
         <a-text value="THANK YOU FOR PLAYING!" align="center" color="black" font="monoid" width="8" position="0 1.6 -5"></a-text>
         <a-text value="NO 3D SHAPES WERE HARMED\nIN THE MAKING OF THIS GAME\n(IT'S ALL VIRTUAL ANYWAY)" align="center" color="black" font="monoid" width="8" position="0 0.25 -5.5"></a-text>
-      </a-entity>
+      </a-level>
     </script>
   </body>
 </html>

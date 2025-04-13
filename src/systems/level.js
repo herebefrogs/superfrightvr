@@ -31,7 +31,7 @@ AFRAME.registerSystem('level', {
     })
   },
   loadLevel: function(levelId) {
-    const oldLevel = document.querySelector('[level]');
+    const oldLevel = document.querySelector('a-level');
     if (oldLevel) {
       document.querySelector('a-scene').removeChild(oldLevel)
     }
@@ -45,7 +45,7 @@ AFRAME.registerSystem('level', {
     document.querySelector('a-scene').appendChild(newLevel)
 
     // some scene state cleanups
-    this.el[newLevel.getAttribute('level').gameTimeTracked ? 'addState' : 'removeState']('game-time-tracked');
+    this.el[newLevel.getAttribute('gameTimeTracked') ? 'addState' : 'removeState']('game-time-tracked');
     this.el.removeState('level-cleared');
     this.el.removeState('game-over')
 

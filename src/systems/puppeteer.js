@@ -100,18 +100,18 @@ AFRAME.registerSystem('puppeteer', {
       // give some time for the 'player hit' sound to play & complete
       setTimeout(() => {
         zzfx(1.7,.05,507,.07,.23,.17,0,2.5,0,7,-85,.07,.02,0,0,0,.15,.72,.15,0,0);
-        this.retry.setAttribute('portal', { to: '#' + document.querySelector('[level]').id })
+        this.retry.setAttribute('portal', { to: '#' + document.querySelector('a-level').id })
         this.retry.setAttribute('visible', true);
       }, 1000)
     }
   },
   reset: function() {
-    this.walkers = [...document.querySelectorAll('[level] [linear-motion]')];
-    this.sinWalkers = [...document.querySelectorAll('[level] [sinlinear-motion]')];
-    this.spinners = [...document.querySelectorAll('[level] [spin-motion]')];
-    this.gravitas = [...document.querySelectorAll('[level] [gravity]')];
-    this.puppets = [...document.querySelectorAll('[level] [puppet]')];
-    this.portal = document.querySelector('[level] a-portal')
+    this.walkers = [...document.querySelectorAll('a-level [linear-motion]')];
+    this.sinWalkers = [...document.querySelectorAll('a-level [sinlinear-motion]')];
+    this.spinners = [...document.querySelectorAll('a-level [spin-motion]')];
+    this.gravitas = [...document.querySelectorAll('a-level [gravity]')];
+    this.puppets = [...document.querySelectorAll('a-level [puppet]')];
+    this.portal = document.querySelector('a-level a-portal')
     this.retry.setAttribute('visible', false);
     this.playerLimbs.forEach(limb => limb.setAttribute('health', { hp: 1 }))
   },

@@ -74,7 +74,7 @@ AFRAME.registerSystem('gesture-tracker', {
       bullet.setAttribute('linear-motion', { direction: `${direction.x} ${direction.y} ${direction.z}` })
       bullet.setAttribute('health', { group: gun.components.health.data.group });
 
-      document.querySelector('[level]').appendChild(bullet);
+      document.querySelector('a-level').appendChild(bullet);
     }
   }
 });
