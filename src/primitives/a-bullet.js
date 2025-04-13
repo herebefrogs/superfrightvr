@@ -1,7 +1,7 @@
 AFRAME.registerPrimitive('a-bullet', {
   defaultComponents: {
     bullet: {},
-    'dynamic-collider': { on: true },
+    'dynamic-collider': {},
     'linear-motion': { speed: 2 },
     'ttl': 15,
   },

@@ -11,11 +11,5 @@ AFRAME.registerComponent('level', {
   update: function() {
     this.el.object3D.visible = this.data.active;
     this.el[this.data.active ? 'play' : 'pause']();
-
-    for (const el of document.querySelectorAll(`#${this.el.id} [dynamic-collider]`)) {
-      if (el.getAttribute('visible')) {
-        el.components['dynamic-collider'][this.data.active ? '_play' : '_pause']();
-      }
-    }
   }
 })
