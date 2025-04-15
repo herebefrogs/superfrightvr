@@ -13,12 +13,10 @@ AFRAME.registerComponent('gesture-tracker', {
       }
 
       if (target.components.portal) {
-        this.el.addState('hovering-portal');
-        this.targets['hovering-portal'] = target;
+        this.setTarget(target, 'hovering-portal');
       }
       else if (target.components.gun) {
-        this.el.addState('hovering-gun');
-        this.targets['hovering-gun'] = target;
+        this.setTarget(target, 'hovering-gun');
       }
     },
     obbcollisionended: function(e) {
@@ -30,25 +28,26 @@ AFRAME.registerComponent('gesture-tracker', {
       }
 
       if (target.components.portal) {
-        this.el.removeState('hovering-portal');
-        delete this.targets['hovering-portal'];
+        this.deleteTarget('hovering-portal');
       }
       else if (target.components.gun) {
-        this.el.removeState('hovering-gun');
-        delete this.targets['hovering-gun'];
+        this.deleteTarget('hovering-gun');
       }
     }
   },
   init: function() {
     this.targets = {}
   },
+  setTarget: function(target, state) {
+    this.el.addState(state);
+    this.targets[state] = target;
+  },
   getTarget: function(state) {
     return this.targets[state]
   },
-  updateTarget: function(oldState, newState) {
-    this.targets[newState] = this.targets[oldState];
-    delete this.targets[oldState];
-    return this.targets[newState];
+  deleteTarget: function(state) {
+    this.el.removeState(state)
+    delete this.targets[state];
   },
   reset: function() {
     // release the target and any state that could be associated with it
@@ -59,5 +58,9 @@ AFRAME.registerComponent('gesture-tracker', {
     this.el.removeState('holding-gun');
     this.el.removeState('hovering-gun');
     this.el.removeState('hovering-portal');
+    const gun = document.querySelector(`#${this.el.id} a-gun`)
+    if (gun) {
+      this.el.removeChild(gun);
+    }
   }
 });

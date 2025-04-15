@@ -22,11 +22,10 @@ It emits a `step` event (given `tick` is already reserved by AFRAME) for whichev
 
 `gesture-tracker` component keeps track of which game actions are made on one hand controller (grabbing, shooting) and game entity it is colliding with (hovering-portal, hovering-gun). It is apply to each entity with `hand-controls` component.
 
-`gesture-tracjer` system check each hand controller actions and triggers relevant transition (e.g. grabbing a portal loads the next level, grabbing a gun makes the gun follow the hand, dropping a gun leaves the gun at the last hand position...)
+`gesture-tracker` system check each hand controller actions and triggers relevant transition (e.g. grabbing a portal loads the next level, grabbing a gun makes the gun follow the hand, dropping a gun leaves the gun at the last hand position...)
 
 `portal` component setup an `obb-collider` on its entity so it can be hovered and grabbed, and keeps track of which level should be loaded.
 
-`sync-stance` component copies the position and rotation of a target entity to its entity on every tick. It is used to make the gun follow the hand (since adding the gun as a child of the hand controller entity doesn't render the gun)
 
 `a-gun` primitive is an assembly of other primitives depicting a gun pointing forward.
 
@@ -43,6 +42,5 @@ comp.gesture-tracker -> grabbing state
 
 grabbing + hovering-portal states -> sys.gesture-tracker -> loadlevel event
 
-grabbing + hovering-gun states -> sys.gesture-tracker -> holding-gun state + comp.sync-stance on <a-gun>
-
-holding-gun + !grabbing states -> sys.gesture-tracker -> - comp.sync-stance on <a-gun>
+grabbing + hovering-gun states -> sys.gesture-tracker -> holding-gun state
+holding-gun + !grabbing states -> sys.gesture-tracker ->

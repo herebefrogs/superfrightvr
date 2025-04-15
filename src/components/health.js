@@ -42,6 +42,7 @@ AFRAME.registerComponent('health', {
       if (!this.el.components['motion-tracker'] && !this.el.parentNode.components['motion-tracker']) {
         // TODO should animate death
         this.el.parentNode.removeChild(this.el)
+        // turn off dynamic-collider
         this.el.pause();
       }
     }

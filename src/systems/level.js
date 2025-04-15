@@ -18,8 +18,8 @@ AFRAME.registerSystem('level', {
       // hack to avoid "next portal appears" sound
       this.el.addState('level-cleared');
   
-      // DEBUG.grabPortal('#right', '#title', 10000);
-      // DEBUG.grabGun('#left', '#level_1', 500);
+      // DEBUG.grabPortal('#right', 1);
+      // DEBUG.grabGun('#left', 500);
       // DEBUG.move('#left', '-1 1.5 -0.5', 550);
       // DEBUG.shoot('#left', 600);
       // DEBUG.move('#left', '0 1.5 -0.5', 750);
@@ -49,6 +49,7 @@ AFRAME.registerSystem('level', {
     this.el.removeState('level-cleared');
     this.el.removeState('game-over')
 
+    // TODO these 2 component and system should do this in response to 'level-loaded' event
     // make hand controllers' release their grabbed objects
     this.hands.forEach(hand => { hand.components['gesture-tracker']?.reset() })
     // remove all objects moved by the puppeteer in this level

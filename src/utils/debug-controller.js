@@ -1,21 +1,25 @@
-const grabEntity = (handId, levelId, delay, entityType) => {
+const grabEntity = (handId, delay, entityType, callback) => {
   setTimeout(() => {
     const hand = document.querySelector(handId);
-    hand.components['gesture-tracker'].targets[`hovering-${entityType}`] = document.querySelector(`${levelId} a-${entityType}`)
+    hand.components['gesture-tracker'].targets[`hovering-${entityType}`] = document.querySelector(`a-level a-${entityType}`)
     hand.addState(`hovering-${entityType}`);
     hand.addState('grabbing');
+    if (callback) {
+      callback();
+    }
   }, delay)
 }
 
 window.DEBUG = {
   ...window.DEBUG,
-  grabGun: (handId, levelId, delay) => {
-    grabEntity(handId, levelId, delay, 'gun');
-    const gun = document.querySelector(`${levelId} a-gun`);
-    gun.setAttribute('gun', { pointDown: false });
+  grabGun: (handId, delay) => {
+    grabEntity(handId, delay, 'gun', () => {
+      const gun = document.querySelector(`a-level a-gun`);
+      gun.setAttribute('gun', { pointDown: false });
+    });
   },
-  grabPortal: (handId, levelId, delay) => {
-    grabEntity(handId, levelId, delay, 'portal');
+  grabPortal: (handId, delay) => {
+    grabEntity(handId, delay, 'portal');
   },
   drop: (handId, delay) => {
     setTimeout(() => {
