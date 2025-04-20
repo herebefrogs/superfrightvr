@@ -75,7 +75,7 @@ AFRAME.registerComponent('bullet', {
   },
   updateTrail: function(distanceTravelled) {
     if (distanceTravelled <= MAX_BULLET_TRAIL) {
-      this.trail.setAttribute('line', { end: `0 0 -${distanceTravelled}` });
+      this.trail.setAttribute('line', { end: `0 0 -${distanceTravelled * 3/4}` });
     }
   },
 })
