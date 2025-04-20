@@ -11,6 +11,8 @@ AFRAME.registerSystem('puppeteer', {
 
     this.el.addEventListener('child-attached', (e) => { this.trackEntity(e.detail.el) })
     this.el.addEventListener('child-detached', (e) => { this.untrackEntity(e.detail.el) })
+
+    this.el.addEventListener('gravity-changed', (e) => { this[e.detail.gravity ? 'trackEntity' : 'untrackEntity'](e.detail.el) });
   },
   _tick: function(time, timeDelta) {
     for (let el of this.gravitas) {
