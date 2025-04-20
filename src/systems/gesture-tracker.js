@@ -43,7 +43,6 @@ AFRAME.registerSystem('gesture-tracker', {
     heldGun.setAttribute('health', gun.getAttribute('health'));
     // configure the gun correctly
     heldGun.addState('grabbed');
-    heldGun.setAttribute('raycaster', { enabled: true });
     // position the gun relative to the gimbal as opposed to the global world
     heldGun.setAttribute('position', '0 0 0');
   
@@ -87,7 +86,6 @@ AFRAME.registerSystem('gesture-tracker', {
     droppedGun.setAttribute('health', heldGun.getAttribute('health'));
     droppedGun.setAttribute('position', hand.getAttribute('position'));
     droppedGun.object3D.rotation.set(gimbalWorldRotation.x, gimbalWorldRotation.y, gimbalWorldRotation.z);
-    droppedGun.setAttribute('raycaster', { enabled: false });
     droppedGun.setAttribute('gravity', true);
 
     // add free to the scene and hand's targets
@@ -98,32 +96,18 @@ AFRAME.registerSystem('gesture-tracker', {
 
   },
   shootGun: function(gun) {
-    // NOTE we should only call shootGun when it's true, but it's safer to check
-    if (gun.components.raycaster.data.enabled) {
-      zzfx(1,.05,62,.01,.07,.4,2,2.8,6,-8,0,0,0,1.4,28,.4,0,.4,.1,.46,181); // gun shot
-      const world = document.querySelector('#world');
+    zzfx(1,.05,62,.01,.07,.4,2,2.8,6,-8,0,0,0,1.4,28,.4,0,.4,.1,.46,181); // gun shot
 
-      const intersection = gun.components.raycaster.getIntersection(world)
-      const normal = intersection.normal;
-      const direction = { x: -normal.x, y: -normal.y, z: -normal.z };
+    const nozzlePosition = gun.object3D.localToWorld(new THREE.Vector3(0, 0.08, -0.2));
+    const gunRotation = gun.object3D.getWorldDirection(new THREE.Vector3());
+    const gunDirection = gunRotation.clone().negate();
 
-      const bullet = document.createElement('a-bullet');
-      // NOTE: hand rotation cannot be trusted due to the extra 90deg counterclockwise to display its model straight
-      // so work from the gun which is pointing in the direction we want to bullet to follow
-      const gunWorldRotation = (new THREE.Euler()).setFromQuaternion(
-        gun.object3D.getWorldQuaternion(new THREE.Quaternion()),
-        'XYZ'
-      );
-      bullet.object3D.rotation.set(gunWorldRotation.x, gunWorldRotation.y, gunWorldRotation.z);
+    const bullet = document.createElement('a-bullet');
+    bullet.setAttribute('position', nozzlePosition);
+    bullet.object3D.lookAt(gunRotation);
+    bullet.setAttribute('linear-motion', { direction: gunDirection });
+    bullet.setAttribute('health', { group: gun.getAttribute('health').group });
 
-      const origin = gun.getAttribute('raycaster').origin;
-      const nozzlePosition = gun.object3D.localToWorld(new THREE.Vector3(origin.x, origin.y, origin.z));
-
-      bullet.setAttribute('position', nozzlePosition);
-      bullet.setAttribute('linear-motion', { direction });
-      bullet.setAttribute('health', { group: gun.getAttribute('health').group });
-
-      document.querySelector('a-level').appendChild(bullet);
-    }
+    document.querySelector('a-level').appendChild(bullet);
   }
 });
