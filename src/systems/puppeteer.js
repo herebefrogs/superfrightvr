@@ -116,16 +116,16 @@ AFRAME.registerSystem('puppeteer', {
     this.playerLimbs.forEach(limb => limb.setAttribute('health', { hp: 1 }))
   },
   trackEntity: function(el) {
-    if (el.components['linear-motion']) {
+    if (el.components['linear-motion'] && !this.walkers.includes(el)) {
       this.walkers.push(el);
     }
-    if (el.components['spin-motion']) {
+    if (el.components['spin-motion'] && !this.spinners.includes(el)) {
       this.spinners.push(el);
     }
-    if (el.components['sinlinear-motion']) {
+    if (el.components['sinlinear-motion'] && !this.sinWalkers.includes(el)) {
       this.sinWalkers.push(el);
     }
-    if (el.components['gravity']) {
+    if (el.components['gravity'] && !this.gravitas.includes(el)) {
       this.gravitas.push(el);
     }
   },
