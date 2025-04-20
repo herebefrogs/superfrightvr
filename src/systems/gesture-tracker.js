@@ -112,15 +112,13 @@ AFRAME.registerSystem('gesture-tracker', {
       // need to figure out the same counter rotation as when releasing the gun
       const rotation = gun.getAttribute('rotation');
 
-      // NOTE y and z should be swapped, but given the gun model is pointing downward to account
-      // for hand model orientation that AFRAME autocorrects, it works as is
-      const nozzlePosition = new THREE.Vector3(0, -0.22, -0.08);
-      const origin = gun.object3D.localToWorld(nozzlePosition);
+      const origin = gun.getAttribute('raycaster').origin;
+      const nozzlePosition = gun.object3D.localToWorld(new THREE.Vector3(origin.x, origin.y, origin.z));
 
-      bullet.setAttribute('position', `${origin.x} ${origin.y} ${origin.z}`);
-      bullet.setAttribute('rotation', `${rotation.x} ${rotation.y} ${rotation.z}`);
-      bullet.setAttribute('linear-motion', { direction: `${direction.x} ${direction.y} ${direction.z}` })
-      bullet.setAttribute('health', { group: gun.components.health.data.group });
+      bullet.setAttribute('position', nozzlePosition);
+      bullet.setAttribute('rotation', rotation);
+      bullet.setAttribute('linear-motion', { direction });
+      bullet.setAttribute('health', { group: gun.getAttribute('health').group });
 
       document.querySelector('a-level').appendChild(bullet);
     }

@@ -30,11 +30,7 @@ AFRAME.registerComponent('gun', {
 
     // TODO there could also be a front sight, a hammer and a trigger...
 
-    this.el.setAttribute('raycaster',
-      this.data.pointDown
-        // correct the raycaster line direction if needed, and move the origin in front of the gun's nozzle
-        ? { direction: '0 -1 0', origin: '0 -0.2 -0.08' }
-        : { direction: '0 0 -1', origin: '0 0.09 -0.2' }
-    );
+    // set the origin in front of the gun's nozzle
+    this.el.setAttribute('raycaster', { direction: '0 0 -1', origin: '0 0.08 -0.2' });
   },
 });
