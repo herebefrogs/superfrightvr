@@ -23,20 +23,24 @@ AFRAME.registerComponent('sniper', {
   fireBullet: function() {
     zzfx(1,.05,62,.01,.07,.4,2,2.8,6,-8,0,0,0,1.4,28,.4,0,.4,.1,.46,181); // gun shot
 
-    const object3D = this.el.object3D
+    const object3D = this.el.object3D;
     const sniperPosition = object3D.localToWorld(object3D.position.clone());
-    const playerDirection = this.playerHead.position.clone()
+    const playerDirection = this.playerHead.position.clone();
     // head is a bit too high, aim at upper torso
     playerDirection.y -= 0.05;
-    playerDirection.sub(sniperPosition).normalize();
+    // O = origin
+    // P = player
+    // S = sniper
+    // bulletDirection = OP - OS = OP + SO = SO + OP = SP = from sniper to player
+    const bulletDirection = (new THREE.Vector3()).subVectors(playerDirection, sniperPosition).normalize();
+    const bulletRotation = bulletDirection.clone().negate();
 
     const bullet = document.createElement('a-bullet');
-    // adjust the geometry rotation for the bullet to face away from the enemy
-    bullet.setAttribute('bullet', { fromPlayer: false })
     bullet.setAttribute('position', sniperPosition);
-    bullet.object3D.lookAt(playerDirection);
-    bullet.setAttribute('linear-motion', { direction: playerDirection })
-    bullet.setAttribute('health', { group: this.el.components.health.data.group })
+    // adjust the bullet's geometry so it faces away from the enemy
+    bullet.object3D.lookAt(bulletRotation);
+    bullet.setAttribute('linear-motion', { direction: bulletDirection })
+    bullet.setAttribute('health', { group: this.el.getAttribute('health').group })
 
     document.querySelector('a-level').appendChild(bullet);
   }

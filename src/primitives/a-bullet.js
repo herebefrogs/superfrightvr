@@ -21,9 +21,6 @@ const MAX_BULLET_TRAIL = 2.5;
  * - obbcollisionstarted -> kill targets with 'health' component
  */
 AFRAME.registerComponent('bullet', {
-  schema: {
-    fromPlayer : { type: 'boolean', default: true },
-  },
   events: {
     componentchanged: function(e) {
       if (e.detail.name === 'linear-motion') {
@@ -55,10 +52,6 @@ AFRAME.registerComponent('bullet', {
     bullet.setAttribute('material', {
       color: 'black',
     });
-    // cylinder is standing up, with tail going up, but gets rotated 90 by the gun/hand controller extra rotation
-    // so it ends up horizontal with the trail staying behind... but if it comes from an enemy, it must face away
-    // and there is not that hand controller extra rotation
-    bullet.object3D.rotation.x = this.data.fromPlayer ? 0 : -Math.PI/2;
 
     // bullet trail
     const trail = document.createElement('a-entity');
@@ -73,10 +66,16 @@ AFRAME.registerComponent('bullet', {
     this.el.appendChild(bullet);
 
     this.trail = trail;
+
+    // cylinder is created standing up, so rotate it 90deg clockwise along the x-axis
+    // so it points forward in the direction that the bullet will travel towards
+    bullet.object3D.rotation.x = -Math.PI/2;
+    trail.object3D.rotation.x = -Math.PI/2;
+
   },
   updateTrail: function(distanceTravelled) {
     if (distanceTravelled <= MAX_BULLET_TRAIL) {
-      this.trail.setAttribute('line', { end: `0 ${distanceTravelled} 0` });
+      this.trail.setAttribute('line', { end: `0 0 -${distanceTravelled}` });
     }
   },
 })

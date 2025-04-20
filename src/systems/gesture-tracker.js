@@ -108,15 +108,18 @@ AFRAME.registerSystem('gesture-tracker', {
       const direction = { x: -normal.x, y: -normal.y, z: -normal.z };
 
       const bullet = document.createElement('a-bullet');
-      // TODO the bullet orientation is wrong... pointing downward
-      // need to figure out the same counter rotation as when releasing the gun
-      const rotation = gun.getAttribute('rotation');
+      // NOTE: hand rotation cannot be trusted due to the extra 90deg counterclockwise to display its model straight
+      // so work from the gun which is pointing in the direction we want to bullet to follow
+      const gunWorldRotation = (new THREE.Euler()).setFromQuaternion(
+        gun.object3D.getWorldQuaternion(new THREE.Quaternion()),
+        'XYZ'
+      );
+      bullet.object3D.rotation.set(gunWorldRotation.x, gunWorldRotation.y, gunWorldRotation.z);
 
       const origin = gun.getAttribute('raycaster').origin;
       const nozzlePosition = gun.object3D.localToWorld(new THREE.Vector3(origin.x, origin.y, origin.z));
 
       bullet.setAttribute('position', nozzlePosition);
-      bullet.setAttribute('rotation', rotation);
       bullet.setAttribute('linear-motion', { direction });
       bullet.setAttribute('health', { group: gun.getAttribute('health').group });
 
