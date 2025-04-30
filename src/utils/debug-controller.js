@@ -1,8 +1,12 @@
 const grabEntity = (handId, delay, entityType, callback) => {
   setTimeout(() => {
     const hand = document.querySelector(handId);
-    hand.components['gesture-tracker'].targets[`hovering-${entityType}`] = document.querySelector(`a-level a-${entityType}`)
-    hand.addState(`hovering-${entityType}`);
+    // this should be
+    // 1. move hand to position of entity
+    // 2. emit grip
+    // hand.components['gesture-tracker'].targets[`hovering-${entityType}`] = [document.querySelector(`a-level a-${entityType}`)]
+    hand.components['gesture-tracker'].setTarget(document.querySelector(`a-level a-${entityType}`), `hovering-${entityType}`);
+//    hand.addState(`hovering-${entityType}`);
     hand.addState('grabbing');
     if (callback) {
       callback();
@@ -13,10 +17,7 @@ const grabEntity = (handId, delay, entityType, callback) => {
 window.DEBUG = {
   ...window.DEBUG,
   grabGun: (handId, delay) => {
-    grabEntity(handId, delay, 'gun', () => {
-      const gun = document.querySelector(`a-level a-gun`);
-      gun.setAttribute('gun', { pointDown: false });
-    });
+    grabEntity(handId, delay, 'gun');
   },
   grabPortal: (handId, delay) => {
     grabEntity(handId, delay, 'portal');
@@ -39,6 +40,18 @@ window.DEBUG = {
       hand.setAttribute('rotation', rotation);
     }, delay);
   },
+  grip: (handId, delay) => {
+    setTimeout(() => {
+      const hand = document.querySelector(handId);
+      hand.emit('gripdown');
+    }, delay);
+  },
+  ungrip: (handId, delay) => {
+    setTimeout(() => {
+      const hand = document.querySelector(handId);
+      hand.emit('gripup');
+    }, delay);
+  },
   shoot: (handId, delay) => {
     setTimeout(() => {
       const hand = document.querySelector(handId);
@@ -48,7 +61,8 @@ window.DEBUG = {
   punch: (handId, delay) => {
     setTimeout(() => {
       const hand = document.querySelector(handId);
-      hand.removeState('grabbing');
+      hand.removeState('grabbing'); // why?
+      // punch is grip & shoot
       hand.emit('triggerdown');
     }, delay);
   },

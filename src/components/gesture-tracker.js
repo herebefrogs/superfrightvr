@@ -7,58 +7,71 @@ AFRAME.registerComponent('gesture-tracker', {
     obbcollisionstarted: function (e) {
       const target = e.detail.withEl;
 
-      if (target.components['gesture-tracker']) {
+      if (target.hasAttribute('gesture-tracker')) {
         // a hand cannot grab another hand
         return;
       }
 
-      if (target.components.portal) {
-        this.setTarget(target, 'hovering-portal');
-      }
-      else if (target.components.gun) {
-        this.setTarget(target, 'hovering-gun');
+      if (target.hasAttribute('portal') || target.hasAttribute('gun')) {
+        this.addState('hovering', target);
       }
     },
     obbcollisionended: function(e) {
       const target = e.detail.withEl;
 
-      if (target.components['gesture-tracker']) {
-        // a hand cannot grab another hand
+      if (target.hasAttribute('gesture-tracker')) {
+        // a hand cannot drop another hand
         return;
       }
 
-      if (target.components.portal) {
-        this.deleteTarget('hovering-portal');
-      }
-      else if (target.components.gun) {
-        this.deleteTarget('hovering-gun');
+      if (target.hasAttribute('portal') || target.hasAttribute('gun')) {
+        this.removeState('hovering', target);
       }
     }
   },
   init: function() {
-    this.targets = {}
+    this.state2targets = {
+      'hovering': [],
+      'holding': [],
+    }
   },
-  setTarget: function(target, state) {
+  addState: function(state, target) {
+    // guarantee uniqueness of targets
+    this.state2targets[state] = this.state2targets[state].filter(t => t !== target);
+    this.state2targets[state].push(target);
+    if (state === 'holding') {
+      target.addState('held');
+    }
     this.el.addState(state);
-    this.targets[state] = target;
   },
-  getTarget: function(state) {
-    return this.targets[state]
+  getState: function(state) {
+    if (state === 'holding') {
+      // can only hold 1 target at a time
+      return this.state2targets[state][0];
+    }
+    // can hover multiple targets at a time
+    return this.state2targets[state];
   },
-  deleteTarget: function(state) {
-    this.el.removeState(state)
-    delete this.targets[state];
+  removeState: function(state, target) {
+    // saveguard other targets associated with this state
+    this.state2targets[state] = this.state2targets[state].filter(t => t !== target);
+    if (state === 'holding') {
+      target.removeState('held');
+    }
+    if (!this.state2targets[state].length) {
+        // we should only remove the element's state if there is no more targets associated
+        this.el.removeState(state);
+    }
   },
   reset: function() {
-    // release the target and any state that could be associated with it
-    for (state in this.targets) {
-      this.targets[state].removeState('grabbed');
+    // NOTE: this is necessary to avoid that a gun held in hand while changing levels
+    // is brought into the next level.
+    // release targets and any state that could be associated with it
+    for (state in this.state2targets) {
+      this.state2targets[state].forEach(t => this.removeState(state, t));
     }
-    this.targets = {};
-    this.el.removeState('holding-gun');
-    this.el.removeState('hovering-gun');
-    this.el.removeState('hovering-portal');
-    const gun = document.querySelector(`#${this.el.id} a-gun`)
+    // remove any gun that could be attached to the hand
+    const gun = document.querySelector(`#${this.el.id} a-gimbal`)
     if (gun) {
       this.el.removeChild(gun);
     }

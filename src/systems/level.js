@@ -18,6 +18,9 @@ AFRAME.registerSystem('level', {
       // hack to avoid "next portal appears" sound
       this.el.addState('level-cleared');
   
+      // this.loadLevel('#level_1');
+      // DEBUG.move('#right', '0 1 -0.65', 100);
+      // DEBUG.grip('#right', 200);
       // DEBUG.grabPortal('#right', 1);
       // DEBUG.grabGun('#left', 500);
       // DEBUG.move('#left', '-1 1.5 -0.5', 550);
@@ -26,8 +29,6 @@ AFRAME.registerSystem('level', {
       // DEBUG.punch('#left', 1000);
       // DEBUG.drop('#left', 1500);
       // DEBUG.grabPortal('#right', '#level_1', 2000);
-
-      // DEBUG.log('foo')
     })
   },
   loadLevel: function(levelId) {

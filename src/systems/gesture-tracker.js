@@ -1,48 +1,83 @@
 AFRAME.registerSystem('gesture-tracker', {
   init: function() {
-    this.hands = document.querySelectorAll('[gesture-tracker]');
+    this.hands = Array.from(document.querySelectorAll('[gesture-tracker]'));
   },
   tick: function() {
-    for (const hand of this.hands) {
+    this.hands.find(hand => {
+      // NOTE: for reasons unknown, hand.getAttribute('gesture-tracker') returns {}
+      // despite the component existing on this element...
       const gesture = hand.components['gesture-tracker'];
 
-      if (hand.is('hovering-portal') && hand.is('grabbing')) {
-        hand.removeState('hovering-portal');
-        hand.removeState('grabbing')
-        const portal = gesture.getTarget('hovering-portal');
-        zzfx(1,.05,166,.07,.11,.15,0,2.8,-3,-186,0,0,.1,0,0,.1,0,.55,.26,0,0);  // portal grabbed
-        this.el.emit('loadlevel', { levelId: portal.components.portal.data.to });
+      // NOTE: check that the hand isn't holding something else
+      // to prevent it from grabbing a second gun while already holding one
+      if (hand.is('hovering') && hand.is('grabbing') && !hand.is('holding')) {
+        // we don't know yet what the targets are
+        const targets = gesture.getState('hovering');
+
+        // NOTE: use find() instead of forEach() so we can break out of the loop
+        const target = targets.find(target => {
+          if (target.hasAttribute('portal')) {
+            // no need to remove any state, the level will reset the hand's gesture-tracker component
+            zzfx(1,.05,166,.07,.11,.15,0,2.8,-3,-186,0,0,.1,0,0,.1,0,.55,.26,0,0);  // portal grabbed
+            // NOTE: for reasons unknown, target.getAttribute('portal') returns {}
+            // despite the component existing on this element...
+            this.el.emit('loadlevel', { levelId: target.components.portal.data.to });
+            // do not try to hold any other targets
+            return true;
+          }
+          // NOTE: check that the target isn't held by another hand
+          // to prevent 2 hands from holding the same gun
+          if (target.hasAttribute('gun') && !target.is('held')) {
+            // no need to remove any state, the level will reset the hand's gesture-tracker component
+            this.grabGun(target, hand, gesture);
+            // do not try to hold any other targets
+            return true;
+          }
+          // continue to next target
+        })
+        // do not try to process another hand if this one has already grabbed something
+        return !!target;
       }
-      else if (hand.is('hovering-gun') && hand.is('grabbing')) {
-        const gun = gesture.getTarget('hovering-gun');
-        // make sure the gun is not already grabbed by another hand before grabbing it
-        if (!gun.is('grabbed')) {
-          this.grabGun(gun, hand, gesture);
+      else if (hand.is('holding') && !hand.is('grabbing')) {
+        const target = gesture.getState('holding');
+
+        if (target.hasAttribute('gun')) {
+          this.dropGun(target, hand, gesture);
+          // NOTE: do not try to process another hand if this one has already dropped a gun.
+          // this is because the left hand is processed before the right hand (HTML markup order).
+          // If the left hand drops a gun, it will add a copy of the gun to the scene but the gun
+          // it originally held no longer has the "held" state for the rest of the tick/for loop
+          // and could be a target of the right hand trying to grab it. This would create a 2nd
+          // copy of the gun in the right hand, while the 1st copy is free falling, essentially
+          // duplicating the gun out of thin air.
+          return true;
         }
       }
-      else if (hand.is('holding-gun') && !hand.is('grabbing')) {
-        this.dropGun(gesture.getTarget('holding-gun'), hand, gesture);
+      else if (hand.is('holding') && hand.is('shooting')) {
+        const target = gesture.getState('holding');
+
+        if (target.hasAttribute('gun')) {
+          // wouldn't work for a machine gun
+          hand.removeState('shooting');
+          // TODO this method should be moved to the gun component
+          this.shootGun(target);
+          return true;
+        }
       }
-      else if (hand.is('holding-gun') && hand.is('shooting')) {
-        // wouldn't work for a machine gun
-        hand.removeState('shooting');
-        this.shootGun(gesture.getTarget('holding-gun'));
-      }
-    }
+      return false;
+    })
   },
   grabGun: function(gun, hand, gesture) {
     zzfx(1,.05,43,0,.44,.03,1,1.8,-18,-58,0,0,.01,.4,0,.1,0,.77,.11,0,0); // drop gun
 
-    // remove orignal gun from scene and hand's targets
-    document.querySelector('a-level').removeChild(gun);
-    gesture.deleteTarget('hovering-gun');
+    // remove orignal gun from scene
+    // this will trigger an obbcollisionended event which will remove the hovering state from whichever hand was over this gun
+    gun.parentNode.removeChild(gun);
 
     // make a new gun
-    // NOTE: re-parenting isn't supported in AFRAME, the original gun doesn't render if attached to the hand!
+    // NOTE: re-parenting isn't supported in AFRAME, the original gun doesn't render when attached to the hand!
     const heldGun = document.createElement('a-gun');
     heldGun.setAttribute('health', gun.getAttribute('health'));
-    // configure the gun correctly
-    heldGun.addState('grabbed');
     // position the gun relative to the gimbal as opposed to the global world
     heldGun.setAttribute('position', '0 0 0');
   
@@ -55,11 +90,9 @@ AFRAME.registerSystem('gesture-tracker', {
 
     // add gun to the gimbal, and the gimble to the hand
     gimbal.appendChild(heldGun);
+    // this will trigger an obbcollisionstarted event which will add the hovering state for this gun
     hand.appendChild(gimbal);
-    // set the cloned gun as the hand's targets
-    gesture.setTarget(heldGun, 'holding-gun');
-
-
+    gesture.addState('holding', heldGun);
   },
   dropGun: function(heldGun, hand, gesture) {
     zzfx(1,.05,43,0,.44,.03,1,1.8,-18,-58,0,0,.01,.4,0,.1,0,.77,.11,0,0); // drop gun
@@ -76,9 +109,10 @@ AFRAME.registerSystem('gesture-tracker', {
     );
 
     // remove grabbed grun from hand and hand's targets
+    // this will trigger an obbcollisionended event which will remove the hovering state for this gun
     hand.removeChild(gimbal);
     // and the gun from the hand's targets;
-    gesture.deleteTarget('holding-gun');
+    gesture.removeState('holding', heldGun);
 
     // make a new gun
     // NOTE: re-parenting isn't supported in AFRAME, the original gun doesn't render if attached to the hand!
@@ -88,12 +122,10 @@ AFRAME.registerSystem('gesture-tracker', {
     droppedGun.object3D.rotation.set(gimbalWorldRotation.x, gimbalWorldRotation.y, gimbalWorldRotation.z);
     droppedGun.setAttribute('gravity', true);
 
-    // add free to the scene and hand's targets
+    // add free gun to the scene
+    // this will trigger an obbcollisionstarted event which will add the hovering state for this gun
+    // so it can be grabbed again without having to leave its collision box
     document.querySelector('a-level').appendChild(droppedGun);
-    // NOTE: most likely true, otherwise the player won't be able to grab the gun again
-    // until the hand & gun exist each other so another obbcollisionstarted event can be emitted
-    gesture.setTarget(droppedGun, 'hovering-gun');
-
   },
   shootGun: function(gun) {
     zzfx(1,.05,62,.01,.07,.4,2,2.8,6,-8,0,0,0,1.4,28,.4,0,.4,.1,.46,181); // gun shot
