@@ -3,7 +3,7 @@
  */
 AFRAME.registerComponent('linear-motion', {
   schema: {
-    direction: { type: 'vec3', default: '0 0 0' },
+    direction: { type: 'vec3', default: { x: 0, y: 0, z: 0 } },
     speed: { type: 'number', default: 1 },
     distanceTravelled: { type: 'number', default: 0 }
   }
@@ -14,7 +14,7 @@ AFRAME.registerComponent('linear-motion', {
  */
 AFRAME.registerComponent('spin-motion', {
   schema: {
-    direction: { type: 'vec3', default: '0 0 0' },
+    direction: { type: 'vec3', default: { x: 0, y: 0, z: 0 } },
     speed: { type: 'number', default: 1 },
   }
 })
@@ -24,7 +24,7 @@ AFRAME.registerComponent('spin-motion', {
  */
 AFRAME.registerComponent('sinlinear-motion', {
   schema: {
-    direction: { type: 'vec3', default: '0 0 0' },
+    direction: { type: 'vec3', default: { x: 0, y: 0, z: 0 } },
     speed: { type: 'number', default: 1 },
     alpha: { type: 'number', default: 0 }
   }

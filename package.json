@@ -5,10 +5,11 @@
   "description": "JS13KGAMES 2024 entry",
   "main": "src/index.html",
   "scripts": {
-    "clean": "rm -rf dist && mkdir dist",
+    "clean": "rm -rf dist && mkdir -p dist/lib",
     "build": "run-s clean build:*",
     "build:js": "esbuild src/index.js --bundle --format=iife --loader:.webp=dataurl | terser --config-file scripts/terser.config.js -o dist/game.js",
-    "build:html": "grep -v 'aframe' src/index.html | html-inline -b dist | sed 's_<script>_<script src=\"https://js13kgames.com/webxr-src/2024/aframe.js\"></script><script>_' | html-minifier -c scripts/htmlmin.json -o dist/index.html",
+    "build:html": "grep -v 'aframe' src/index.html | html-inline -b dist | sed 's_<script>_<script src=\"/lib/aframe-1.7.1.min.js\"></script><script>_' | html-minifier -c scripts/htmlmin.json -o dist/index.html",
+    "build:lib": "cp src/lib/* dist/lib",
     "build:zip": "zip -FS -qjX9 dist/game.zip dist/index.html && advzip -z -4 dist/game.zip",
     "build:zipSize": "node scripts/zipSize.js",
     "start": "npm-run-all -s clean -p dev:*",

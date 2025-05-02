@@ -44,6 +44,7 @@ jobs:
           npm run clean
           npm run build:js
           npm run build:html
+          npm run build:lib
           npm run build:zip
 
       - name: Prepare commit message

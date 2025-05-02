@@ -1,5 +1,4 @@
 bugs
-- upgrade to self-hosted A-FRAME 1.7.1 so we stop hammering js1k3games.com
 - on retry, enemy bullets from the previous attempts are still active (even though no longer visible)
   and kill the player (level 4 and 5)... have system.level clear them, or clear themselves on level-loaded event
 - 2~3 more methods to relocate, and fire events instead to trigger them to decouple components
