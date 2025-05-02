@@ -1,18 +1,13 @@
 bugs
-- bullet origin is wrong (not the muzzle of the gun)
-x gravity/physis should stop affecting objects in inactive levels
-x holding gun with 2 hands crashes game (one hand has the other as a target, so gun methods don't work on it)
-x holding a gun while changing level crashes the game when the gun is released (something to do with the target... fix in conductor or gesture-tracker)
-x entities in a level that's hidden aren't paused
-x gun is rotated 90 deg because so is the hand model (though I don't know where that is corrected)
+- upgrade to self-hosted A-FRAME 1.7.1 so we stop hammering js1k3games.com
+- on retry, enemy bullets from the previous attempts are still active (even though no longer visible)
+  and kill the player (level 4 and 5)... have system.level clear them, or clear themselves on level-loaded event
+- 2~3 more methods to relocate, and fire events instead to trigger them to decouple components
+  system.level + system.gesture-tracker
+- one or more code decisions to document (look at TODO why did I do this?)
 
 game:
-x moving between a title screen, lobby and levels
-x grabbing/releasing a gun
-x make bullet
-x hit a target
 - physics (so you can throw stuff at enemies)
-- stop game when 13s have passed
 - implement interesting puppet motions/behaviours
 - implement methods to pause/resume the game properly when leaving the VR browser for the Occulus main menu and back
 

@@ -31,16 +31,68 @@ It emits a `step` event (given `tick` is already reserved by AFRAME) for whichev
 
 `a-pyramid` primitive is an assembly of other primitives depicting a pyramid pointing face up.
 
-Lifecycle
+`a-gimbal` primitive is a geometry-less entity used to orient children entities in a certain direction
 
-comp.motion-tracker -> player-moving state -> sys.game-time -> step event -> sys.puppeteer
+`a-level` primitive
 
-comp.gesture-tracker -> grabbing state
-                     -> hovering-portal state
-                     -> hovering-gun state
-                     -> shooting state
+`a-bullet` primitive
 
-grabbing + hovering-portal states -> sys.gesture-tracker -> loadlevel event
+`a-portal` primitive
 
-grabbing + hovering-gun states -> sys.gesture-tracker -> holding-gun state
-holding-gun + !grabbing states -> sys.gesture-tracker ->
+## Event & state lifecycle
+
+**Legend**: (entity.component, "event" | +/-state [, entity]) --causes--> (entity, +/-state | "event" [, targeted_entity])
+
+```
+# hands interactions
+(hand.hand-control, "gripdown")    -> (hand, +grabbing)
+(hand.hand-control, "gripup")      -> (hand, -grabbing)
+(hand.hand-control, "triggerdown") -> (hand, +grabbing)
+(hand.hand-control, "triggerup")   -> (hand, -grabbing)
+
+(hand.obb-collider, "obbcollisionstarted", gun|portal)
+                                   -> (hand, +hovering, gun|portal)
+(hand.obb-collider, "obbcollisionended", target)
+                                   -> (hand, -hovering, gun|portal)
+
+(hand, +hovering, gun) && (hand, +grabbing)
+                       && (hand, -holding)   # 1 hand cannot hold 2 guns
+                       && (gun, -held)       # 2 hands cannot hold the same gun
+                                   -> (hand, +holding, gun) && (gun, +held)
+(hand, +holding, gun) && (hand, -grabbing)
+                                   -> (hand, -holding, gun) && (gun, -held)
+
+(hand, +hovering, portal) && (hand, +grabbing)
+                          && (hand, -holding) # 1 hand cannot hold a gun and a portal
+                                   -> (portal, "load-level")
+
+# bullet interactions
+# TODO
+```
+
+## THREE.js/A-FRAME orientation
+
+```
+       ^ +y
+       |
+       |
+       |
+        ------> +x
+      /
+     /
+    v +z
+```
+
+**Caveat**: Hand in GLB file modelled pointing along - y-axis, and rotated by A-FRAME 90 degrees counter-clockwise along the x-axis so it renders pointing towards - z-axis (away from the camera). Any Entity with geometry modelled to point forward - z-axis is rotated as well and will point up toward +y-axis
+
+## Test cases
+
+1. grab a gun -> hold the gun pointing forward, gun follows hand
+2. grab a gun -> other hand can't grab it ("2 hands can't grab the same gun" principle)
+3. grab a gun -> can't grab a portal or another gun with a gun in hand ("1 hand can't grab 2 guns" principle)
+4. drop a gun -> released gun drops
+5. drop a gun -> hand can grab it back without exiting the gun's collision box
+6. drop a gun while other hand is trying to grab it -> released gun is instantly caught by other hand
+7. grab a portal -> change level
+8. grab a portal while other hand grab a gun -> gun isn't carried into the next level, releasing hand grip does not cause problem
+9. grab a portal with bullets flying -> bullets aren't carried into the next level (even if they don't render, make sure they're not active in the new level)
