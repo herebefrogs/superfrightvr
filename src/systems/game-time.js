@@ -15,7 +15,7 @@ AFRAME.registerSystem('game-time', {
     // this.gameTimeHUD = document.querySelector('[game-time]');
 
     // const sceneEl = this.el;
-    // sceneEl.addEventListener('level-loaded', () => { this.toggleGameTimeHUDVisibility(sceneEl.is('game-time-tracked')); })
+    // sceneEl.addEventListener('levelloaded', () => { this.toggleGameTimeHUDVisibility(sceneEl.is('game-time-tracked')); })
   },
   tick: function(_time, timeDelta) {
     const sceneEl = this.el;

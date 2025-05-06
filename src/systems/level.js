@@ -2,7 +2,7 @@
  * System overseeing the game.
  * 
  * Events:
- * - 'level-loaded' emitted on the scene after current active level changed
+ * - 'levelloaded' emitted on the scene after current active level changed
  */
 AFRAME.registerSystem('level', {
   init: function() {
@@ -38,6 +38,9 @@ AFRAME.registerSystem('level', {
     }
 
     // clone the level templates
+    // NOTE: given the #level_templates script tag is of type text/html,
+    // its children aren't parsed as HTML elements but just 1 DOM text node.
+    // we need a temporary div to parse these levels, so we can pick the one we need
     const levelTemplates = document.createElement('div');
     levelTemplates.innerHTML = document.querySelector(`#level_templates`).innerHTML;
     // pick the level we need
@@ -50,12 +53,7 @@ AFRAME.registerSystem('level', {
     this.el.removeState('level-cleared');
     this.el.removeState('game-over')
 
-    // TODO these 2 component and system should do this in response to 'level-loaded' event
-    // make hand controllers' release their grabbed objects
-    this.hands.forEach(hand => { hand.components['gesture-tracker']?.reset() })
-    // remove all objects moved by the puppeteer in this level
-    this.el.systems.puppeteer.reset();
-
-    this.el.emit('level-loaded', { level: newLevel });
+    // notify other systems and components to reset for the new level
+    this.el.emit('levelloaded', { level: newLevel });
   },
 });

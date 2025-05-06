@@ -34,6 +34,7 @@ AFRAME.registerComponent('gesture-tracker', {
       'hovering': [],
       'holding': [],
     }
+    this.el.sceneEl.addEventListener('levelloaded', (e) => { this.reset() });
   },
   addState: function(state, target) {
     // guarantee uniqueness of targets
@@ -64,8 +65,8 @@ AFRAME.registerComponent('gesture-tracker', {
     }
   },
   reset: function() {
-    // NOTE: this is necessary to avoid that a gun held in hand while changing levels
-    // is brought into the next level.
+    // NOTE: this reset is necessary to avoid that a gun held in hand
+    // while changing levels is brought into the next level.
     // release targets and any state that could be associated with it
     for (state in this.state2targets) {
       this.state2targets[state].forEach(t => this.removeState(state, t));
